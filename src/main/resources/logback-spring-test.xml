@@ -8,9 +8,9 @@
     </appender>
 
     <appender name="PAYLOAD" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/home/ec2-user/alarm-service/logs/payloadLog-user.log</file>
+        <file>/Users/mysend/log/payloadLog.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>payloadLog-user.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>payloadLog.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>5</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
@@ -22,8 +22,5 @@
     <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
-    <logger name="io.my.base.log.PayloadLog" level="INFO">
-        <appender-ref ref="PAYLOAD" />
-    </logger>
 
 </configuration>
