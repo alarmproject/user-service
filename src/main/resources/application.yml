@@ -3,6 +3,7 @@ logging:
     org:
       springframework:
         r2dbc: DEBUG
+  config: classpath:logback-spring-test.xml
 
 jjwt:
   access-token:
@@ -34,3 +35,4 @@ spring:
     url: r2dbc:mariadb://alarm-project.cl4rharqalth.ap-northeast-2.rds.amazonaws.com:3306/innodb
     username: root
     password: 12345678
+
