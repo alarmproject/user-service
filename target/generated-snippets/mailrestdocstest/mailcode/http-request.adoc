@@ -1,8 +1,0 @@
-[source,http,options="nowrap"]
-----
-GET /mail/code?email=universitycafeterialife@gmail.com HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiaWQiOjAsImV4cCI6MTY0NzMzMjUwOH0._sU5RBRgIQaO8Bf1zDu3a1jqDrFWelnbuc-yitacaTr5mPbfGz-AmLAdDy5ThqcvX4ufRp5bRAFBUB24U9l0AQ
-Accept: application/json
-Host: mysend.com:8080
-
-----

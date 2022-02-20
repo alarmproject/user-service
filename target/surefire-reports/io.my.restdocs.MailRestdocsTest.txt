@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: io.my.restdocs.MailRestdocsTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 8.57 s <<< FAILURE! - in io.my.restdocs.MailRestdocsTest
-sendCode  Time elapsed: 0.584 s  <<< ERROR!
-java.lang.NullPointerException
-	at io.my.restdocs.MailRestdocsTest.sendCode(MailRestdocsTest.java:28)
-

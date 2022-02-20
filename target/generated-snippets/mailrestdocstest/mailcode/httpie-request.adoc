@@ -1,6 +1,0 @@
-[source,bash]
-----
-$ http GET 'http://mysend.com:8080/mail/code?email=universitycafeterialife@gmail.com' \
-    'Authorization:Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiaWQiOjAsImV4cCI6MTY0NzMzMjUwOH0._sU5RBRgIQaO8Bf1zDu3a1jqDrFWelnbuc-yitacaTr5mPbfGz-AmLAdDy5ThqcvX4ufRp5bRAFBUB24U9l0AQ' \
-    'Accept:application/json'
-----

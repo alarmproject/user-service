@@ -1,6 +1,0 @@
-{"logType":"response","logId":"61710188-5580-4804-b86c-91cd202e8174","url":"GET /healthcheck","logTime":1643883556175}
-{"headers":{},"body":{"code":0,"result":"service is health","logId":"61710188-5580-4804-b86c-91cd202e8174","logType":"response","logTime":1643883556240,"excueteTime":68},"statusCode":"OK","statusCodeValue":200}
-{"logType":"response","logId":"248b3030-55f5-448c-b642-e3f59effb4ea","url":"GET /healthcheck","logTime":1643883891682}
-{"logType":"response","response":{"headers":{},"body":{"code":0,"result":"service is health"},"statusCodeValue":200,"statusCode":"OK"},"excueteTime":73,"logId":"248b3030-55f5-448c-b642-e3f59effb4ea","logTime":1643883891752}
-{"logType":"response","logId":"b145197e-a504-42ca-a0ac-63b149c2f284","url":"GET /healthcheck","logTime":1643883991777}
-{"logType":"response","response":{"headers":{},"body":{"code":0,"result":"service is health"},"statusCodeValue":200,"statusCode":"OK"},"excueteTime":3,"logId":"b145197e-a504-42ca-a0ac-63b149c2f284","logTime":1643883991779}
