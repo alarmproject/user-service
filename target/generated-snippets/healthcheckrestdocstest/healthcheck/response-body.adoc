@@ -1,0 +1,7 @@
+[source,options="nowrap"]
+----
+{
+  "code" : 0,
+  "result" : "service is health"
+}
+----

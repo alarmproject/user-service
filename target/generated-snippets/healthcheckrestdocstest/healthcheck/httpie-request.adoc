@@ -1,0 +1,6 @@
+[source,bash]
+----
+$ http GET 'http://mysend.com:8080/healthcheck' \
+    'Authorization:Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiaWQiOjAsImV4cCI6MTY0NzMzMjA0OX0.xWhwPJ6QCLdMUHR6g2vm2L9GycbWLwoTqujykFzw0FBzJLaN_xg38bsGc-jsvn4AksDbdZrKV8WV6cp0FQnKvw' \
+    'Accept:application/json'
+----

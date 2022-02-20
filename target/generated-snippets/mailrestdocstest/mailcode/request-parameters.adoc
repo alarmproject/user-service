@@ -1,0 +1,12 @@
+.RequestParameters
+[cols="2,1,1,1,4"]
+|===
+|Name|Length|Format|Optional|Description
+
+|email
+|0
+|String
+|
+|메일 주소
+
+|===

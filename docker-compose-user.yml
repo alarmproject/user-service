@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  alarm-user:
+    image: rlabotjd/mysend:latest-alarm-user
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 7000:8080
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - TZ=Asia/Seoul
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        delay: 60s
+        window: 120s

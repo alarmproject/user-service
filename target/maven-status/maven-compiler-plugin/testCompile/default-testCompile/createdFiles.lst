@@ -1,0 +1,7 @@
+io/my/base/util/JwtUtilTest.class
+io/my/base/base/RestDocAttributes.class
+io/my/base/base/MockitoBase.class
+io/my/base/base/SpringBootBase.class
+io/my/restdocs/HealthCheckRestdocsTest.class
+io/my/base/base/RestdocsBase.class
+io/my/restdocs/MailRestdocsTest.class

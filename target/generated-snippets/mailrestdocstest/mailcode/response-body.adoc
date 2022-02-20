@@ -1,0 +1,8 @@
+[source,options="nowrap"]
+----
+{
+  "code" : 0,
+  "result" : "success",
+  "mailCode" : 456
+}
+----

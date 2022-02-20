@@ -1,0 +1,10 @@
+.RequestHeader 
+[cols="2,8"]
+|===
+|Name|Description
+
+|`+Authorization+`
+|JWT 인증 토큰
+
+
+|===

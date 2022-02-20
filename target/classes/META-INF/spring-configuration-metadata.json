@@ -1,0 +1,89 @@
+{
+  "groups": [
+    {
+      "name": "jjwt.access-token",
+      "type": "io.my.base.properties.jwt.AccessTokenProperties",
+      "sourceType": "io.my.base.properties.jwt.AccessTokenProperties"
+    },
+    {
+      "name": "jjwt.refresh-token",
+      "type": "io.my.base.properties.jwt.RefreshTokenProperties",
+      "sourceType": "io.my.base.properties.jwt.RefreshTokenProperties"
+    },
+    {
+      "name": "mail",
+      "type": "io.my.mail.MailProperties",
+      "sourceType": "io.my.mail.MailProperties"
+    },
+    {
+      "name": "security.un-security",
+      "type": "io.my.base.properties.security.UnSecurityProperties",
+      "sourceType": "io.my.base.properties.security.UnSecurityProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "jjwt.access-token.expired-time",
+      "type": "java.lang.Integer",
+      "sourceType": "io.my.base.properties.jwt.AccessTokenProperties",
+      "defaultValue": 0
+    },
+    {
+      "name": "jjwt.access-token.secret-key",
+      "type": "java.lang.String",
+      "sourceType": "io.my.base.properties.jwt.AccessTokenProperties"
+    },
+    {
+      "name": "jjwt.refresh-token.expired-time",
+      "type": "java.lang.Integer",
+      "sourceType": "io.my.base.properties.jwt.RefreshTokenProperties",
+      "defaultValue": 0
+    },
+    {
+      "name": "jjwt.refresh-token.secret-key",
+      "type": "java.lang.String",
+      "sourceType": "io.my.base.properties.jwt.RefreshTokenProperties"
+    },
+    {
+      "name": "mail.password",
+      "type": "java.lang.String",
+      "sourceType": "io.my.mail.MailProperties"
+    },
+    {
+      "name": "mail.smtp-auth",
+      "type": "java.lang.String",
+      "sourceType": "io.my.mail.MailProperties"
+    },
+    {
+      "name": "mail.smtp-host",
+      "type": "java.lang.String",
+      "sourceType": "io.my.mail.MailProperties"
+    },
+    {
+      "name": "mail.smtp-port",
+      "type": "java.lang.String",
+      "sourceType": "io.my.mail.MailProperties"
+    },
+    {
+      "name": "mail.smtp-socket-factory-class",
+      "type": "java.lang.String",
+      "sourceType": "io.my.mail.MailProperties"
+    },
+    {
+      "name": "mail.smtp-socket-factory-port",
+      "type": "java.lang.String",
+      "sourceType": "io.my.mail.MailProperties"
+    },
+    {
+      "name": "mail.username",
+      "type": "java.lang.String",
+      "sourceType": "io.my.mail.MailProperties"
+    },
+    {
+      "name": "security.un-security.list",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "io.my.base.properties.security.UnSecurityProperties"
+    }
+  ],
+  "hints": []
+}

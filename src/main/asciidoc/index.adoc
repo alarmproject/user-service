@@ -1,0 +1,26 @@
+= API Guide
+학식 라이프 ;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+:operation-curl-request-title: Example request
+:operation-http-response-title: Example response
+
+[[overview]]
+= 개요
+
+[[resources-api]]
+== API
+
+
+[[resources-healthcheck]]
+==== healthcheck
+
+include::{snippets}/healthcheckrestdocstest/healthcheck/response-fields.adoc[]
+include::{snippets}/healthcheckrestdocstest/healthcheck/http-request.adoc[]
+include::{snippets}/healthcheckrestdocstest/healthcheck/http-response.adoc[]
+include::{snippets}/healthcheckrestdocstest/healthcheck/curl-request.adoc[]
+
