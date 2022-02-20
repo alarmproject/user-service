@@ -46,7 +46,7 @@ pipeline {
           agent any
           steps {
             echo 'Build Maven'
-            sh 'mvn clean package'
+            sh 'mvn clean package -P local'
           }
 
           post {
