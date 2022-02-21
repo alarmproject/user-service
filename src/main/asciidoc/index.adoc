@@ -24,3 +24,83 @@ include::{snippets}/healthcheckrestdocstest/healthcheck/http-request.adoc[]
 include::{snippets}/healthcheckrestdocstest/healthcheck/http-response.adoc[]
 include::{snippets}/healthcheckrestdocstest/healthcheck/curl-request.adoc[]
 
+
+[[resources-userlogin]]
+==== user login
+
+include::{snippets}/userrestdocstest/userlogin/request-fields.adoc[]
+include::{snippets}/userrestdocstest/userlogin/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userlogin/http-request.adoc[]
+include::{snippets}/userrestdocstest/userlogin/http-response.adoc[]
+include::{snippets}/userrestdocstest/userlogin/curl-request.adoc[]
+
+
+[[resources-userjoin]]
+==== user join
+
+include::{snippets}/userrestdocstest/userjoin/request-fields.adoc[]
+include::{snippets}/userrestdocstest/userjoin/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userjoin/http-request.adoc[]
+include::{snippets}/userrestdocstest/userjoin/http-response.adoc[]
+include::{snippets}/userrestdocstest/userjoin/curl-request.adoc[]
+
+
+[[resources-usersociallogin]]
+==== user social login
+
+include::{snippets}/userrestdocstest/usersociallogin/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/usersociallogin/response-fields.adoc[]
+include::{snippets}/userrestdocstest/usersociallogin/http-request.adoc[]
+include::{snippets}/userrestdocstest/usersociallogin/http-response.adoc[]
+include::{snippets}/userrestdocstest/usersociallogin/curl-request.adoc[]
+
+
+[[resources-usersocialjoin]]
+==== user social join
+
+include::{snippets}/userrestdocstest/usersocialjoin/request-fields.adoc[]
+include::{snippets}/userrestdocstest/usersocialjoin/response-fields.adoc[]
+include::{snippets}/userrestdocstest/usersocialjoin/http-request.adoc[]
+include::{snippets}/userrestdocstest/usersocialjoin/http-response.adoc[]
+include::{snippets}/userrestdocstest/usersocialjoin/curl-request.adoc[]
+
+
+[[resources-userregistfindemail]]
+==== user regist find email
+
+include::{snippets}/userrestdocstest/userregistfindemail/request-fields.adoc[]
+include::{snippets}/userrestdocstest/userregistfindemail/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userregistfindemail/http-request.adoc[]
+include::{snippets}/userrestdocstest/userregistfindemail/http-response.adoc[]
+include::{snippets}/userrestdocstest/userregistfindemail/curl-request.adoc[]
+
+
+[[resources-userfindemail]]
+==== user find email
+
+include::{snippets}/userrestdocstest/userfindemail/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/userfindemail/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userfindemail/http-request.adoc[]
+include::{snippets}/userrestdocstest/userfindemail/http-response.adoc[]
+include::{snippets}/userrestdocstest/userfindemail/curl-request.adoc[]
+
+
+[[resources-userchangepassword]]
+==== user change password
+
+include::{snippets}/userrestdocstest/userchangepassword/request-fields.adoc[]
+include::{snippets}/userrestdocstest/userchangepassword/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userchangepassword/http-request.adoc[]
+include::{snippets}/userrestdocstest/userchangepassword/http-response.adoc[]
+include::{snippets}/userrestdocstest/userchangepassword/curl-request.adoc[]
+
+
+[[resources-mailcode]]
+==== mail code
+
+include::{snippets}/mailrestdocstest/mailcode/request-parameters.adoc[]
+include::{snippets}/mailrestdocstest/mailcode/response-fields.adoc[]
+include::{snippets}/mailrestdocstest/mailcode/http-request.adoc[]
+include::{snippets}/mailrestdocstest/mailcode/http-response.adoc[]
+include::{snippets}/mailrestdocstest/mailcode/curl-request.adoc[]
+

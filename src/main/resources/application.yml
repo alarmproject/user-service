@@ -15,7 +15,7 @@ jjwt:
 security:
   un-security:
     list:
-      - GET /specification
+      - GET /specification/index.html
       - GET /healthcheck
       - POST /user/join
       - POST /user/login
