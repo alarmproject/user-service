@@ -3,6 +3,7 @@ package io.my.base.base;
 import io.my.base.context.JwtContextWebFilter;
 import io.my.base.util.JwtUtil;
 import io.my.mail.MailService;
+import io.my.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -53,10 +54,13 @@ public class RestdocsBase {
     @MockBean
     protected MailService mailService;
 
+    @MockBean
+    protected UserService userService;
+
     @BeforeEach
     void setUp(ApplicationContext applicationContext,
                RestDocumentationContextProvider restDocumentation) {
-        authorization = "Bearer " + jwtUtil.createAccessToken(0L);
+        authorization = "Bearer " + jwtUtil.createAccessToken(1L);
 
         this.webTestClient = WebTestClient.bindToApplicationContext(applicationContext)
                 .configureClient()

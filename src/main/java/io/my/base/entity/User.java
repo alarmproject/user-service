@@ -17,6 +17,7 @@ public class User extends BaseEntity {
     private Byte type;
     private String name;
     private String nickname;
+    private String password;
     private String email;
     private String deviceToken;
     private String collegeEmail;

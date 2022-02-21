@@ -13,10 +13,10 @@ public class JoinRequest {
     private String name;
     private String email;
     private String nickname;
+    private String password;
 
     private String deviceToken;
     private String collegeEmail;
-    private Long imageId;
     private Long collegeId;
 
     public Integer getId() { return null; }

@@ -15,10 +15,16 @@ jjwt:
 security:
   un-security:
     list:
+      - GET /specification
       - GET /healthcheck
-      - POST /join
-      - POST /login
+      - POST /user/join
+      - POST /user/login
+      - GET /user/social/login
+      - POST /user/social/join
+      - GET /user/find/email
+      - POST /user/change/password
       - GET /mail/code
+      - GET /user/find/email
 
 mail:
   username: universitycafeterialife@gmail.com
