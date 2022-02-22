@@ -15,6 +15,7 @@
 [[resources-api]]
 == API
 
+=== Healthcheck
 
 [[resources-healthcheck]]
 ==== healthcheck
@@ -24,6 +25,8 @@ include::{snippets}/healthcheckrestdocstest/healthcheck/http-request.adoc[]
 include::{snippets}/healthcheckrestdocstest/healthcheck/http-response.adoc[]
 include::{snippets}/healthcheckrestdocstest/healthcheck/curl-request.adoc[]
 
+
+=== user
 
 [[resources-userlogin]]
 ==== user login
@@ -95,6 +98,8 @@ include::{snippets}/userrestdocstest/userchangepassword/http-response.adoc[]
 include::{snippets}/userrestdocstest/userchangepassword/curl-request.adoc[]
 
 
+=== mail
+
 [[resources-mailcode]]
 ==== mail code
 
@@ -103,4 +108,17 @@ include::{snippets}/mailrestdocstest/mailcode/response-fields.adoc[]
 include::{snippets}/mailrestdocstest/mailcode/http-request.adoc[]
 include::{snippets}/mailrestdocstest/mailcode/http-response.adoc[]
 include::{snippets}/mailrestdocstest/mailcode/curl-request.adoc[]
+
+
+=== college
+
+[[resources-collegesearch]]
+==== college search
+
+include::{snippets}/collegerestdocstest/collegesearch/request-parameters.adoc[]
+include::{snippets}/collegerestdocstest/collegesearch/response-fields.adoc[]
+include::{snippets}/collegerestdocstest/collegesearch/http-request.adoc[]
+include::{snippets}/collegerestdocstest/collegesearch/http-response.adoc[]
+include::{snippets}/collegerestdocstest/collegesearch/curl-request.adoc[]
+
 
