@@ -7,9 +7,9 @@ import io.my.user.payload.request.JoinRequest;
 import io.my.user.payload.request.LoginRequest;
 import io.my.user.payload.response.FindEmailResponse;
 import io.my.user.payload.response.LoginResponse;
+import io.my.user.payload.response.SearchUserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mockito.internal.matchers.Find;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -60,6 +60,20 @@ public class UserController {
     @PatchMapping("/change/password")
     public Mono<BaseResponse> changePassword(@RequestBody LoginRequest requestBody) {
         return userService.changePassword(requestBody.getEmail(), requestBody.getPassword());
+    }
+
+    @Logger
+    @GetMapping("/search")
+    public Mono<SearchUserResponse> searchUser(
+            @RequestParam(name = "search", required = false) String search,
+            @RequestParam(name = "searchType", defaultValue = "0", required = false) int type) {
+
+        Mono<SearchUserResponse> responseMono;
+
+        if (type == 0) responseMono = userService.searchUserByName(search);
+        else responseMono = userService.searchUserByNickname(search);
+
+        return responseMono;
     }
 
 

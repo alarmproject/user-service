@@ -44,7 +44,7 @@ public class RestdocsBase {
     protected WebTestClient webTestClient;
     protected Snippet defaultRequestHeader;
 
-    private static String BASE_URL = "http://mysend.co.kr:8080/user/";
+    private static String BASE_URL = "http://mysend.co.kr:8080/";
 
     @Autowired
     protected JwtUtil jwtUtil;

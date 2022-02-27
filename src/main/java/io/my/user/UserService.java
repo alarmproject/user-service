@@ -5,17 +5,22 @@ import io.my.base.entity.User;
 import io.my.base.entity.UserBackupEmail;
 import io.my.base.exception.object.DatabaseException;
 import io.my.base.payload.BaseResponse;
+import io.my.base.properties.ServerProperties;
 import io.my.base.repository.UserBackupEmailRepository;
 import io.my.base.repository.UserRepository;
+import io.my.base.repository.custom.CustomUserRepository;
 import io.my.base.util.JwtUtil;
 import io.my.user.payload.request.JoinRequest;
 import io.my.user.payload.request.LoginRequest;
 import io.my.user.payload.response.FindEmailResponse;
 import io.my.user.payload.response.LoginResponse;
+import io.my.user.payload.response.SearchUserResponse;
+import io.my.user.payload.response.dto.SearchUser;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -24,6 +29,8 @@ public class UserService {
     private final JwtUtil jwtUtil;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+    private final ServerProperties serverProperties;
+    private final CustomUserRepository customUserRepository;
     private final UserBackupEmailRepository userBackupEmailRepository;
 
     public Mono<LoginResponse> login(LoginRequest requestBody) {
@@ -135,6 +142,31 @@ public class UserService {
     }
 
 
+    public Mono<SearchUserResponse> searchUserByName(String name) {
+        return searchUser(customUserRepository.findUserByName(name));
+
+    }
+
+    public Mono<SearchUserResponse> searchUserByNickname(String nickname) {
+        return searchUser(customUserRepository.findUserByNickname(nickname));
+    }
+
+    public Mono<SearchUserResponse> searchUser(Flux<User> flux) {
+        return flux.map(user ->
+                new SearchUser(
+                        user.getId(),
+                        user.getNickname(),
+                        user.getName(),
+                        user.getEmail(),
+                        user.getImage() != null ?
+                            serverProperties.getImaegUrl() +
+                                    user.getImage().getFileName() : null)
+        ).collectList().map(list -> {
+            SearchUserResponse responseBody = new SearchUserResponse();
+            responseBody.setList(list);
+            return responseBody;
+        }).switchIfEmpty(Mono.just(new SearchUserResponse()));
+    }
 
 
 }
