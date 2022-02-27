@@ -3,6 +3,7 @@ package io.my.base.base;
 import io.my.base.context.JwtContextWebFilter;
 import io.my.base.util.JwtUtil;
 import io.my.college.CollegeService;
+import io.my.friend.FriendService;
 import io.my.mail.MailService;
 import io.my.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,6 +45,7 @@ public class RestdocsBase {
     protected WebTestClient webTestClient;
     protected Snippet defaultRequestHeader;
 
+    protected final static String EMAIL = "universitycafeterialife@gmail.com";
     private static String BASE_URL = "http://mysend.co.kr:8080/";
 
     @Autowired
@@ -60,6 +62,9 @@ public class RestdocsBase {
 
     @MockBean
     protected CollegeService collegeService;
+
+    @MockBean
+    protected FriendService friendService;
 
     @BeforeEach
     void setUp(ApplicationContext applicationContext,
@@ -88,6 +93,10 @@ public class RestdocsBase {
         return this.webTestClient.get().uri(uri).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).exchange();
     }
 
+    protected WebTestClient.ResponseSpec getWebTestClientUnAuth(String uri) {
+        return this.webTestClient.get().uri(uri).accept(MediaType.APPLICATION_JSON).exchange();
+    }
+
     protected WebTestClient.ResponseSpec getWebTestClient(Object body, String uri) {
         return this.webTestClient.method(HttpMethod.GET).uri(uri).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).bodyValue(body).exchange();
     }
@@ -96,12 +105,16 @@ public class RestdocsBase {
         return this.webTestClient.post().uri(uri).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).bodyValue(body).exchange();
     }
 
+    protected WebTestClient.ResponseSpec postWebTestClientUnAuth(Object body, String uri) {
+        return this.webTestClient.post().uri(uri).accept(MediaType.APPLICATION_JSON).bodyValue(body).exchange();
+    }
+
     protected WebTestClient.ResponseSpec postWebTestClient(BodyInserters.MultipartInserter multipartInserter, String uri) {
         return this.webTestClient.post().uri(uri).header(HttpHeaders.AUTHORIZATION, authorization).body(multipartInserter).exchange();
     }
 
     protected WebTestClient.ResponseSpec postWebTestClient(String uri) {
-        return this.webTestClient.post().uri(uri).accept(MediaType.APPLICATION_JSON).exchange();
+        return this.webTestClient.post().uri(uri).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).exchange();
     }
 
     protected WebTestClient.ResponseSpec putWebTestClient(Object body, String uri) {
@@ -110,6 +123,10 @@ public class RestdocsBase {
 
     protected WebTestClient.ResponseSpec patchWebTestClient(Object body, String uri) {
         return this.webTestClient.patch().uri(uri).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).bodyValue(body).exchange();
+    }
+
+    protected WebTestClient.ResponseSpec patchWebTestClientUnAuth(Object body, String uri) {
+        return this.webTestClient.patch().uri(uri).accept(MediaType.APPLICATION_JSON).bodyValue(body).exchange();
     }
 
     protected WebTestClient.ResponseSpec patchWebTestClient(String uri) {

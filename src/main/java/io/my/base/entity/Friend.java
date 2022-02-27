@@ -3,6 +3,7 @@ package io.my.base.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Getter @Setter
@@ -10,7 +11,11 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Friend extends BaseEntity {
     @Id
     private Long id;
+    private Long userId;
+    private Long followUserId;
 
+    @Transient
     private User user;
+    @Transient
     private User followUser;
 }

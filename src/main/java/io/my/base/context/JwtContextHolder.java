@@ -28,4 +28,8 @@ public class JwtContextHolder {
     public static Context withJwtContext(Mono<? extends JwtContext> jwtContext) {
         return Context.of(JWT_CONTEXT_KEY, jwtContext);
     }
+
+    public static Mono<Long> getMonoUserId() {
+        return getMonoContext().map(JwtContext::getUserId);
+    }
 }

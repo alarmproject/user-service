@@ -98,6 +98,16 @@ include::{snippets}/userrestdocstest/userchangepassword/http-response.adoc[]
 include::{snippets}/userrestdocstest/userchangepassword/curl-request.adoc[]
 
 
+[[resources-usersearch]]
+==== user search
+
+include::{snippets}/userrestdocstest/usersearch/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/usersearch/response-fields.adoc[]
+include::{snippets}/userrestdocstest/usersearch/http-request.adoc[]
+include::{snippets}/userrestdocstest/usersearch/http-response.adoc[]
+include::{snippets}/userrestdocstest/usersearch/curl-request.adoc[]
+
+
 === mail
 
 [[resources-mailcode]]
@@ -108,6 +118,35 @@ include::{snippets}/mailrestdocstest/mailcode/response-fields.adoc[]
 include::{snippets}/mailrestdocstest/mailcode/http-request.adoc[]
 include::{snippets}/mailrestdocstest/mailcode/http-response.adoc[]
 include::{snippets}/mailrestdocstest/mailcode/curl-request.adoc[]
+
+
+=== friend
+
+[[resources-getfriendlist]]
+==== get friend list
+
+include::{snippets}/friendrestdocstest/getfriendlist/response-fields.adoc[]
+include::{snippets}/friendrestdocstest/getfriendlist/http-request.adoc[]
+include::{snippets}/friendrestdocstest/getfriendlist/http-response.adoc[]
+include::{snippets}/friendrestdocstest/getfriendlist/curl-request.adoc[]
+
+[[resources-addfriend]]
+==== add friend
+
+include::{snippets}/friendrestdocstest/addfriend/request-parameters.adoc[]
+include::{snippets}/friendrestdocstest/addfriend/response-fields.adoc[]
+include::{snippets}/friendrestdocstest/addfriend/http-request.adoc[]
+include::{snippets}/friendrestdocstest/addfriend/http-response.adoc[]
+include::{snippets}/friendrestdocstest/addfriend/curl-request.adoc[]
+
+[[resources-removefriend]]
+==== remove friend
+
+include::{snippets}/friendrestdocstest/removefriend/request-parameters.adoc[]
+include::{snippets}/friendrestdocstest/removefriend/response-fields.adoc[]
+include::{snippets}/friendrestdocstest/removefriend/http-request.adoc[]
+include::{snippets}/friendrestdocstest/removefriend/http-response.adoc[]
+include::{snippets}/friendrestdocstest/removefriend/curl-request.adoc[]
 
 
 === college

@@ -8,6 +8,8 @@ import io.my.user.payload.request.JoinRequest;
 import io.my.user.payload.request.LoginRequest;
 import io.my.user.payload.response.FindEmailResponse;
 import io.my.user.payload.response.LoginResponse;
+import io.my.user.payload.response.SearchUserResponse;
+import io.my.user.payload.response.dto.SearchUser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -16,16 +18,18 @@ import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 import org.springframework.restdocs.request.RequestParametersSnippet;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
 class UserRestdocsTest extends RestdocsBase {
-    private final static String EMAIL = "universitycafeterialife@gmail.com";
 
     @Test
     @DisplayName("일반 Login API")
-    public void login() {
+    void login() {
         LoginRequest requestBody = new LoginRequest();
         requestBody.setEmail(EMAIL);
         requestBody.setPassword("password");
@@ -68,7 +72,7 @@ class UserRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                 );
 
-        postWebTestClient(requestBody, "/user/login").expectStatus()
+        postWebTestClientUnAuth(requestBody, "/user/login").expectStatus()
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/userlogin", requestFieldsSnippet, responseFieldsSnippet));
@@ -76,7 +80,7 @@ class UserRestdocsTest extends RestdocsBase {
 
     @Test
     @DisplayName("일반 Join API")
-    public void join() {
+    void join() {
         JoinRequest requestBody = new JoinRequest();
         requestBody.setName("김보성");
         requestBody.setPassword("password");
@@ -153,7 +157,7 @@ class UserRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                 );
 
-        postWebTestClient(requestBody, "/user/join").expectStatus()
+        postWebTestClientUnAuth(requestBody, "/user/join").expectStatus()
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/userjoin", requestFieldsSnippet, responseFieldsSnippet));
@@ -161,7 +165,7 @@ class UserRestdocsTest extends RestdocsBase {
 
     @Test
     @DisplayName("소셜 Login API")
-    public void socialLogin() {
+    void socialLogin() {
         LoginResponse responseBody = new LoginResponse();
         responseBody.setAuthorization(jwtUtil.createAccessToken(1L));
         responseBody.setId(1L);
@@ -202,7 +206,7 @@ class UserRestdocsTest extends RestdocsBase {
                 "=" +
                 EMAIL;
 
-        getWebTestClient("/user/social/login" + params).expectStatus()
+        getWebTestClientUnAuth("/user/social/login" + params).expectStatus()
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/usersociallogin", requestParametersSnippet, responseFieldsSnippet));
@@ -210,7 +214,7 @@ class UserRestdocsTest extends RestdocsBase {
 
     @Test
     @DisplayName("소셜 Join API")
-    public void socialJoin() {
+    void socialJoin() {
         JoinRequest requestBody = new JoinRequest();
         requestBody.setName("김보성");
         requestBody.setPassword("password");
@@ -287,7 +291,7 @@ class UserRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                 );
 
-        postWebTestClient(requestBody, "/user/social/join").expectStatus()
+        postWebTestClientUnAuth(requestBody, "/user/social/join").expectStatus()
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/usersocialjoin", requestFieldsSnippet, responseFieldsSnippet));
@@ -295,7 +299,7 @@ class UserRestdocsTest extends RestdocsBase {
 
     @Test
     @DisplayName("백업용 이메일 등록 API")
-    public void registFindEmail() {
+    void registFindEmail() {
         FindEmailRequest requestBody = new FindEmailRequest();
         requestBody.setEmail(EMAIL);
         BaseResponse responseBody = new BaseResponse();
@@ -329,7 +333,7 @@ class UserRestdocsTest extends RestdocsBase {
 
     @Test
     @DisplayName("아이디(이메일) 찾기 API")
-    public void findEmail() {
+    void findEmail() {
         FindEmailResponse responseBody = new FindEmailResponse();
         responseBody.setEmail(EMAIL);
 
@@ -365,7 +369,7 @@ class UserRestdocsTest extends RestdocsBase {
                 "=" +
                 EMAIL;
 
-        getWebTestClient("/user/find/email" + params).expectStatus()
+        getWebTestClientUnAuth("/user/find/email" + params).expectStatus()
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/userfindemail", requestParametersSnippet, responseFieldsSnippet));
@@ -374,7 +378,7 @@ class UserRestdocsTest extends RestdocsBase {
 
     @Test
     @DisplayName("비밀번호 변경 API")
-    public void changePassword() {
+    void changePassword() {
         LoginRequest requestBody = new LoginRequest();
         requestBody.setPassword("password");
         requestBody.setEmail(EMAIL);
@@ -406,11 +410,86 @@ class UserRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                 );
 
-        patchWebTestClient(requestBody, "/user/change/password").expectStatus()
+        patchWebTestClientUnAuth(requestBody, "/user/change/password").expectStatus()
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/userchangepassword", requestFieldsSnippet, responseFieldsSnippet));
+    }
 
+    @Test
+    @DisplayName("회원 검색 API")
+    void searchUser() {
+        SearchUserResponse responseBody = new SearchUserResponse();
+        List<SearchUser> list = new ArrayList<>();
+
+        SearchUser entity = new SearchUser();
+        entity.setId(1L);
+        entity.setEmail(EMAIL);
+        entity.setName("name");
+        entity.setNickname("nickname");
+        entity.setFileName("fileName");
+
+        list.add(entity);
+        responseBody.setList(list);
+
+        Mockito.when(userService.searchUserByName(Mockito.anyString())).thenReturn(Mono.just(responseBody));
+        Mockito.when(userService.searchUserByNickname(Mockito.anyString())).thenReturn(Mono.just(responseBody));
+
+        RequestParametersSnippet requestParametersSnippet =
+                requestParameters(
+                        parameterWithName("search").description("검색어")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")
+                                ),
+                        parameterWithName("searchType").description("검색어 타입, 0: 이름(default), 1: 닉네임")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")
+                                )
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("list.[].id").description("회원 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("list.[].email").description("회원 이메일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("list.[].nickname").description("회원 닉네임")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("list.[].name").description("회원 이름")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("list.[].fileName").description("이미지 경로(수정 예정)")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String"))
+                );
+
+        String params = "?" +
+                "search=" + "nickname" +
+                "&searchType=1"
+        ;
+
+        getWebTestClient("/user/search" + params).expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/usersearch", requestParametersSnippet, responseFieldsSnippet));
 
     }
 

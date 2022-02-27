@@ -69,7 +69,7 @@ class CollegeRestdocsTest extends RestdocsBase {
                 );
         String params = "?search=대학";
 
-        getWebTestClient("/college/list"+ params).expectStatus()
+        getWebTestClientUnAuth("/college/list"+ params).expectStatus()
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/collegesearch", requestParametersSnippet, responseFieldsSnippet));

@@ -25,6 +25,8 @@ security:
       - POST /user/change/password
       - GET /mail/code
       - GET /user/find/email
+      - GET /college/list
+      - PATCH /user/change/password
 
 mail:
   username: universitycafeterialife@gmail.com

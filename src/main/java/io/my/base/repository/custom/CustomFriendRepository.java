@@ -14,19 +14,35 @@ public class CustomFriendRepository {
     private final DatabaseClient client;
 
     public Flux<Friend> findFriendListByUserId(Long userId) {
-        String query = "";
+        String query =
+                "SELECT " +
+                "f.id as id " +
+                ", u.id as follow_user_id " +
+                ", u.email as follow_user_email " +
+                ", u.name as follow_user_name " +
+                ", u.nickname as follow_user_nickname " +
+                ", i.id as follow_user_image_id " +
+                ", i.file_name as follow_user_image_name " +
+                "FROM " +
+                "friend f " +
+                "LEFT JOIN `user` u ON f.follow_user_id = u.id " +
+                "LEFT JOIN image i ON u.image_id = i.id " +
+                "WHERE user_id = :userId";
 
         return client.sql(query).bind("userId", userId).map((row, rowMetadata) -> {
 
             Friend friend = new Friend();
             User user = new User();
-            user.setName(row.get("followUserName", String.class));
-            user.setEmail(row.get("followUserEmail", String.class));
-            user.setNickname(row.get("followUserNickname", String.class));
+            friend.setId(row.get("id", Long.class));
+            user.setId(row.get("follow_user_id", Long.class));
+            user.setName(row.get("follow_user_name", String.class));
+            user.setEmail(row.get("follow_user_email", String.class));
+            user.setNickname(row.get("follow_user_nickname", String.class));
 
-            if (row.get("follow_file_name", String.class) != null) {
+            if (row.get("follow_user_image_name", String.class) != null) {
                 Image image = new Image();
-                image.setFileName(row.get("follow_file_name", String.class));
+                image.setId(row.get("follow_user_image_id", Long.class));
+                image.setFileName(row.get("follow_user_image_name", String.class));
                 user.setImage(image);
             }
 

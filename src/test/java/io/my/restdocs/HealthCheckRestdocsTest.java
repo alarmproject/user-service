@@ -31,7 +31,7 @@ class HealthCheckRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                         );
 
-        getWebTestClient("/healthcheck").expectStatus()
+        getWebTestClientUnAuth("/healthcheck").expectStatus()
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/healthcheck", requestParametersSnippet, responseFieldsSnippet));

@@ -7,9 +7,11 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Getter @Setter
 @Table("user_backup_email")
-public class UserBackupEmail {
+public class UserBackupEmail extends BaseEntity {
     @Id
     private Long id;
     private String email;
     private Long userId;
+
+    private User user;
 }

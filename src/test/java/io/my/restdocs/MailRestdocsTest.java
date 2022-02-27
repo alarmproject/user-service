@@ -55,7 +55,7 @@ class MailRestdocsTest extends RestdocsBase {
                 "=" +
                 email;
 
-        getWebTestClient("/mail/code" + params).expectStatus()
+        getWebTestClientUnAuth("/mail/code" + params).expectStatus()
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/mailcode", requestParametersSnippet, responseFieldsSnippet));
