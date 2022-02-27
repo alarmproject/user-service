@@ -490,7 +490,40 @@ class UserRestdocsTest extends RestdocsBase {
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/usersearch", requestParametersSnippet, responseFieldsSnippet));
+    }
 
+    @Test
+    @DisplayName("프로필 사진 변경 API")
+    void changeImage() {
+        Mockito.when(userService.changeImage(Mockito.anyLong())).thenReturn(Mono.just(new BaseResponse()));
+
+        RequestParametersSnippet requestParametersSnippet =
+                requestParameters(
+                        parameterWithName("id").description("이미지 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")
+                                )
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+
+        String params = "?id=1";
+
+        patchWebTestClient("/user/image" + params).expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/changeimage", requestParametersSnippet, responseFieldsSnippet));
     }
 
 

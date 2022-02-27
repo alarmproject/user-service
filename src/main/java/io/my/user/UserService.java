@@ -168,5 +168,22 @@ public class UserService {
         }).switchIfEmpty(Mono.just(new SearchUserResponse()));
     }
 
+    public Mono<BaseResponse> changeImage(Long id) {
+        return JwtContextHolder.getMonoUserId()
+                .flatMap(userRepository::findById)
+                .flatMap(entity -> {
+                    entity.setImageId(id);
+                    return userRepository.save(entity).map(user -> new BaseResponse());
+                })
+                .switchIfEmpty(Mono.just(failChangeImage()));
+    }
+
+    private BaseResponse failChangeImage() {
+        BaseResponse responseBody = new BaseResponse();
+        responseBody.setResult("이미지 변경에 실패하였습니다..");
+        responseBody.setCode(5);
+        return responseBody;
+    }
+
 
 }

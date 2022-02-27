@@ -98,6 +98,16 @@ include::{snippets}/userrestdocstest/userchangepassword/http-response.adoc[]
 include::{snippets}/userrestdocstest/userchangepassword/curl-request.adoc[]
 
 
+[[resources-userchangeimage]]
+==== user change image
+
+include::{snippets}/userrestdocstest/changeimage/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/changeimage/response-fields.adoc[]
+include::{snippets}/userrestdocstest/changeimage/http-request.adoc[]
+include::{snippets}/userrestdocstest/changeimage/http-response.adoc[]
+include::{snippets}/userrestdocstest/changeimage/curl-request.adoc[]
+
+
 [[resources-usersearch]]
 ==== user search
 

@@ -76,5 +76,11 @@ public class UserController {
         return responseMono;
     }
 
+    @Logger
+    @PatchMapping("/image")
+    public Mono<BaseResponse> changeImage(@RequestParam("id") Long id) {
+        return userService.changeImage(id);
+    }
+
 
 }
