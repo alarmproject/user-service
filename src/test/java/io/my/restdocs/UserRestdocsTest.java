@@ -2,14 +2,13 @@ package io.my.restdocs;
 
 import io.my.base.base.RestDocAttributes;
 import io.my.base.base.RestdocsBase;
+import io.my.base.payload.BaseExtentionResponse;
 import io.my.base.payload.BaseResponse;
 import io.my.user.payload.request.FindEmailRequest;
 import io.my.user.payload.request.JoinRequest;
 import io.my.user.payload.request.LoginRequest;
-import io.my.user.payload.response.FindEmailResponse;
 import io.my.user.payload.response.LoginResponse;
 import io.my.user.payload.response.SearchUserResponse;
-import io.my.user.payload.response.dto.SearchUser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -34,9 +33,9 @@ class UserRestdocsTest extends RestdocsBase {
         requestBody.setEmail(EMAIL);
         requestBody.setPassword("password");
 
-        LoginResponse responseBody = new LoginResponse();
-        responseBody.setAuthorization(jwtUtil.createAccessToken(1L));
-        responseBody.setId(1L);
+        BaseExtentionResponse<LoginResponse> responseBody =
+                new BaseExtentionResponse<>(
+                        new LoginResponse(1L, jwtUtil.createAccessToken(1L)));
 
         Mockito.when(userService.login(Mockito.any())).thenReturn(Mono.just(responseBody));
 
@@ -62,11 +61,11 @@ class UserRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("authorization").description("JWT Token")
+                        fieldWithPath("returnValue.authorization").description("JWT Token")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
-                        fieldWithPath("id").description("회원 ID")
+                        fieldWithPath("returnValue.id").description("회원 ID")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer"))
@@ -91,9 +90,9 @@ class UserRestdocsTest extends RestdocsBase {
         requestBody.setCollegeId(1L);
         requestBody.setCollegeEmail(EMAIL);
 
-        LoginResponse responseBody = new LoginResponse();
-        responseBody.setAuthorization(jwtUtil.createAccessToken(1L));
-        responseBody.setId(1L);
+        BaseExtentionResponse<LoginResponse> responseBody =
+                new BaseExtentionResponse<>(
+                        new LoginResponse(1L, jwtUtil.createAccessToken(1L)));
 
         Mockito.when(userService.join(Mockito.any())).thenReturn(Mono.just(responseBody));
 
@@ -147,11 +146,11 @@ class UserRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("authorization").description("JWT Token")
+                        fieldWithPath("returnValue.authorization").description("JWT Token")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
-                        fieldWithPath("id").description("회원 ID")
+                        fieldWithPath("returnValue.id").description("회원 ID")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer"))
@@ -166,9 +165,9 @@ class UserRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("소셜 Login API")
     void socialLogin() {
-        LoginResponse responseBody = new LoginResponse();
-        responseBody.setAuthorization(jwtUtil.createAccessToken(1L));
-        responseBody.setId(1L);
+        BaseExtentionResponse<LoginResponse> responseBody =
+                new BaseExtentionResponse<>(
+                        new LoginResponse(1L, jwtUtil.createAccessToken(1L)));
 
         Mockito.when(userService.socialLogin(Mockito.anyString())).thenReturn(Mono.just(responseBody));
 
@@ -191,11 +190,11 @@ class UserRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("authorization").description("JWT Token")
+                        fieldWithPath("returnValue.authorization").description("JWT Token")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
-                        fieldWithPath("id").description("회원 ID")
+                        fieldWithPath("returnValue.id").description("회원 ID")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer"))
@@ -225,9 +224,9 @@ class UserRestdocsTest extends RestdocsBase {
         requestBody.setCollegeId(1L);
         requestBody.setCollegeEmail(EMAIL);
 
-        LoginResponse responseBody = new LoginResponse();
-        responseBody.setAuthorization(jwtUtil.createAccessToken(1L));
-        responseBody.setId(1L);
+        BaseExtentionResponse<LoginResponse> responseBody =
+                new BaseExtentionResponse<>(
+                        new LoginResponse(1L, jwtUtil.createAccessToken(1L)));
 
         Mockito.when(userService.socialJoin(Mockito.any())).thenReturn(Mono.just(responseBody));
 
@@ -281,11 +280,11 @@ class UserRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("authorization").description("JWT Token")
+                        fieldWithPath("returnValue.authorization").description("JWT Token")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
-                        fieldWithPath("id").description("회원 ID")
+                        fieldWithPath("returnValue.id").description("회원 ID")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer"))
@@ -334,8 +333,8 @@ class UserRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("아이디(이메일) 찾기 API")
     void findEmail() {
-        FindEmailResponse responseBody = new FindEmailResponse();
-        responseBody.setEmail(EMAIL);
+        BaseExtentionResponse<String> responseBody = new BaseExtentionResponse<>();
+        responseBody.setReturnValue(EMAIL);
 
         Mockito.when(userService.findEmail(Mockito.anyString())).thenReturn(Mono.just(responseBody));
 
@@ -358,7 +357,7 @@ class UserRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("email").description("이메일")
+                        fieldWithPath("returnValue").description("이메일")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String"))
@@ -419,10 +418,10 @@ class UserRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("회원 검색 API")
     void searchUser() {
-        SearchUserResponse responseBody = new SearchUserResponse();
-        List<SearchUser> list = new ArrayList<>();
+        BaseExtentionResponse<List<SearchUserResponse>> responseBody = new BaseExtentionResponse<>();
+        List<SearchUserResponse> list = new ArrayList<>();
 
-        SearchUser entity = new SearchUser();
+        SearchUserResponse entity = new SearchUserResponse();
         entity.setId(1L);
         entity.setEmail(EMAIL);
         entity.setName("name");
@@ -430,7 +429,7 @@ class UserRestdocsTest extends RestdocsBase {
         entity.setFileName("fileName");
 
         list.add(entity);
-        responseBody.setList(list);
+        responseBody.setReturnValue(list);
 
         Mockito.when(userService.searchUserByName(Mockito.anyString())).thenReturn(Mono.just(responseBody));
         Mockito.when(userService.searchUserByNickname(Mockito.anyString())).thenReturn(Mono.just(responseBody));
@@ -459,23 +458,23 @@ class UserRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("list.[].id").description("회원 번호")
+                        fieldWithPath("returnValue.[].id").description("회원 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("list.[].email").description("회원 이메일")
+                        fieldWithPath("returnValue.[].email").description("회원 이메일")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
-                        fieldWithPath("list.[].nickname").description("회원 닉네임")
+                        fieldWithPath("returnValue.[].nickname").description("회원 닉네임")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
-                        fieldWithPath("list.[].name").description("회원 이름")
+                        fieldWithPath("returnValue.[].name").description("회원 이름")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
-                        fieldWithPath("list.[].fileName").description("이미지 경로(수정 예정)")
+                        fieldWithPath("returnValue.[].fileName").description("이미지 경로(수정 예정)")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String"))

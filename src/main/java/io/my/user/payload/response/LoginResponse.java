@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginResponse extends BaseResponse {
+public class LoginResponse {
     private Long id;
     private String authorization;
 }

@@ -1,6 +1,6 @@
 package io.my.mail;
 
-import io.my.mail.payload.MailCodeResponse;
+import io.my.base.payload.BaseExtentionResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ public class MailController {
     private final MailService mailService;
 
     @GetMapping("/code")
-    public Mono<MailCodeResponse> sendCode(
+    public Mono<BaseExtentionResponse<Integer>> sendCode(
             @RequestParam("email") String email) {
         int mailCode = new Random().nextInt(900) + 100;
 

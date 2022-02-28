@@ -1,7 +1,7 @@
 package io.my.mail;
 
 import io.my.base.exception.object.MailSenderException;
-import io.my.mail.payload.MailCodeResponse;
+import io.my.base.payload.BaseExtentionResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -16,7 +16,7 @@ import java.util.Properties;
 public class MailService {
     private final MailProperties mailProperties;
 
-    public Mono<MailCodeResponse> sendJoinCodeMail(String email, int mailCode) {
+    public Mono<BaseExtentionResponse<Integer>> sendJoinCodeMail(String email, int mailCode) {
         String subject = "학식라이프 인증코드입니다.";
         String text =
                 "<div>" +
@@ -30,7 +30,7 @@ public class MailService {
 
         return Mono.fromCallable(() -> {
             sendMail(email, subject, text);
-            return new MailCodeResponse(mailCode);
+            return new BaseExtentionResponse<>(mailCode);
         }).doOnError(throwable -> {throw new MailSenderException();});
     }
 

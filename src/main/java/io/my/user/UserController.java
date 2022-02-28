@@ -1,17 +1,19 @@
 package io.my.user;
 
 import io.my.base.annotation.Logger;
+import io.my.base.payload.BaseExtentionResponse;
 import io.my.base.payload.BaseResponse;
 import io.my.user.payload.request.FindEmailRequest;
 import io.my.user.payload.request.JoinRequest;
 import io.my.user.payload.request.LoginRequest;
-import io.my.user.payload.response.FindEmailResponse;
 import io.my.user.payload.response.LoginResponse;
 import io.my.user.payload.response.SearchUserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -21,26 +23,26 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public Mono<LoginResponse> login(
+    public Mono<BaseExtentionResponse<LoginResponse>> login(
             @RequestBody LoginRequest requestBody) {
         return userService.login(requestBody);
     }
 
     @PostMapping("/join")
-    public Mono<LoginResponse> join(
+    public Mono<BaseExtentionResponse<LoginResponse>> join(
             @RequestBody JoinRequest requestBody) {
         return userService.join(requestBody);
     }
 
     @Logger
     @GetMapping("/social/login")
-    public Mono<LoginResponse> socialLogin(@RequestParam(value = "email") String email) {
+    public Mono<BaseExtentionResponse<LoginResponse>> socialLogin(@RequestParam(value = "email") String email) {
         return userService.socialLogin(email);
     }
 
     @Logger
     @PostMapping("/social/join")
-    public Mono<LoginResponse> socialJoin(@RequestBody JoinRequest requesetBody) {
+    public Mono<BaseExtentionResponse<LoginResponse>> socialJoin(@RequestBody JoinRequest requesetBody) {
         return userService.socialJoin(requesetBody);
     }
 
@@ -52,7 +54,7 @@ public class UserController {
 
     @Logger
     @GetMapping("/find/email")
-    public Mono<FindEmailResponse> findEmail(@RequestParam("email") String email) {
+    public Mono<BaseExtentionResponse<String>> findEmail(@RequestParam("email") String email) {
         return userService.findEmail(email);
     }
 
@@ -64,11 +66,11 @@ public class UserController {
 
     @Logger
     @GetMapping("/search")
-    public Mono<SearchUserResponse> searchUser(
+    public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUser(
             @RequestParam(name = "search", required = false) String search,
             @RequestParam(name = "searchType", defaultValue = "0", required = false) int type) {
 
-        Mono<SearchUserResponse> responseMono;
+        Mono<BaseExtentionResponse<List<SearchUserResponse>>> responseMono;
 
         if (type == 0) responseMono = userService.searchUserByName(search);
         else responseMono = userService.searchUserByNickname(search);

@@ -1,13 +1,17 @@
 package io.my.college.payload.response;
 
 import io.my.base.payload.BaseResponse;
-import io.my.college.payload.CollegeIdAndName;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Getter @Setter
-public class CollegeSearchResponse extends BaseResponse {
-    private List<CollegeIdAndName> list;
+@NoArgsConstructor
+@AllArgsConstructor
+public class CollegeSearchResponse {
+    private Long id;
+    private String name;
 }

@@ -2,7 +2,7 @@ package io.my.restdocs;
 
 import io.my.base.base.RestDocAttributes;
 import io.my.base.base.RestdocsBase;
-import io.my.college.payload.CollegeIdAndName;
+import io.my.base.payload.BaseExtentionResponse;
 import io.my.college.payload.response.CollegeSearchResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,19 +24,19 @@ class CollegeRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("CollegeSearch Controller")
     void collegeSearch() {
-        CollegeSearchResponse responseBody = new CollegeSearchResponse();
-        List<CollegeIdAndName> list = new ArrayList<>();
-        CollegeIdAndName firstEntity = new CollegeIdAndName();
+        BaseExtentionResponse<List<CollegeSearchResponse>> responseBody = new BaseExtentionResponse<>();
+        List<CollegeSearchResponse> list = new ArrayList<>();
+        CollegeSearchResponse firstEntity = new CollegeSearchResponse();
         firstEntity.setId(1L);
         firstEntity.setName("서울대학교");
-        CollegeIdAndName secondEntity = new CollegeIdAndName();
+        CollegeSearchResponse secondEntity = new CollegeSearchResponse();
         secondEntity.setId(2L);
         secondEntity.setName("고려대학교");
 
         list.add(firstEntity);
         list.add(secondEntity);
 
-        responseBody.setList(list);
+        responseBody.setReturnValue(list);
 
         Mockito.when(collegeService.colleageSearch(Mockito.anyString())).thenReturn(Mono.just(responseBody));
 
@@ -58,11 +58,11 @@ class CollegeRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("list.[].id").description("대학교 번호")
+                        fieldWithPath("returnValue.[].id").description("대학교 번호")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
-                        fieldWithPath("list.[].name").description("대학교 이름")
+                        fieldWithPath("returnValue.[].name").description("대학교 이름")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String"))

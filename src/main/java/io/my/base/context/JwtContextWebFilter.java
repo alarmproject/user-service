@@ -40,7 +40,5 @@ public class JwtContextWebFilter implements WebFilter {
         if (context.getJwt() == null || !jwtUtil.verifyAccessToken(jwt)) throw new JwtException();
 
         context.setUserId(jwtUtil.getUserIdByAccessToken(jwt));
-
-        // TODO Database에서 User 정보를 가져와서 Context에 User 세팅
     }
 }

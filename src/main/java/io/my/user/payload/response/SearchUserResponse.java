@@ -1,13 +1,17 @@
 package io.my.user.payload.response;
 
-import io.my.base.payload.BaseResponse;
-import io.my.user.payload.response.dto.SearchUser;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter @Setter
-public class SearchUserResponse extends BaseResponse {
-    List<SearchUser> list;
+@NoArgsConstructor
+@AllArgsConstructor
+public class SearchUserResponse {
+    private Long id;
+    private String nickname;
+    private String name;
+    private String email;
+    private String fileName;
 }
