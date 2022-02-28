@@ -15,19 +15,31 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     protected Mono<EntityResponse<BaseResponse>> exceptionAdvice(Exception e) {
         e.printStackTrace();
-        return EntityResponse.fromObject(new BaseResponse(1, "Server Error")).status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        return EntityResponse.fromObject(
+                new BaseResponse(
+                        ErrorTypeEnum.SERVER_ERROR.getCode(),
+                        ErrorTypeEnum.SERVER_ERROR.getResult()))
+                .status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     @ExceptionHandler(JwtException.class)
     protected Mono<EntityResponse<BaseResponse>> exceptionAdvice(JwtException e) {
         e.printStackTrace();
-        return EntityResponse.fromObject(new BaseResponse(2, "Don't have jwt or jwt is wrong")).status(HttpStatus.BAD_REQUEST).build();
+        return EntityResponse.fromObject(
+                new BaseResponse(
+                        ErrorTypeEnum.JWT_EXCEPTION.getCode(),
+                        ErrorTypeEnum.JWT_EXCEPTION.getResult()))
+                .status(HttpStatus.BAD_REQUEST).build();
     }
 
     @ExceptionHandler(MailSenderException.class)
     protected Mono<EntityResponse<BaseResponse>> exceptionAdvice(MailSenderException e) {
         e.printStackTrace();
-        return EntityResponse.fromObject(new BaseResponse(3, "Mail Sender is error")).status(HttpStatus.BAD_REQUEST).build();
+        return EntityResponse.fromObject(
+                new BaseResponse(
+                        ErrorTypeEnum.MAIL_EXCEPTION.getCode(),
+                        ErrorTypeEnum.MAIL_EXCEPTION.getResult()))
+                .status(HttpStatus.BAD_REQUEST).build();
     }
 
 }

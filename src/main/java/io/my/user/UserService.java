@@ -3,6 +3,7 @@ package io.my.user;
 import io.my.base.context.JwtContextHolder;
 import io.my.base.entity.User;
 import io.my.base.entity.UserBackupEmail;
+import io.my.base.exception.ErrorTypeEnum;
 import io.my.base.exception.object.DatabaseException;
 import io.my.base.payload.BaseExtentionResponse;
 import io.my.base.payload.BaseResponse;
@@ -53,15 +54,15 @@ public class UserService {
 
     private Mono<BaseExtentionResponse<LoginResponse>> notJoinUser() {
         BaseExtentionResponse<LoginResponse> responseBody = new BaseExtentionResponse<>();
-        responseBody.setResult("가입하지 않은 회원입니다.");
-        responseBody.setCode(1);
+        responseBody.setResult(ErrorTypeEnum.NOT_JOIN_USER.getResult());
+        responseBody.setCode(ErrorTypeEnum.NOT_JOIN_USER.getCode());
         return Mono.just(responseBody);
     }
 
     private Mono<BaseExtentionResponse<LoginResponse>> notEqualsPasswordUser() {
         BaseExtentionResponse<LoginResponse> responseBody = new BaseExtentionResponse<>();
-        responseBody.setResult("비밀번호가 다릅니다.");
-        responseBody.setCode(2);
+        responseBody.setResult(ErrorTypeEnum.WRONG_PASSWORD.getResult());
+        responseBody.setCode(ErrorTypeEnum.WRONG_PASSWORD.getCode());
         return Mono.just(responseBody);
     }
 
@@ -88,8 +89,8 @@ public class UserService {
 
     private BaseExtentionResponse<LoginResponse> failJoin() {
         BaseExtentionResponse<LoginResponse> responseBody = new BaseExtentionResponse<>();
-        responseBody.setResult("회원가입에 실패했습니다.");
-        responseBody.setCode(3);
+        responseBody.setResult(ErrorTypeEnum.FAIL_TO_JOIN.getResult());
+        responseBody.setCode(ErrorTypeEnum.FAIL_TO_JOIN.getCode());
         return responseBody;
     }
 
@@ -106,8 +107,8 @@ public class UserService {
 
     private BaseResponse failRegistFindEmail() {
         BaseResponse responseBody = new BaseResponse();
-        responseBody.setResult("해당 이메일로 등록된 백업용 이메일이 있습니다.");
-        responseBody.setCode(4);
+        responseBody.setResult(ErrorTypeEnum.EXIST_BACKUP_EMAIL.getResult());
+        responseBody.setCode(ErrorTypeEnum.EXIST_BACKUP_EMAIL.getCode());
         return responseBody;
     }
 
@@ -115,7 +116,7 @@ public class UserService {
         return userBackupEmailRepository.findByEmail(email)
                 .flatMap(entity -> userRepository.findById(entity.getUserId()))
                 .map(entity -> {
-                    BaseExtentionResponse responseBody = new BaseExtentionResponse();
+                    BaseExtentionResponse<String> responseBody = new BaseExtentionResponse<>();
                     responseBody.setReturnValue(entity.getEmail());
                     return responseBody;
                 });
@@ -125,13 +126,13 @@ public class UserService {
         return userRepository.findByEmail(email).flatMap(entity -> {
             entity.setPassword(bcryptHash(password));
             return userRepository.save(entity).map(user -> new BaseResponse());
-        }).switchIfEmpty(Mono.just(failChangePassword(email)));
+        }).switchIfEmpty(Mono.just(failChangePassword()));
     }
 
-    private BaseResponse failChangePassword(String email) {
+    private BaseResponse failChangePassword() {
         BaseResponse responseBody = new BaseResponse();
-        responseBody.setResult(email + "로 등록된 회원이 없습니다..");
-        responseBody.setCode(5);
+        responseBody.setResult(ErrorTypeEnum.NOT_EXIST_USER.getResult());
+        responseBody.setCode(ErrorTypeEnum.NOT_EXIST_USER.getCode());
         return responseBody;
     }
 
@@ -182,8 +183,8 @@ public class UserService {
 
     private BaseResponse failChangeImage() {
         BaseResponse responseBody = new BaseResponse();
-        responseBody.setResult("이미지 변경에 실패하였습니다..");
-        responseBody.setCode(5);
+        responseBody.setResult(ErrorTypeEnum.FAIL_TO_CHANGE_IMAGE.getResult());
+        responseBody.setCode(ErrorTypeEnum.FAIL_TO_CHANGE_IMAGE.getCode());
         return responseBody;
     }
 

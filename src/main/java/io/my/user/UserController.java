@@ -59,7 +59,7 @@ public class UserController {
     }
 
     @Logger
-    @PatchMapping("/change/password")
+    @PatchMapping("/password")
     public Mono<BaseResponse> changePassword(@RequestBody LoginRequest requestBody) {
         return userService.changePassword(requestBody.getEmail(), requestBody.getPassword());
     }
