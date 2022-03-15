@@ -1,5 +1,6 @@
 package io.my.base.payload;
 
+import io.my.base.exception.ErrorTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,5 +17,10 @@ public class BaseResponse {
 
     public BaseResponse(String result) {
         this.result = result;
+    }
+
+    public BaseResponse(ErrorTypeEnum errorTypeEnum) {
+        this.code = errorTypeEnum.getCode();
+        this.result = errorTypeEnum.getResult();
     }
 }

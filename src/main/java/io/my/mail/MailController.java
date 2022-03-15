@@ -23,6 +23,6 @@ public class MailController {
             @RequestParam("email") String email) {
         int mailCode = new Random().nextInt(900) + 100;
 
-        return mailService.sendJoinCodeMail(email, mailCode);
+        return this.mailService.sendJoinCodeMail(email, mailCode);
     }
 }

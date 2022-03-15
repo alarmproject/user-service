@@ -525,5 +525,115 @@ class UserRestdocsTest extends RestdocsBase {
                 .consumeWith(createConsumer("/changeimage", requestParametersSnippet, responseFieldsSnippet));
     }
 
+    @Test
+    @DisplayName("닉네 변경 API")
+    void changeNickname() {
+        Mockito.when(userService.changeNickname(Mockito.anyString())).thenReturn(Mono.just(new BaseResponse()));
+
+        RequestParametersSnippet requestParametersSnippet =
+                requestParameters(
+                        parameterWithName("nickname").description("닉네임")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")
+                                )
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+
+        String params = "?nickname=nickname";
+
+        patchWebTestClient("/user/nickname" + params).expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/changenickname", requestParametersSnippet, responseFieldsSnippet));
+    }
+
+    @Test
+    @DisplayName("이메일 중복체크 API")
+    void checkEmail() {
+        Mockito.when(userService.checkEmail(Mockito.anyString())).thenReturn(Mono.just(new BaseExtentionResponse<>(Boolean.FALSE)));
+
+        RequestParametersSnippet requestParametersSnippet =
+                requestParameters(
+                        parameterWithName("email").description("이메일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")
+                                )
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue").description("true: 이미 존재, false: 없는 이메일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean"))
+                );
+
+        String params = "?email=" + this.EMAIL;
+
+        getWebTestClientUnAuth("/user/check/email" + params).expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/checkemail", requestParametersSnippet, responseFieldsSnippet));
+    }
+
+    @Test
+    @DisplayName("닉네임 중복체크 API")
+    void checkNickname() {
+        Mockito.when(userService.checkNickname(Mockito.anyString())).thenReturn(Mono.just(new BaseExtentionResponse<>(Boolean.FALSE)));
+
+        RequestParametersSnippet requestParametersSnippet =
+                requestParameters(
+                        parameterWithName("nickname").description("닉네임")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")
+                                )
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue").description("true: 이미 존재, false: 없는 이메일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean"))
+                );
+
+        String params = "?nickname=nickname";
+
+        getWebTestClientUnAuth("/user/check/nickname" + params).expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/checknickname", requestParametersSnippet, responseFieldsSnippet));
+    }
+
 
 }

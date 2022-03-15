@@ -1,5 +1,6 @@
 package io.my.base.base;
 
+import io.my.active.ActiveService;
 import io.my.base.context.JwtContextWebFilter;
 import io.my.base.util.JwtUtil;
 import io.my.college.CollegeService;
@@ -65,6 +66,9 @@ public class RestdocsBase {
 
     @MockBean
     protected FriendService friendService;
+
+    @MockBean
+    protected ActiveService activeService;
 
     @BeforeEach
     void setUp(ApplicationContext applicationContext,

@@ -1,11 +1,15 @@
 package io.my.friend;
 
+import io.my.active.ActiveContent;
 import io.my.base.context.JwtContextHolder;
+import io.my.base.entity.ActiveHistory;
 import io.my.base.entity.Friend;
 import io.my.base.payload.BaseExtentionResponse;
 import io.my.base.payload.BaseResponse;
 import io.my.base.properties.ServerProperties;
+import io.my.base.repository.ActiveHistoryRepository;
 import io.my.base.repository.FriendRepository;
+import io.my.base.repository.UserRepository;
 import io.my.base.repository.custom.CustomFriendRepository;
 import io.my.friend.payload.response.FriendListResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +22,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class FriendService {
+    private final ActiveHistoryRepository activeHistoryRepository;
     private final CustomFriendRepository customFriendRepository;
     private final FriendRepository friendRepository;
+    private final UserRepository userRepository;
+
     private final ServerProperties serverProperties;
 
     public Mono<BaseExtentionResponse<List<FriendListResponse>>>  getFriends() {
@@ -66,7 +73,27 @@ public class FriendService {
                 entity.setFollowUserId(id);
                 return friendRepository.save(entity);
             })
-            .map(friend -> new BaseResponse())
+            .flatMap(friend -> userRepository.findById(friend.getUserId()))
+            .flatMap(user -> {
+                ActiveHistory entity = new ActiveHistory();
+                entity.setUserId(user.getId());
+
+                String content = ActiveContent.ADDED_FRIEND.getContent();
+                entity.setContent(content.replaceFirst("\\{}", user.getName()));
+
+                return activeHistoryRepository.save(entity);
+            })
+            .flatMap(activeHistory -> userRepository.findById(id))
+            .flatMap(user -> {
+                ActiveHistory entity = new ActiveHistory();
+                entity.setUserId(user.getId());
+
+                String content = ActiveContent.BE_ADDED_FRIEND.getContent();
+                entity.setContent(content.replaceFirst("\\{}", user.getName()));
+
+                return activeHistoryRepository.save(entity);
+            })
+            .map(entity -> new BaseResponse())
             .switchIfEmpty(Mono.just(new BaseResponse(1, "등록 실패")))
         ;
     }

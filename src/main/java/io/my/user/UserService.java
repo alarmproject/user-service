@@ -41,29 +41,19 @@ public class UserService {
             if (rightUser) {
                 return Mono.just(successSocialLogin(user.getId()));
             } else {
-                return notEqualsPasswordUser();
+                return Mono.just(new BaseExtentionResponse<LoginResponse>(ErrorTypeEnum.WRONG_PASSWORD));
             }
-        }).switchIfEmpty(notJoinUser());
+        }).switchIfEmpty(
+                Mono.just(new BaseExtentionResponse<>(ErrorTypeEnum.NOT_JOIN_USER))
+        );
     }
 
     public Mono<BaseExtentionResponse<LoginResponse>> socialLogin(String email) {
         return userRepository.findByEmail(email)
                 .flatMap(user -> Mono.just(successSocialLogin(user.getId())))
-                .switchIfEmpty(notJoinUser());
-    }
-
-    private Mono<BaseExtentionResponse<LoginResponse>> notJoinUser() {
-        BaseExtentionResponse<LoginResponse> responseBody = new BaseExtentionResponse<>();
-        responseBody.setResult(ErrorTypeEnum.NOT_JOIN_USER.getResult());
-        responseBody.setCode(ErrorTypeEnum.NOT_JOIN_USER.getCode());
-        return Mono.just(responseBody);
-    }
-
-    private Mono<BaseExtentionResponse<LoginResponse>> notEqualsPasswordUser() {
-        BaseExtentionResponse<LoginResponse> responseBody = new BaseExtentionResponse<>();
-        responseBody.setResult(ErrorTypeEnum.WRONG_PASSWORD.getResult());
-        responseBody.setCode(ErrorTypeEnum.WRONG_PASSWORD.getCode());
-        return Mono.just(responseBody);
+                .switchIfEmpty(
+                        Mono.just(
+                                new BaseExtentionResponse<>(ErrorTypeEnum.NOT_JOIN_USER)));
     }
 
     public Mono<BaseExtentionResponse<LoginResponse>> join(JoinRequest requestBody) {
@@ -79,19 +69,12 @@ public class UserService {
         return userRepository.save(user).map(entity -> {
             if (entity == null || entity.getId() == null) throw new DatabaseException();
             return successSocialLogin(entity.getId());
-        }).onErrorReturn(failJoin());
+        }).onErrorReturn(new BaseExtentionResponse<>(ErrorTypeEnum.FAIL_TO_JOIN));
     }
 
     private BaseExtentionResponse<LoginResponse> successSocialLogin(Long id) {
         return new BaseExtentionResponse<>(
                 new LoginResponse(id, jwtUtil.createAccessToken(id)));
-    }
-
-    private BaseExtentionResponse<LoginResponse> failJoin() {
-        BaseExtentionResponse<LoginResponse> responseBody = new BaseExtentionResponse<>();
-        responseBody.setResult(ErrorTypeEnum.FAIL_TO_JOIN.getResult());
-        responseBody.setCode(ErrorTypeEnum.FAIL_TO_JOIN.getCode());
-        return responseBody;
     }
 
     public Mono<BaseResponse> registFindEmail(String email) {
@@ -101,15 +84,8 @@ public class UserService {
             entity.setUserId(context.getUserId());
             return userBackupEmailRepository.save(entity)
                     .map(e -> new BaseResponse())
-                    .onErrorReturn(failRegistFindEmail());
+                    .onErrorReturn(new BaseResponse(ErrorTypeEnum.EXIST_BACKUP_EMAIL));
         });
-    }
-
-    private BaseResponse failRegistFindEmail() {
-        BaseResponse responseBody = new BaseResponse();
-        responseBody.setResult(ErrorTypeEnum.EXIST_BACKUP_EMAIL.getResult());
-        responseBody.setCode(ErrorTypeEnum.EXIST_BACKUP_EMAIL.getCode());
-        return responseBody;
     }
 
     public Mono<BaseExtentionResponse<String>> findEmail(String email) {
@@ -126,14 +102,7 @@ public class UserService {
         return userRepository.findByEmail(email).flatMap(entity -> {
             entity.setPassword(bcryptHash(password));
             return userRepository.save(entity).map(user -> new BaseResponse());
-        }).switchIfEmpty(Mono.just(failChangePassword()));
-    }
-
-    private BaseResponse failChangePassword() {
-        BaseResponse responseBody = new BaseResponse();
-        responseBody.setResult(ErrorTypeEnum.NOT_EXIST_USER.getResult());
-        responseBody.setCode(ErrorTypeEnum.NOT_EXIST_USER.getCode());
-        return responseBody;
+        }).switchIfEmpty(Mono.just(new BaseResponse(ErrorTypeEnum.FAIL_TO_CHANGE_NICKNAME)));
     }
 
     private boolean checkBcrypt(String password, String savePassword) {
@@ -147,7 +116,6 @@ public class UserService {
 
     public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUserByName(String name) {
         return searchUser(customUserRepository.findUserByName(name));
-
     }
 
     public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUserByNickname(String nickname) {
@@ -178,15 +146,30 @@ public class UserService {
                     entity.setImageId(id);
                     return userRepository.save(entity).map(user -> new BaseResponse());
                 })
-                .switchIfEmpty(Mono.just(failChangeImage()));
+                .switchIfEmpty(Mono.just(new BaseResponse(ErrorTypeEnum.FAIL_TO_CHANGE_IMAGE)));
     }
 
-    private BaseResponse failChangeImage() {
-        BaseResponse responseBody = new BaseResponse();
-        responseBody.setResult(ErrorTypeEnum.FAIL_TO_CHANGE_IMAGE.getResult());
-        responseBody.setCode(ErrorTypeEnum.FAIL_TO_CHANGE_IMAGE.getCode());
-        return responseBody;
+    public Mono<BaseResponse> changeNickname(String nickname) {
+        return JwtContextHolder.getMonoUserId()
+                .flatMap(userRepository::findById)
+                .flatMap(entity -> {
+                    entity.setNickname(nickname);
+                    return userRepository.save(entity).map(user -> new BaseResponse());
+                })
+                .switchIfEmpty(Mono.just(new BaseResponse(ErrorTypeEnum.FAIL_TO_CHANGE_NICKNAME)));
     }
 
+    public Mono<BaseExtentionResponse<Boolean>> checkEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> new BaseExtentionResponse<>(Boolean.TRUE))
+                .switchIfEmpty(Mono.just(new BaseExtentionResponse<>(Boolean.FALSE)))
+                ;
+    }
 
+    public Mono<BaseExtentionResponse<Boolean>> checkNickname(String nickname) {
+        return userRepository.findByNickname(nickname)
+                .map(user -> new BaseExtentionResponse<>(Boolean.TRUE))
+                .switchIfEmpty(Mono.just(new BaseExtentionResponse<>(Boolean.FALSE)))
+                ;
+    }
 }

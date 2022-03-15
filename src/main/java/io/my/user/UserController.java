@@ -9,13 +9,11 @@ import io.my.user.payload.request.LoginRequest;
 import io.my.user.payload.response.LoginResponse;
 import io.my.user.payload.response.SearchUserResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -59,12 +57,6 @@ public class UserController {
     }
 
     @Logger
-    @PatchMapping("/password")
-    public Mono<BaseResponse> changePassword(@RequestBody LoginRequest requestBody) {
-        return userService.changePassword(requestBody.getEmail(), requestBody.getPassword());
-    }
-
-    @Logger
     @GetMapping("/search")
     public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUser(
             @RequestParam(name = "search", required = false) String search,
@@ -79,10 +71,33 @@ public class UserController {
     }
 
     @Logger
+    @PatchMapping("/password")
+    public Mono<BaseResponse> changePassword(@RequestBody LoginRequest requestBody) {
+        return userService.changePassword(requestBody.getEmail(), requestBody.getPassword());
+    }
+
+    @Logger
     @PatchMapping("/image")
     public Mono<BaseResponse> changeImage(@RequestParam("id") Long id) {
         return userService.changeImage(id);
     }
+
+    @Logger
+    @PatchMapping("/nickname")
+    public Mono<BaseResponse> changeImage(@RequestParam("nickname") String nickname) {
+        return userService.changeNickname(nickname);
+    }
+
+    @GetMapping("/check/email")
+    public Mono<BaseExtentionResponse<Boolean>> checkEmail(@RequestParam("email") String email) {
+        return userService.checkEmail(email);
+    }
+
+    @GetMapping("/check/nickname")
+    public Mono<BaseExtentionResponse<Boolean>> checkNickname(@RequestParam("nickname") String nickname) {
+        return userService.checkNickname(nickname);
+    }
+
 
 
 }

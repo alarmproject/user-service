@@ -11,13 +11,14 @@ public enum ErrorTypeEnum {
     WRONG_PASSWORD(102, "비밀번호가 다릅니다."),
     FAIL_TO_JOIN(103, "회원가입에 실패했습니다."),
     EXIST_BACKUP_EMAIL(104, "해당 이메일로 등록된 백업용 이메일이 있습니다."),
-    NOT_EXIST_USER(105, "해당 이메일로 등록된 회원이 없습니다."),
+    FAIL_TO_CHANGE_PASSWORD(105, "비밀번호 변경에 실패했습니다."),
     FAIL_TO_CHANGE_IMAGE(106, "이미지 변경에 실패했습니다."),
+    FAIL_TO_CHANGE_NICKNAME(107, "닉네임 변경에 실패했습니다."),
 
     ;
 
-    private Integer code;
-    private String result;
+    private final Integer code;
+    private final String result;
 
     ErrorTypeEnum(Integer code, String result) {
         this.code = code;

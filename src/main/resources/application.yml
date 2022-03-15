@@ -27,6 +27,8 @@ security:
       - GET /user/find/email
       - GET /college/list
       - PATCH /user/password
+      - GET /user/check/email
+      - GET /user/check/nickname
 
 mail:
   username: universitycafeterialife@gmail.com

@@ -29,21 +29,27 @@ public class MailService {
                 "<div style='margin-top: 10px'>이 메일은 발신 전용 메일입니다.</div>";
 
         return Mono.fromCallable(() -> {
-            sendMail(email, subject, text);
+            this.sendMail(email, subject, text);
             return new BaseExtentionResponse<>(mailCode);
         }).doOnError(throwable -> {throw new MailSenderException();});
     }
 
     private void sendMail(String email, String subject, String text) throws Exception {
-        String username = mailProperties.getUsername();
-        String password = mailProperties.getPassword();
+        InternetAddress[] toAddr = new InternetAddress[1];
+        toAddr[0] = new InternetAddress(email);
+        this.sendMail(toAddr, subject, text);
+    }
+
+    private void sendMail(InternetAddress[] toAddr, String subject, String text) {
+        String username = this.mailProperties.getUsername();
+        String password = this.mailProperties.getPassword();
 
         Properties properties = new Properties();
-        properties.put("mail.smtp.host", mailProperties.getSmtpHost());
-        properties.put("mail.smtp.port", mailProperties.getSmtpPort());
-        properties.put("mail.smtp.auth", mailProperties.getSmtpAuth());
-        properties.put("mail.smtp.socketFactory.port", mailProperties.getSmtpSocketFactoryPort());
-        properties.put("mail.smtp.socketFactory.class", mailProperties.getSmtpSocketFactoryClass());
+        properties.put("mail.smtp.host", this.mailProperties.getSmtpHost());
+        properties.put("mail.smtp.port", this.mailProperties.getSmtpPort());
+        properties.put("mail.smtp.auth", this.mailProperties.getSmtpAuth());
+        properties.put("mail.smtp.socketFactory.port", this.mailProperties.getSmtpSocketFactoryPort());
+        properties.put("mail.smtp.socketFactory.class", this.mailProperties.getSmtpSocketFactoryClass());
 
         Session session = Session.getInstance(properties,
                 new javax.mail.Authenticator() {
@@ -55,15 +61,18 @@ public class MailService {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("universitycafeterialife"));
+
             message.setRecipients(
                     Message.RecipientType.TO,
-                    InternetAddress.parse(email)
+                    toAddr
             );
+
             message.setSubject(subject);
             message.setContent(text, "text/html; charset=utf-8");
             Transport.send(message);
         } catch(MessagingException e) {
             throw new RuntimeException();
         }
+
     }
 }
