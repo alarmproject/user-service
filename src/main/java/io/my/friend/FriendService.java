@@ -18,6 +18,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @RequiredArgsConstructor
@@ -99,9 +100,21 @@ public class FriendService {
     }
 
     public Mono<BaseResponse> removeFriend(Long id) {
+        AtomicReference<Long> userIdLong = new AtomicReference<>(0L);
+
         return JwtContextHolder.getMonoUserId()
-            .flatMap(userId -> friendRepository.deleteByUserIdAndFollowUserId(userId, id))
-            .map(o -> new BaseResponse())
+            .flatMap(userId -> {
+                userIdLong.set(userId);
+                return friendRepository.deleteByUserIdAndFollowUserId(userId, id);
+            })
+            .then(userRepository.findById(id))
+            .flatMap(user -> {
+                ActiveHistory entity = new ActiveHistory();
+                entity.setUserId(userIdLong.get());
+                entity.setContent(ActiveContent.DELETED_FRIEND.getContent().replaceAll("\\{}", user.getName()));
+                return activeHistoryRepository.save(entity);
+            })
+            .map(entity -> new BaseResponse())
             .switchIfEmpty(Mono.just(new BaseResponse()))
         ;
     }
