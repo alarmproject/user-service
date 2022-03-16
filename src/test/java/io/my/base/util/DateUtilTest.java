@@ -19,7 +19,7 @@ class DateUtilTest {
         log.info("firstUnixTime: {}", firstUnixTime);
         log.info("secondUnixTime: {}", secondUnixTime);
 
-        assertTrue(firstUnixTime < secondUnixTime);
+        assertTrue(firstUnixTime <= secondUnixTime);
     }
 
     @Test
