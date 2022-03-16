@@ -1,6 +1,7 @@
 package io.my.active;
 
 import io.my.active.payload.response.ActiveHistoryResponse;
+import io.my.base.annotation.Logger;
 import io.my.base.payload.BaseExtentionPagingResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import java.util.List;
 public class ActiveController {
     private final ActiveService activeService;
 
+    @Logger
     @GetMapping("/history")
     public Mono<BaseExtentionPagingResponse<List<ActiveHistoryResponse>>> findActiveHistory(
             @RequestParam(name = "id", required = false) Long id) {
