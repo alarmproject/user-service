@@ -2,6 +2,7 @@ package io.my.base.base;
 
 import io.my.active.ActiveService;
 import io.my.base.context.JwtContextWebFilter;
+import io.my.base.util.DateUtil;
 import io.my.base.util.JwtUtil;
 import io.my.college.CollegeService;
 import io.my.friend.FriendService;
@@ -51,6 +52,9 @@ public class RestdocsBase {
 
     @Autowired
     protected JwtUtil jwtUtil;
+
+    @Autowired
+    protected DateUtil dateUtil;
 
     @Autowired
     protected JwtContextWebFilter jwtContextWebFilter;

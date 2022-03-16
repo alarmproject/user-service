@@ -8,6 +8,7 @@ import io.my.base.payload.BaseExtentionResponse;
 import io.my.base.payload.BaseResponse;
 import io.my.base.repository.ActiveHistoryRepository;
 import io.my.base.repository.custom.CustomActiveHistoryRepository;
+import io.my.base.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -17,6 +18,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ActiveService {
+    private final DateUtil dateUtil;
     private final CustomActiveHistoryRepository customActiveHistoryRepository;
 
     public Mono<BaseExtentionPagingResponse<List<ActiveHistoryResponse>>> findActiveHistory(Long id) {
@@ -28,8 +30,12 @@ public class ActiveService {
             ActiveHistoryResponse response = new ActiveHistoryResponse();
             response.setContent(entity.getContent());
             response.setId(entity.getId());
-            response.setModDateTime(entity.getModDateTime());
-            response.setRegDateTime(entity.getRegDateTime());
+            response.setModDateTime(
+                    dateUtil.localDateTimeToUnixTime(entity.getModDateTime())
+            );
+            response.setRegDateTime(
+                    dateUtil.localDateTimeToUnixTime(entity.getRegDateTime())
+            );
             return response;
         })
         .collectList()

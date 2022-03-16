@@ -31,8 +31,8 @@ class ActiveHistoryRestdocsTest extends RestdocsBase {
             ActiveHistoryResponse response = new ActiveHistoryResponse();
             response.setId(index);
             response.setContent("수업 ABC" + index + " 의 시간이 변경되었습니다.");
-            response.setRegDateTime(LocalDateTime.now());
-            response.setModDateTime(LocalDateTime.now());
+            response.setRegDateTime(dateUtil.localDateTimeToUnixTime(LocalDateTime.now()));
+            response.setModDateTime(dateUtil.localDateTimeToUnixTime(LocalDateTime.now()));
 
             list.add(response);
         }
@@ -75,11 +75,11 @@ class ActiveHistoryRestdocsTest extends RestdocsBase {
                         fieldWithPath("returnValue.[].regDateTime").description("생성 시각")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("LocalDateTime")),
+                                        RestDocAttributes.format("UnixTime")),
                         fieldWithPath("returnValue.[].modDateTime").description("수정 시각")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("LocalDateTime"))
+                                        RestDocAttributes.format("UnixTime"))
                 );
 
         String params = "?id=15";
