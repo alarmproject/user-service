@@ -20,15 +20,16 @@ public class CustomActiveHistoryRepository {
                 "FROM " +
                 "active_history " +
                 "WHERE " +
-                "id < :id " +
-                "AND user_id = :userId " +
+                ((id != null && id != 0) ? ("id < :id AND ") : "") +
+                "user_id = :userId " +
                 "ORDER BY id DESC LIMIT :limit"
                 ;
 
         DatabaseClient.GenericExecuteSpec sql = client.sql(query);
 
+        if (id != null && id != 0) sql = sql.bind("id", id);
+
         return sql
-                .bind("id", id)
                 .bind("userId", userId)
                 .bind("limit", limit).map((row, rowMetadata) -> {
                     ActiveHistory entity = new ActiveHistory();

@@ -22,9 +22,7 @@ public class ActiveService {
     public Mono<BaseExtentionPagingResponse<List<ActiveHistoryResponse>>> findActiveHistory(Long id) {
         return JwtContextHolder.getMonoUserId().flatMapMany(userId -> {
             Integer limit = 10;
-            return customActiveHistoryRepository.findActiveHistoryPaging(
-                    (id == null || id == 0) ? Long.MAX_VALUE : id, userId, limit
-            );
+            return customActiveHistoryRepository.findActiveHistoryPaging(id, userId, limit);
         })
         .map(entity -> {
             ActiveHistoryResponse response = new ActiveHistoryResponse();
