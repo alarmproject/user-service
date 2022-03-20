@@ -89,6 +89,7 @@ class UserRestdocsTest extends RestdocsBase {
         requestBody.setType((byte) 0);
         requestBody.setCollegeId(1L);
         requestBody.setCollegeEmail(EMAIL);
+        requestBody.setClassOf(13);
 
         BaseExtentionResponse<LoginResponse> responseBody =
                 new BaseExtentionResponse<>(
@@ -130,6 +131,10 @@ class UserRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
+                        fieldWithPath("classOf").description("학번").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
                         fieldWithPath("id").description("고유번호(요청 파라미터 아님)").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
@@ -223,6 +228,7 @@ class UserRestdocsTest extends RestdocsBase {
         requestBody.setType((byte) 0);
         requestBody.setCollegeId(1L);
         requestBody.setCollegeEmail(EMAIL);
+        requestBody.setClassOf(13);
 
         BaseExtentionResponse<LoginResponse> responseBody =
                 new BaseExtentionResponse<>(
@@ -264,6 +270,10 @@ class UserRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
+                        fieldWithPath("classOf").description("학번").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
                         fieldWithPath("id").description("고유번호(요청 파라미터 아님)").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),

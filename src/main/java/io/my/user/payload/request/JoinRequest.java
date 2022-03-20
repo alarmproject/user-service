@@ -14,6 +14,7 @@ public class JoinRequest {
     private String email;
     private String nickname;
     private String password;
+    private Integer classOf;
 
     private String deviceToken;
     private String collegeEmail;

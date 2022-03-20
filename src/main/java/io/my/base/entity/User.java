@@ -22,6 +22,7 @@ public class User extends BaseEntity {
     private String email;
     private String deviceToken;
     private String collegeEmail;
+    private Integer classOf;
 
     private Long imageId;
     private Long collegeId;

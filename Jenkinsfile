@@ -6,9 +6,9 @@ pipeline {
         maven 'mvn'
     }
 
-    triggers {
-        pollSCM('*/3 * * * *')
-    }
+//     triggers {
+//         pollSCM('*/3 * * * *')
+//     }
 
     stages {
         // 레포지토리를 다운로드 받음
