@@ -1,6 +1,7 @@
 package io.my.base.repository.custom;
 
 import io.my.base.entity.ActiveHistory;
+import io.my.base.repository.query.CustomActiveHistoryQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
@@ -11,27 +12,11 @@ import java.time.LocalDateTime;
 @Repository
 @RequiredArgsConstructor
 public class CustomActiveHistoryRepository {
-    private final DatabaseClient client;
+    private final CustomActiveHistoryQuery customActiveHistoryQuery;
 
     public Flux<ActiveHistory> findActiveHistoryPaging(Long id, Long userId, Integer limit) {
-        String query =
-                "SELECT " +
-                "* " +
-                "FROM " +
-                "active_history " +
-                "WHERE " +
-                ((id != null && id != 0) ? ("id < :id AND ") : "") +
-                "user_id = :userId " +
-                "ORDER BY id DESC LIMIT :limit"
-                ;
-
-        DatabaseClient.GenericExecuteSpec sql = client.sql(query);
-
-        if (id != null && id != 0) sql = sql.bind("id", id);
-
-        return sql
-                .bind("userId", userId)
-                .bind("limit", limit).map((row, rowMetadata) -> {
+        return this.customActiveHistoryQuery.findActiveHistoryPaging(id, userId, limit)
+                .map((row, rowMetadata) -> {
                     ActiveHistory entity = new ActiveHistory();
 
                     entity.setId(row.get("id", Long.class));

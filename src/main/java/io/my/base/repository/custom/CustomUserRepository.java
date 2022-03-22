@@ -2,6 +2,7 @@ package io.my.base.repository.custom;
 
 import io.my.base.entity.Image;
 import io.my.base.entity.User;
+import io.my.base.repository.query.CustomUserQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
@@ -10,36 +11,18 @@ import reactor.core.publisher.Flux;
 @Repository
 @RequiredArgsConstructor
 public class CustomUserRepository {
-    private final DatabaseClient client;
+    private final CustomUserQuery customUserQuery;
 
     public Flux<User> findUserByName(String name) {
-        String query =
-                "SELECT " +
-                "u.id, u.name, u.nickname, u.email, i.file_name " +
-                "FROM " +
-                "user as u " +
-                "LEFT JOIN image as i " +
-                "ON u.image_id = i.id " +
-                "WHERE u.name LIKE CONCAT('%', :name, '%')"
-        ;
-        return findUserSearch("name", name, query);
+        return findUserSearch(this.customUserQuery.findUserByName(name));
     }
 
     public Flux<User> findUserByNickname(String nickname) {
-        String query =
-                "SELECT " +
-                        "u.id, u.name, u.nickname, u.email, i.file_name " +
-                        "FROM " +
-                        "user as u " +
-                        "LEFT JOIN image as i " +
-                        "ON u.image_id = i.id " +
-                        "WHERE u.nickname LIKE CONCAT('%', :nickname, '%')"
-                ;
-        return findUserSearch("nickname", nickname, query);
+        return findUserSearch(this.customUserQuery.findUserByNickname(nickname));
     }
 
-    private Flux<User> findUserSearch(String searchName, String search, String query) {
-        return client.sql(query).bind(searchName, search).map((row, rowMetadata) -> {
+    private Flux<User> findUserSearch(DatabaseClient.GenericExecuteSpec spec) {
+        return spec.map((row, rowMetadata) -> {
             User user = new User();
             user.setName(row.get("name", String.class));
             user.setId(row.get("id", Long.class));
