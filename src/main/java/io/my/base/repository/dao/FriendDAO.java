@@ -1,21 +1,20 @@
-package io.my.base.repository.custom;
+package io.my.base.repository.dao;
 
 import io.my.base.entity.Friend;
 import io.my.base.entity.Image;
 import io.my.base.entity.User;
-import io.my.base.repository.query.CustomFriendQuery;
+import io.my.base.repository.query.FriendQuery;
 import lombok.RequiredArgsConstructor;
-import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
 @Repository
 @RequiredArgsConstructor
-public class CustomFriendRepository {
-    private final CustomFriendQuery customFriendQuery;
+public class FriendDAO {
+    private final FriendQuery friendQuery;
 
     public Flux<Friend> findFriendListByUserId(Long userId) {
-        return this.customFriendQuery.findFriendListByUserId(userId)
+        return this.friendQuery.findFriendListByUserId(userId)
                 .map((row, rowMetadata) -> {
                     Friend friend = new Friend();
                     User user = new User();

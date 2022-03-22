@@ -8,7 +8,7 @@ import reactor.core.publisher.Flux;
 
 @Component
 @RequiredArgsConstructor
-public class CustomFriendQuery {
+public class FriendQuery {
     private final DatabaseClient client;
 
     public DatabaseClient.GenericExecuteSpec findFriendListByUserId(Long userId) {

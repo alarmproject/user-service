@@ -10,7 +10,7 @@ import io.my.base.properties.ServerProperties;
 import io.my.base.repository.ActiveHistoryRepository;
 import io.my.base.repository.FriendRepository;
 import io.my.base.repository.UserRepository;
-import io.my.base.repository.custom.CustomFriendRepository;
+import io.my.base.repository.dao.FriendDAO;
 import io.my.friend.payload.response.FriendListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequiredArgsConstructor
 public class FriendService {
     private final ActiveHistoryRepository activeHistoryRepository;
-    private final CustomFriendRepository customFriendRepository;
+    private final FriendDAO friendDAO;
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
 
@@ -32,7 +32,7 @@ public class FriendService {
 
     public Mono<BaseExtentionResponse<List<FriendListResponse>>>  getFriends() {
         return JwtContextHolder.getMonoUserId()
-                .flatMap(userId -> customFriendRepository.findFriendListByUserId(userId).collectList())
+                .flatMap(userId -> friendDAO.findFriendListByUserId(userId).collectList())
                 .map(friendList -> {
                     List<FriendListResponse> list = changeEntityToResponse(friendList);
                     return new BaseExtentionResponse<>(list);

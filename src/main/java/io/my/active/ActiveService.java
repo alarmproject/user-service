@@ -4,10 +4,7 @@ package io.my.active;
 import io.my.active.payload.response.ActiveHistoryResponse;
 import io.my.base.context.JwtContextHolder;
 import io.my.base.payload.BaseExtentionPagingResponse;
-import io.my.base.payload.BaseExtentionResponse;
-import io.my.base.payload.BaseResponse;
-import io.my.base.repository.ActiveHistoryRepository;
-import io.my.base.repository.custom.CustomActiveHistoryRepository;
+import io.my.base.repository.dao.ActiveHistoryDAO;
 import io.my.base.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,12 +16,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ActiveService {
     private final DateUtil dateUtil;
-    private final CustomActiveHistoryRepository customActiveHistoryRepository;
+    private final ActiveHistoryDAO activeHistoryDAO;
 
     public Mono<BaseExtentionPagingResponse<List<ActiveHistoryResponse>>> findActiveHistory(Long id) {
         return JwtContextHolder.getMonoUserId().flatMapMany(userId -> {
             Integer limit = 10;
-            return customActiveHistoryRepository.findActiveHistoryPaging(id, userId, limit);
+            return activeHistoryDAO.findActiveHistoryPaging(id, userId, limit);
         })
         .map(entity -> {
             ActiveHistoryResponse response = new ActiveHistoryResponse();

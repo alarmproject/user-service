@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class CustomUserQuery {
+public class UserQuery {
     private final DatabaseClient client;
 
     public DatabaseClient.GenericExecuteSpec findUserByName(String name) {

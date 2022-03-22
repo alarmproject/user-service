@@ -10,7 +10,7 @@ import io.my.base.payload.BaseResponse;
 import io.my.base.properties.ServerProperties;
 import io.my.base.repository.UserBackupEmailRepository;
 import io.my.base.repository.UserRepository;
-import io.my.base.repository.custom.CustomUserRepository;
+import io.my.base.repository.dao.UserDAO;
 import io.my.base.util.JwtUtil;
 import io.my.user.payload.request.JoinRequest;
 import io.my.user.payload.request.LoginRequest;
@@ -32,7 +32,7 @@ public class UserService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final ServerProperties serverProperties;
-    private final CustomUserRepository customUserRepository;
+    private final UserDAO userDAO;
     private final UserBackupEmailRepository userBackupEmailRepository;
 
     public Mono<BaseExtentionResponse<LoginResponse>> login(LoginRequest requestBody) {
@@ -115,11 +115,11 @@ public class UserService {
 
 
     public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUserByName(String name) {
-        return searchUser(customUserRepository.findUserByName(name));
+        return searchUser(userDAO.findUserByName(name));
     }
 
     public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUserByNickname(String nickname) {
-        return searchUser(customUserRepository.findUserByNickname(nickname));
+        return searchUser(userDAO.findUserByNickname(nickname));
     }
 
     public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUser(Flux<User> flux) {

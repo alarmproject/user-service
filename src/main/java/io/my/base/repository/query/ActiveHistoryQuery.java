@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CustomActiveHistoryQuery {
+public class ActiveHistoryQuery {
     private final DatabaseClient client;
 
     public DatabaseClient.GenericExecuteSpec findActiveHistoryPaging(Long id, Long userId, Integer limit) {
