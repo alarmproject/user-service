@@ -19,6 +19,7 @@ public class JoinRequest {
     private String deviceToken;
     private String collegeEmail;
     private Long collegeId;
+    private Long imageId;
 
     public Integer getId() { return null; }
 }

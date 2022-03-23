@@ -90,6 +90,7 @@ class UserRestdocsTest extends RestdocsBase {
         requestBody.setCollegeId(1L);
         requestBody.setCollegeEmail(EMAIL);
         requestBody.setClassOf(13);
+        requestBody.setImageId(1L);
 
         BaseExtentionResponse<LoginResponse> responseBody =
                 new BaseExtentionResponse<>(
@@ -132,6 +133,10 @@ class UserRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("classOf").description("학번").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("imageId").description("이미지 번호").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
@@ -229,6 +234,7 @@ class UserRestdocsTest extends RestdocsBase {
         requestBody.setCollegeId(1L);
         requestBody.setCollegeEmail(EMAIL);
         requestBody.setClassOf(13);
+        requestBody.setImageId(1L);
 
         BaseExtentionResponse<LoginResponse> responseBody =
                 new BaseExtentionResponse<>(
@@ -271,6 +277,10 @@ class UserRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("classOf").description("학번").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("imageId").description("이미지 번호").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
