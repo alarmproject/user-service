@@ -32,7 +32,8 @@ security:
 
 mail:
   username: universitycafeterialife@gmail.com
-  password: unicafelife12
+#  password: unicafelife12
+  password: yznnvsgzouymtase
   smtp-host: smtp.gmail.com
   smtp-port: 465
   smtp-auth: true
