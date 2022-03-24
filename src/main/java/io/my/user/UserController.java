@@ -88,14 +88,22 @@ public class UserController {
         return userService.changeNickname(nickname);
     }
 
+    @Logger
     @GetMapping("/check/email")
     public Mono<BaseExtentionResponse<Boolean>> checkEmail(@RequestParam("email") String email) {
         return userService.checkEmail(email);
     }
 
+    @Logger
     @GetMapping("/check/nickname")
     public Mono<BaseExtentionResponse<Boolean>> checkNickname(@RequestParam("nickname") String nickname) {
         return userService.checkNickname(nickname);
+    }
+
+    @Logger
+    @GetMapping("/image/{id}")
+    public Mono<BaseExtentionResponse<String>> getImageLink(@PathVariable("id") Long userId) {
+        return userService.getImageLink(userId);
     }
 
 

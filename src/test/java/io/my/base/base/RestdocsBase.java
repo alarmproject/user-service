@@ -22,6 +22,7 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.payload.RequestFieldsSnippet;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
+import org.springframework.restdocs.request.PathParametersSnippet;
 import org.springframework.restdocs.request.RequestParametersSnippet;
 import org.springframework.restdocs.request.RequestPartsSnippet;
 import org.springframework.restdocs.snippet.Snippet;
@@ -109,6 +110,10 @@ public class RestdocsBase {
         return this.webTestClient.method(HttpMethod.GET).uri(uri).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).bodyValue(body).exchange();
     }
 
+    protected WebTestClient.ResponseSpec getWebTestClientPathVariable(Object body, String uri) {
+        return this.webTestClient.method(HttpMethod.GET).uri(uri, body).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).exchange();
+    }
+
     protected WebTestClient.ResponseSpec postWebTestClient(Object body, String uri) {
         return this.webTestClient.post().uri(uri).header(HttpHeaders.AUTHORIZATION, authorization).accept(MediaType.APPLICATION_JSON).bodyValue(body).exchange();
     }
@@ -171,6 +176,19 @@ public class RestdocsBase {
                 preprocessResponse(prettyPrint()),
                 defaultRequestHeader,
                 requestFieldsSnippet,
+                responseFieldsSnippet);
+    }
+
+    protected Consumer<EntityExchangeResult<byte[]>> createConsumer(
+            String fileName,
+            PathParametersSnippet pathParametersSnippet,
+            ResponseFieldsSnippet responseFieldsSnippet) {
+        return document(
+                this.getClass().getSimpleName().toLowerCase() + fileName,
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                defaultRequestHeader,
+                pathParametersSnippet,
                 responseFieldsSnippet);
     }
 

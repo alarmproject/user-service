@@ -130,7 +130,7 @@ public class UserService {
                         user.getName(),
                         user.getEmail(),
                         user.getImage() != null ?
-                            serverProperties.getImaegUrl() +
+                            serverProperties.getImageUrl() +
                                     user.getImage().getFileName() : null)
         ).collectList().map(list -> {
             BaseExtentionResponse<List<SearchUserResponse>> responseBody = new BaseExtentionResponse<>();
@@ -172,4 +172,12 @@ public class UserService {
                 .switchIfEmpty(Mono.just(new BaseExtentionResponse<>(Boolean.FALSE)))
                 ;
     }
+
+    public Mono<BaseExtentionResponse<String>> getImageLink(Long id) {
+        return userDAO.findUserImage(id).map(link -> {
+            if (link.equals("")) return new BaseExtentionResponse<>();
+            else return new BaseExtentionResponse<>(link);
+        });
+    }
+
 }

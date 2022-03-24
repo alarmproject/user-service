@@ -10,5 +10,5 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties("server")
 public class ServerProperties {
-    private String imaegUrl;
+    private String imageUrl;
 }

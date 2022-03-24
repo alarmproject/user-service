@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.restdocs.payload.RequestFieldsSnippet;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
+import org.springframework.restdocs.request.PathParametersSnippet;
 import org.springframework.restdocs.request.RequestParametersSnippet;
 import reactor.core.publisher.Mono;
 
@@ -21,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 
 class UserRestdocsTest extends RestdocsBase {
 
@@ -653,6 +653,40 @@ class UserRestdocsTest extends RestdocsBase {
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/checknickname", requestParametersSnippet, responseFieldsSnippet));
+    }
+
+    @Test
+    @DisplayName("사용자 이미지 링크 조회")
+    void getImageLink() {
+        String link = "http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg";
+        Mockito.when(userService.getImageLink(Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(link)));
+
+        PathParametersSnippet pathParametersSnippet = pathParameters(
+                parameterWithName("id").description("유저 번호")
+                        .attributes(
+                                RestDocAttributes.length(0),
+                                RestDocAttributes.format("Integer"))
+        );
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue").description("이미지 주소")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("link"))
+                );
+
+        getWebTestClientPathVariable(1, "/user/image/{id}").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/getimagelink", pathParametersSnippet, responseFieldsSnippet));
     }
 
 

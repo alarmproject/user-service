@@ -35,4 +35,10 @@ public class UserQuery {
         return client.sql(query).bind("nickname", nickname);
     }
 
+    public DatabaseClient.GenericExecuteSpec findUserImage(Long id) {
+        String query = "select i.file_name from `user` u left join image i on u.image_id = i.id where u.id = :id"
+                ;
+        return client.sql(query).bind("id", id);
+    }
+
 }

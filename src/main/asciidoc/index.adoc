@@ -148,6 +148,16 @@ include::{snippets}/userrestdocstest/checknickname/http-response.adoc[]
 include::{snippets}/userrestdocstest/checknickname/curl-request.adoc[]
 
 
+[[resources-getimagelink]]
+==== 사용자 이미지 링크 조회
+
+include::{snippets}/userrestdocstest/getimagelink/path-parameters.adoc[]
+include::{snippets}/userrestdocstest/getimagelink/response-fields.adoc[]
+include::{snippets}/userrestdocstest/getimagelink/http-request.adoc[]
+include::{snippets}/userrestdocstest/getimagelink/http-response.adoc[]
+include::{snippets}/userrestdocstest/getimagelink/curl-request.adoc[]
+
+
 === mail
 
 [[resources-mailcode]]
