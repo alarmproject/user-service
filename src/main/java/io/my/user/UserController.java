@@ -8,6 +8,7 @@ import io.my.user.payload.request.JoinRequest;
 import io.my.user.payload.request.LoginRequest;
 import io.my.user.payload.response.LoginResponse;
 import io.my.user.payload.response.SearchUserResponse;
+import io.my.user.payload.response.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -104,6 +105,12 @@ public class UserController {
     @GetMapping("/image/{id}")
     public Mono<BaseExtentionResponse<String>> getImageLink(@PathVariable("id") Long userId) {
         return userService.getImageLink(userId);
+    }
+    
+    @Logger
+    @GetMapping("/{id}")
+    public Mono<BaseExtentionResponse<UserInfoResponse>> getUserInfo(@PathVariable("id") Long userId) {
+        return userService.getUserInfo(userId);
     }
 
 

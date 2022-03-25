@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class UserQuery {
@@ -41,4 +43,21 @@ public class UserQuery {
         return client.sql(query).bind("id", id);
     }
 
+    public DatabaseClient.GenericExecuteSpec findUserInfo(Long id) {
+        String query =
+                "select " +
+                "u.name " +
+                ", u.nickname " +
+                ", u.email " +
+                ", u.class_of " +
+                ", i.file_name " +
+                ", c.name as college_name " +
+                "from " +
+                "`user` u " +
+                "left join image i on u.image_id = i.id " +
+                "left join college c ON u.college_id = c.id " +
+                "where u.id = :id"
+                ;
+        return client.sql(query).bind("id", id);
+    }
 }

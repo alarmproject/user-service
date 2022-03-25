@@ -16,6 +16,7 @@ import io.my.user.payload.request.JoinRequest;
 import io.my.user.payload.request.LoginRequest;
 import io.my.user.payload.response.LoginResponse;
 import io.my.user.payload.response.SearchUserResponse;
+import io.my.user.payload.response.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -180,4 +181,7 @@ public class UserService {
         });
     }
 
+    public Mono<BaseExtentionResponse<UserInfoResponse>> getUserInfo(Long userId) {
+        return userDAO.findUserInfo(userId).map(BaseExtentionResponse::new);
+    }
 }

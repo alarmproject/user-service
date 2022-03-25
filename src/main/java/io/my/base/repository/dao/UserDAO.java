@@ -4,6 +4,7 @@ import io.my.base.entity.Image;
 import io.my.base.entity.User;
 import io.my.base.properties.ServerProperties;
 import io.my.base.repository.query.UserQuery;
+import io.my.user.payload.response.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
@@ -48,6 +49,24 @@ public class UserDAO {
             String imageLink = row.get("file_name", String.class);
             if (imageLink != null) return serverProperties.getImageUrl() + "?fileName=" +imageLink;
             return "";
+        }).one();
+    }
+
+    public Mono<UserInfoResponse> findUserInfo(Long id) {
+        return this.userQuery.findUserInfo(id).map((row, rowMetadata) -> {
+            String imageUrl = row.get("file_name", String.class);
+
+            if (imageUrl != null)
+                imageUrl = serverProperties.getImageUrl() + "?fileName=" + imageUrl;
+
+            return UserInfoResponse.builder()
+                    .nickname(row.get("nickname", String.class))
+                    .name(row.get("name", String.class))
+                    .email(row.get("email", String.class))
+                    .classOf(row.get("class_of", Integer.class))
+                    .collegeName(row.get("college_name", String.class))
+                    .imageUrl(imageUrl)
+                    .build();
         }).one();
     }
 }

@@ -9,6 +9,7 @@ import io.my.user.payload.request.JoinRequest;
 import io.my.user.payload.request.LoginRequest;
 import io.my.user.payload.response.LoginResponse;
 import io.my.user.payload.response.SearchUserResponse;
+import io.my.user.payload.response.UserInfoResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -687,6 +688,70 @@ class UserRestdocsTest extends RestdocsBase {
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/getimagelink", pathParametersSnippet, responseFieldsSnippet));
+    }
+
+    @Test
+    @DisplayName("사용자 정보 조회")
+    void getUserInfo() {
+        var responseBody = new BaseExtentionResponse<>(
+                UserInfoResponse.builder()
+                        .nickname("nickname")
+                        .name("name")
+                        .email("email")
+                        .classOf(13)
+                        .imageUrl("http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
+                        .collegeName("서울대학교")
+                        .build()
+        );
+
+        Mockito.when(userService.getUserInfo(Mockito.any())).thenReturn(Mono.just(responseBody));
+
+        PathParametersSnippet pathParametersSnippet = pathParameters(
+                parameterWithName("id").description("유저 번호")
+                        .attributes(
+                                RestDocAttributes.length(0),
+                                RestDocAttributes.format("Integer"))
+        );
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.nickname").description("닉네임")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.name").description("이름")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.email").description("이메일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.collegeName").description("학교명")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.classOf").description("학번")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.imageUrl").description("이미지 주소")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String"))
+                );
+
+        getWebTestClientPathVariable(1, "/user/{id}").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/getuserinfo", pathParametersSnippet, responseFieldsSnippet));
     }
 
 
