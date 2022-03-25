@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.Random;
 
@@ -23,6 +24,9 @@ public class MailController {
             @RequestParam("email") String email) {
         int mailCode = new Random().nextInt(900) + 100;
 
-        return this.mailService.sendJoinCodeMail(email, mailCode);
+        Mono.fromCallable(() -> this.mailService.sendJoinCodeMail(email, mailCode))
+                .subscribeOn(Schedulers.boundedElastic()).subscribe();
+
+        return Mono.just(new BaseExtentionResponse<>(mailCode));
     }
 }

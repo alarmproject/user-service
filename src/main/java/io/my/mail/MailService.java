@@ -16,7 +16,7 @@ import java.util.Properties;
 public class MailService {
     private final MailProperties mailProperties;
 
-    public Mono<BaseExtentionResponse<Integer>> sendJoinCodeMail(String email, int mailCode) {
+    public Mono<Void> sendJoinCodeMail(String email, int mailCode) throws Exception {
         String subject = "학식라이프 인증코드입니다.";
         String text =
                 "<div>" +
@@ -27,11 +27,8 @@ public class MailService {
                     " 입니다.</span>" +
                 "</div>" +
                 "<div style='margin-top: 10px'>이 메일은 발신 전용 메일입니다.</div>";
-
-        return Mono.fromCallable(() -> {
-            this.sendMail(email, subject, text);
-            return new BaseExtentionResponse<>(mailCode);
-        }).doOnError(throwable -> {throw new MailSenderException();});
+        this.sendMail(email, subject, text);
+        return Mono.empty();
     }
 
     private void sendMail(String email, String subject, String text) throws Exception {

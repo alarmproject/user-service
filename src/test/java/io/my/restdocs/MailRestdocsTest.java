@@ -19,10 +19,8 @@ class MailRestdocsTest extends RestdocsBase {
 
     @Test
     @DisplayName("인증 코드 전송 API")
-    void sendCode() {
-        BaseExtentionResponse<Integer> responseBody = new BaseExtentionResponse<>(456);
-
-        Mockito.when(mailService.sendJoinCodeMail(Mockito.anyString(), Mockito.anyInt())).thenReturn(Mono.just(responseBody));
+    void sendCode() throws Exception {
+        Mockito.when(mailService.sendJoinCodeMail(Mockito.anyString(), Mockito.anyInt())).thenReturn(Mono.empty());
 
         RequestParametersSnippet requestParametersSnippet =
                 requestParameters(
