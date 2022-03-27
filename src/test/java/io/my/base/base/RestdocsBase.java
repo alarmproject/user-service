@@ -5,8 +5,10 @@ import io.my.base.context.JwtContextWebFilter;
 import io.my.base.util.DateUtil;
 import io.my.base.util.JwtUtil;
 import io.my.college.CollegeService;
+import io.my.department.DepartmentService;
 import io.my.friend.FriendService;
 import io.my.mail.MailService;
+import io.my.professor.ProfessorService;
 import io.my.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -74,6 +76,12 @@ public class RestdocsBase {
 
     @MockBean
     protected ActiveService activeService;
+
+    @MockBean
+    protected DepartmentService departmentService;
+
+    @MockBean
+    protected ProfessorService professorService;
 
     @BeforeEach
     void setUp(ApplicationContext applicationContext,

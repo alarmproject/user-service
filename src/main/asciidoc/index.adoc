@@ -233,3 +233,44 @@ include::{snippets}/activehistoryrestdocstest/activehistory/http-response.adoc[]
 include::{snippets}/activehistoryrestdocstest/activehistory/curl-request.adoc[]
 
 
+=== 학과
+
+[[resources-save-department]]
+==== 학과 등록
+
+include::{snippets}/departmentrestdocstest/savedepartment/request-fields.adoc[]
+include::{snippets}/departmentrestdocstest/savedepartment/response-fields.adoc[]
+include::{snippets}/departmentrestdocstest/savedepartment/http-request.adoc[]
+include::{snippets}/departmentrestdocstest/savedepartment/http-response.adoc[]
+include::{snippets}/departmentrestdocstest/savedepartment/curl-request.adoc[]
+
+[[resources-find-department-list]]
+==== 학과 검색
+
+include::{snippets}/departmentrestdocstest/finddepartmentlist/request-parameters.adoc[]
+include::{snippets}/departmentrestdocstest/finddepartmentlist/response-fields.adoc[]
+include::{snippets}/departmentrestdocstest/finddepartmentlist/http-request.adoc[]
+include::{snippets}/departmentrestdocstest/finddepartmentlist/http-response.adoc[]
+include::{snippets}/departmentrestdocstest/finddepartmentlist/curl-request.adoc[]
+
+
+=== 교수
+
+[[resources-save-professor]]
+==== 교수 등록
+
+include::{snippets}/professorrestdocstest/saveprofessor/request-fields.adoc[]
+include::{snippets}/professorrestdocstest/saveprofessor/response-fields.adoc[]
+include::{snippets}/professorrestdocstest/saveprofessor/http-request.adoc[]
+include::{snippets}/professorrestdocstest/saveprofessor/http-response.adoc[]
+include::{snippets}/professorrestdocstest/saveprofessor/curl-request.adoc[]
+
+[[resources-find-professor-list]]
+==== 교수 검색
+
+include::{snippets}/professorrestdocstest/findprofessorlist/request-parameters.adoc[]
+include::{snippets}/professorrestdocstest/findprofessorlist/response-fields.adoc[]
+include::{snippets}/professorrestdocstest/findprofessorlist/http-request.adoc[]
+include::{snippets}/professorrestdocstest/findprofessorlist/http-response.adoc[]
+include::{snippets}/professorrestdocstest/findprofessorlist/curl-request.adoc[]
+
