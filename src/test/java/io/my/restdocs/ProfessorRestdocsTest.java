@@ -86,6 +86,7 @@ class ProfessorRestdocsTest extends RestdocsBase {
                 .id(2L)
                 .name("이교수")
                 .departmentName("경영학과")
+                .imageUrl("http://mysend.co.kr:8080/image/image?fileName=c91a6281-d9bd-4119-95ac-d57c17c0451a_charactor.jpeg")
                 .build());
         ;
 
