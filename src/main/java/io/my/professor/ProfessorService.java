@@ -3,6 +3,7 @@ package io.my.professor;
 import io.my.base.context.JwtContextHolder;
 import io.my.base.entity.Professor;
 import io.my.base.payload.BaseExtentionResponse;
+import io.my.base.properties.ServerProperties;
 import io.my.base.repository.ProfessorRepository;
 import io.my.base.repository.UserRepository;
 import io.my.base.repository.dao.ProfessorDAO;
@@ -19,6 +20,7 @@ import java.util.List;
 public class ProfessorService {
     private final ProfessorDAO professorDAO;
     private final UserRepository userRepository;
+    private final ServerProperties serverProperties;
     private final ProfessorRepository professorRepository;
 
     public Mono<BaseExtentionResponse<Long>> saveProfessor(SaveProfessorRequest requestBody) {
@@ -28,6 +30,7 @@ public class ProfessorService {
                             .collegeId(user.getCollegeId())
                             .departmentId(requestBody.getDepartmentId())
                             .name(requestBody.getName())
+                            .imageId(requestBody.getImageId())
                             .build();
                     return professorRepository.save(entity);
                 })
@@ -41,6 +44,13 @@ public class ProfessorService {
                             .id(entity.getId())
                             .departmentName(entity.getDepartment().getName())
                             .name(entity.getName())
+                            .imageUrl(
+                                    entity.getImage().getFileName() != null ?
+                                            serverProperties.getImageUrl() +
+                                            serverProperties.getImagePath() +
+                                            entity.getImage().getFileName() :
+                                            null
+                            )
                             .build())
                 .collectList()
                 .map(BaseExtentionResponse::new)

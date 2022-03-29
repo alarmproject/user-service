@@ -13,4 +13,5 @@ public class ProfessorListResponse {
     private Long id;
     private String name;
     private String departmentName;
+    private String imageUrl;
 }

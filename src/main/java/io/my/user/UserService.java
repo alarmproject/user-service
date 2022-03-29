@@ -132,6 +132,7 @@ public class UserService {
                         user.getEmail(),
                         user.getImage() != null ?
                             serverProperties.getImageUrl() +
+                                    serverProperties.getImagePath() +
                                     user.getImage().getFileName() : null)
         ).collectList().map(list -> {
             BaseExtentionResponse<List<SearchUserResponse>> responseBody = new BaseExtentionResponse<>();

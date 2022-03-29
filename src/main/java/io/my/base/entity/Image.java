@@ -1,12 +1,14 @@
 package io.my.base.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Getter @Setter
+@Getter
+@Builder
 @Table("image")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Image extends BaseEntity {
     @Id
     private Long id;

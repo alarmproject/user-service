@@ -56,6 +56,7 @@ public class FriendService {
             if (friend.getFollowUser().getImage() != null) {
                 response.setUserImageUrl(
                         serverProperties.getImageUrl() +
+                                serverProperties.getImagePath() +
                                 friend.getFollowUser().getImage().getFileName()
                 );
                 response.setUserImageId(friend.getFollowUser().getImage().getId());

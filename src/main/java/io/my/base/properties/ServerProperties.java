@@ -11,4 +11,5 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("server")
 public class ServerProperties {
     private String imageUrl;
+    private String imagePath;
 }

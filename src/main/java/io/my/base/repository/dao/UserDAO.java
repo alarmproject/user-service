@@ -34,8 +34,7 @@ public class UserDAO {
             user.setEmail(row.get("email", String.class));
 
             if (row.get("file_name", String.class) != null) {
-                Image image = new Image();
-                image.setFileName(row.get("file_name", String.class));
+                Image image = Image.builder().fileName(row.get("file_name", String.class)).build();
 
                 user.setImage(image);
             }
@@ -47,7 +46,9 @@ public class UserDAO {
     public Mono<String> findUserImage(Long id) {
         return this.userQuery.findUserImage(id).map((row, rowMetadata) -> {
             String imageLink = row.get("file_name", String.class);
-            if (imageLink != null) return serverProperties.getImageUrl() + "?fileName=" +imageLink;
+            if (imageLink != null) return serverProperties.getImageUrl() +
+                    serverProperties.getImagePath() +
+                    imageLink;
             return "";
         }).one();
     }
@@ -57,7 +58,9 @@ public class UserDAO {
             String imageUrl = row.get("file_name", String.class);
 
             if (imageUrl != null)
-                imageUrl = serverProperties.getImageUrl() + "?fileName=" + imageUrl;
+                imageUrl = serverProperties.getImageUrl() +
+                        serverProperties.getImagePath() +
+                        imageUrl;
 
             return UserInfoResponse.builder()
                     .nickname(row.get("nickname", String.class))

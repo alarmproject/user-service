@@ -14,9 +14,11 @@ public class ProfessorQuery {
                 "select " +
                 "p.* " +
                 ", d.name as department_name " +
+                ", i.file_name " +
                 "from " +
                 "professor p " +
                 "join department d on p.department_id = d.id " +
+                "left join image i on p.image_id = i.id " +
                 "where " +
                 "p.college_id = :collegeId " +
                 "and " +

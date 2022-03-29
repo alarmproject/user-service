@@ -29,6 +29,7 @@ class ProfessorRestdocsTest extends RestdocsBase {
         SaveProfessorRequest requestBody = new SaveProfessorRequest();
         requestBody.setName("김교수");
         requestBody.setDepartmentId(1L);
+        requestBody.setImageId(1L);
 
         RequestFieldsSnippet requestFieldsSnippet =
                 requestFields(
@@ -36,7 +37,11 @@ class ProfessorRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
-                        fieldWithPath("departmentId").description("학과 번")
+                        fieldWithPath("departmentId").description("학과 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("imageId").description("사진 번호").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer"))
@@ -75,6 +80,7 @@ class ProfessorRestdocsTest extends RestdocsBase {
                 .id(1L)
                 .name("김교수")
                 .departmentName("경영학과")
+                .imageUrl("http://mysend.co.kr:8080/image/image?fileName=c91a6281-d9bd-4119-95ac-d57c17c0451a_charactor.jpeg")
                 .build());
         list.add(ProfessorListResponse.builder()
                 .id(2L)
@@ -111,6 +117,10 @@ class ProfessorRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("returnValue.[].departmentName").description("학과명")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].imageUrl").description("사진 주소")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String"))

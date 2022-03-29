@@ -16,7 +16,10 @@ public class Professor {
     private Long collegeId;
     private String name;
     private Long departmentId;
+    private Long imageId;
 
     @Transient
     private Department department;
+    @Transient
+    private Image image;
 }

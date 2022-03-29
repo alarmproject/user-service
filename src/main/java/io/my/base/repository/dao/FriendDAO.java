@@ -25,9 +25,10 @@ public class FriendDAO {
                     user.setNickname(row.get("follow_user_nickname", String.class));
 
                     if (row.get("follow_user_image_name", String.class) != null) {
-                        Image image = new Image();
-                        image.setId(row.get("follow_user_image_id", Long.class));
-                        image.setFileName(row.get("follow_user_image_name", String.class));
+                        Image image = Image.builder()
+                                .id(row.get("follow_user_image_id", Long.class))
+                                .fileName(row.get("follow_user_image_name", String.class))
+                                .build();
                         user.setImage(image);
                     }
 

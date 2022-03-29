@@ -1,6 +1,7 @@
 package io.my.base.repository.dao;
 
 import io.my.base.entity.Department;
+import io.my.base.entity.Image;
 import io.my.base.entity.Professor;
 import io.my.base.repository.query.ProfessorQuery;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class ProfessorDAO {
                     .id(row.get("id", Long.class))
                     .name(row.get("name", String.class))
                     .department(Department.builder().name(row.get("department_name", String.class)).build())
+                    .image(Image.builder().fileName(row.get("file_name", String.class)).build())
                     .build())
         .all();
 

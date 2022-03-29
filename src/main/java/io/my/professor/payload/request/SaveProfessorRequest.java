@@ -7,4 +7,5 @@ import lombok.Setter;
 public class SaveProfessorRequest {
     private Long departmentId;
     private String name;
+    private Long imageId;
 }
