@@ -47,5 +47,5 @@ spring:
     password: 1234
 
 server:
-  image-url: http://mysend.co.kr:8080/image/image
+  image-url: http://mysend.co.kr:8080/image
   image-path: /image?fileName=
