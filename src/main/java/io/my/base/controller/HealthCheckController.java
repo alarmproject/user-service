@@ -21,4 +21,6 @@ public class HealthCheckController {
             return ResponseEntity.ok(new BaseResponse("service is health"));
         });
     }
+
+
 }

@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter @Setter
 @AllArgsConstructor
-public class BaseResponse {
+public class BaseResponse implements Serializable {
     private int code;
     private String result;
 

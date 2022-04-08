@@ -19,6 +19,7 @@ import io.my.user.payload.response.SearchUserResponse;
 import io.my.user.payload.response.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
