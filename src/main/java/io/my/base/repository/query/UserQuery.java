@@ -52,6 +52,7 @@ public class UserQuery {
                 ", u.class_of " +
                 ", i.file_name " +
                 ", c.name as college_name " +
+                ", i.id as image_id " + 
                 "from " +
                 "`user` u " +
                 "left join image i on u.image_id = i.id " +

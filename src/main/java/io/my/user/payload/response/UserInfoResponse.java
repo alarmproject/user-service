@@ -11,6 +11,7 @@ public class UserInfoResponse {
     private String name;
     private String email;
     private Integer classOf;
+    private Long imageId;
     private String imageUrl;
     private String collegeName;
 }
