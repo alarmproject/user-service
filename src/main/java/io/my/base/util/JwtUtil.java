@@ -1,9 +1,6 @@
 package io.my.base.util;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.*;
 import io.my.base.properties.jwt.AccessTokenProperties;
 import io.my.base.properties.jwt.RefreshTokenProperties;
 import lombok.RequiredArgsConstructor;
@@ -97,7 +94,7 @@ public class JwtUtil {
                     .setSigningKey(key)
                     .parseClaimsJws(jwt)
                     .getBody();
-        } catch(SignatureException e) {
+        } catch(SignatureException | ExpiredJwtException e) {
             return null;
         }
     }
