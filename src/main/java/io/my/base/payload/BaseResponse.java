@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Getter @Setter
 @AllArgsConstructor
-public class BaseResponse implements Serializable {
+public class BaseResponse {
     private int code;
     private String result;
 

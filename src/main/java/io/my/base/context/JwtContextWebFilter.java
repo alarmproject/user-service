@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import io.my.base.exception.ErrorTypeEnum;
 import io.my.base.payload.BaseResponse;
 import io.my.base.properties.security.UnSecurityProperties;
+import io.my.base.util.JsonUtil;
 import io.my.base.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,17 +12,19 @@ import org.springframework.core.io.buffer.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.util.SerializationUtils;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
+
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtContextWebFilter implements WebFilter {
     private final JwtUtil jwtUtil;
+    private final JsonUtil jsonUtil;
     private final UnSecurityProperties unSecurityProperties;
 
     @NotNull
@@ -60,7 +63,9 @@ public class JwtContextWebFilter implements WebFilter {
         response.setResult(ErrorTypeEnum.JWT_EXCEPTION.getResult());
         response.setCode(ErrorTypeEnum.JWT_EXCEPTION.getCode());
 
-        return new DefaultDataBufferFactory().wrap(SerializationUtils.serialize(response));
+        return new DefaultDataBufferFactory().wrap(
+                this.jsonUtil.objectToByteArray(response)
+        );
     }
 
 }
