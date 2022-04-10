@@ -20,6 +20,7 @@ public class ProfessorDAO {
                     .name(row.get("name", String.class))
                     .department(Department.builder().name(row.get("department_name", String.class)).build())
                     .image(Image.builder().fileName(row.get("file_name", String.class)).build())
+                    .content(row.get("content", String.class))
                     .build())
         .all();
 

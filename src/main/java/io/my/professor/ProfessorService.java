@@ -31,6 +31,7 @@ public class ProfessorService {
                             .departmentId(requestBody.getDepartmentId())
                             .name(requestBody.getName())
                             .imageId(requestBody.getImageId())
+                            .content(requestBody.getContent())
                             .build();
                     return professorRepository.save(entity);
                 })
@@ -51,6 +52,7 @@ public class ProfessorService {
                                             entity.getImage().getFileName() :
                                             null
                             )
+                            .content(entity.getContent())
                             .build())
                 .collectList()
                 .map(BaseExtentionResponse::new)

@@ -34,11 +34,7 @@ class ProfessorRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
-                        fieldWithPath("departmentId").description("학과 번호")
-                                .attributes(
-                                        RestDocAttributes.length(0),
-                                        RestDocAttributes.format("Integer")),
-                        fieldWithPath("imageId").description("사진 번호").optional()
+                        fieldWithPath("departmentId").description("학과 번호").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
@@ -86,12 +82,14 @@ class ProfessorRestdocsTest extends RestdocsBase {
                 .name("김교수")
                 .departmentName("경영학과")
                 .imageUrl("http://mysend.co.kr:8080/image/image?fileName=c91a6281-d9bd-4119-95ac-d57c17c0451a_charactor.jpeg")
+                .content("경영학과/경영학원론")
                 .build());
         list.add(ProfessorListResponse.builder()
                 .id(2L)
                 .name("이교수")
                 .departmentName("경영학과")
                 .imageUrl("http://mysend.co.kr:8080/image/image?fileName=c91a6281-d9bd-4119-95ac-d57c17c0451a_charactor.jpeg")
+                .content("미술학과/미술학원론")
                 .build());
 
         RequestParametersSnippet requestParametersSnippet =
@@ -126,6 +124,10 @@ class ProfessorRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("returnValue.[].imageUrl").description("사진 주소")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].content").description("설명")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String"))

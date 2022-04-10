@@ -14,4 +14,5 @@ public class ProfessorListResponse {
     private String name;
     private String departmentName;
     private String imageUrl;
+    private String content;
 }

@@ -17,6 +17,7 @@ public class Professor {
     private String name;
     private Long departmentId;
     private Long imageId;
+    private String content;
 
     @Transient
     private Department department;
