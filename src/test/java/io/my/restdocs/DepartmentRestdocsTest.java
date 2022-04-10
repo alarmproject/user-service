@@ -25,10 +25,9 @@ class DepartmentRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("학과 등록")
     void saveDepartment() {
-        SaveDepartmentRequest requestBody = new SaveDepartmentRequest();
-        requestBody.setName("경영학과");
+        SaveDepartmentRequest requestBody = new SaveDepartmentRequest("경영학과");
 
-        Mono<BaseExtentionResponse<Long>> responseBody = Mono.just(new BaseExtentionResponse(1L));
+        Mono<BaseExtentionResponse<Long>> responseBody = Mono.just(new BaseExtentionResponse<>(1L));
 
         Mockito.when(departmentService.saveDepartment(Mockito.any())).thenReturn(responseBody);
 

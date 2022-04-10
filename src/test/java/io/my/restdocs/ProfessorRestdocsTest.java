@@ -26,10 +26,7 @@ class ProfessorRestdocsTest extends RestdocsBase {
     @DisplayName("교수 등록 API")
     void saveProfessor() {
         Mockito.when(professorService.saveProfessor(Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(1L)));
-        SaveProfessorRequest requestBody = new SaveProfessorRequest();
-        requestBody.setName("김교수");
-        requestBody.setDepartmentId(1L);
-        requestBody.setImageId(1L);
+        SaveProfessorRequest requestBody = SaveProfessorRequest.builder().name("김교수").departmentId(1L).imageId(1L).content("경제학과/경제학원론").build();
 
         RequestFieldsSnippet requestFieldsSnippet =
                 requestFields(
@@ -44,7 +41,15 @@ class ProfessorRestdocsTest extends RestdocsBase {
                         fieldWithPath("imageId").description("사진 번호").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("Integer"))
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("imageId").description("사진 번호").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("content").description("소개").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String"))
                 );
 
         ResponseFieldsSnippet responseFieldsSnippet =
@@ -88,7 +93,6 @@ class ProfessorRestdocsTest extends RestdocsBase {
                 .departmentName("경영학과")
                 .imageUrl("http://mysend.co.kr:8080/image/image?fileName=c91a6281-d9bd-4119-95ac-d57c17c0451a_charactor.jpeg")
                 .build());
-        ;
 
         RequestParametersSnippet requestParametersSnippet =
                 requestParameters(

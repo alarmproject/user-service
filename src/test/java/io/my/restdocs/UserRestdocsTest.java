@@ -30,9 +30,7 @@ class UserRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("일반 Login API")
     void login() {
-        LoginRequest requestBody = new LoginRequest();
-        requestBody.setEmail(EMAIL);
-        requestBody.setPassword("password");
+        LoginRequest requestBody = LoginRequest.builder().email(EMAIL).password("password").build();
 
         BaseExtentionResponse<LoginResponse> responseBody =
                 new BaseExtentionResponse<>(
@@ -320,8 +318,7 @@ class UserRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("백업용 이메일 등록 API")
     void registFindEmail() {
-        FindEmailRequest requestBody = new FindEmailRequest();
-        requestBody.setEmail(EMAIL);
+        FindEmailRequest requestBody = FindEmailRequest.builder().email(EMAIL).build();
         BaseResponse responseBody = new BaseResponse();
         Mockito.when(userService.registFindEmail(Mockito.anyString())).thenReturn(Mono.just(responseBody));
 
@@ -399,9 +396,7 @@ class UserRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("비밀번호 변경 API")
     void changePassword() {
-        LoginRequest requestBody = new LoginRequest();
-        requestBody.setPassword("password");
-        requestBody.setEmail(EMAIL);
+        LoginRequest requestBody = LoginRequest.builder().password("password").email(EMAIL).build();
         BaseResponse responseBody = new BaseResponse();
 
         Mockito.when(userService.changePassword(Mockito.anyString(), Mockito.anyString())).thenReturn(Mono.just(responseBody));
