@@ -116,12 +116,21 @@ public class UserService {
     }
 
 
-    public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUserByName(String name) {
-        return searchUser(userDAO.findUserByName(name));
+    public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUserByName(Boolean isSameCollege, String name) {
+        Mono<Long> mono = Mono.empty();
+
+        if (isSameCollege)
+            mono = JwtContextHolder.getMonoUserId().flatMap(userRepository::findById).map(User::getCollegeId);
+
+        return searchUser(mono.flatMapMany(collegeId -> userDAO.findUserByName(name, collegeId)));
     }
 
-    public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUserByNickname(String nickname) {
-        return searchUser(userDAO.findUserByNickname(nickname));
+    public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUserByNickname(Boolean isSameCollege, String nickname) {
+        Mono<Long> mono = Mono.empty();
+        if (isSameCollege)
+            mono = JwtContextHolder.getMonoUserId().flatMap(userRepository::findById).map(User::getCollegeId);
+
+        return searchUser(mono.flatMapMany(collegeId -> userDAO.findUserByNickname(nickname, collegeId)));
     }
 
     public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUser(Flux<User> flux) {

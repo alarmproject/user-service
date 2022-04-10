@@ -17,12 +17,12 @@ public class UserDAO {
     private final UserQuery userQuery;
     private final ServerProperties serverProperties;
 
-    public Flux<User> findUserByName(String name) {
-        return findUserSearch(this.userQuery.findUserByName(name));
+    public Flux<User> findUserByName(String name, Long collegeId) {
+        return findUserSearch(this.userQuery.findUserByName(name, collegeId));
     }
 
-    public Flux<User> findUserByNickname(String nickname) {
-        return findUserSearch(this.userQuery.findUserByNickname(nickname));
+    public Flux<User> findUserByNickname(String nickname, Long collegeId) {
+        return findUserSearch(this.userQuery.findUserByNickname(nickname, collegeId));
     }
 
     private Flux<User> findUserSearch(DatabaseClient.GenericExecuteSpec spec) {

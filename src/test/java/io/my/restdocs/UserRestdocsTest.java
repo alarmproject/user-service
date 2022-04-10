@@ -447,8 +447,8 @@ class UserRestdocsTest extends RestdocsBase {
         list.add(entity);
         responseBody.setReturnValue(list);
 
-        Mockito.when(userService.searchUserByName(Mockito.anyString())).thenReturn(Mono.just(responseBody));
-        Mockito.when(userService.searchUserByNickname(Mockito.anyString())).thenReturn(Mono.just(responseBody));
+        Mockito.when(userService.searchUserByName(Mockito.any(), Mockito.anyString())).thenReturn(Mono.just(responseBody));
+        Mockito.when(userService.searchUserByNickname(Mockito.any(), Mockito.anyString())).thenReturn(Mono.just(responseBody));
 
         RequestParametersSnippet requestParametersSnippet =
                 requestParameters(
@@ -457,10 +457,15 @@ class UserRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")
                                 ),
-                        parameterWithName("searchType").description("검색어 타입, 0: 이름(default), 1: 닉네임")
+                        parameterWithName("searchType").description("검색어 타입, 0: 이름(default), 1: 닉네임").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")
+                                ),
+                        parameterWithName("isSameCollege").description("같은 학교만 검색(default: false)").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean")
                                 )
                 );
 
