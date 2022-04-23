@@ -14,6 +14,7 @@ public enum ErrorTypeEnum {
     FAIL_TO_CHANGE_PASSWORD(105, "비밀번호 변경에 실패했습니다."),
     FAIL_TO_CHANGE_IMAGE(106, "이미지 변경에 실패했습니다."),
     FAIL_TO_CHANGE_NICKNAME(107, "닉네임 변경에 실패했습니다."),
+    NOT_FOUND_EXCEPTION(-1, "경로를 찾지 못했습니다."),
 
     ;
 

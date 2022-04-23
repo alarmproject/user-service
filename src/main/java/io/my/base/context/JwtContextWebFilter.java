@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import io.my.base.exception.ErrorTypeEnum;
 import io.my.base.payload.BaseResponse;
 import io.my.base.properties.security.UnSecurityProperties;
+import io.my.base.util.ExceptionUtil;
 import io.my.base.util.JsonUtil;
 import io.my.base.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +18,12 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.StandardCharsets;
-
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtContextWebFilter implements WebFilter {
     private final JwtUtil jwtUtil;
-    private final JsonUtil jsonUtil;
+    private final ExceptionUtil exceptionUtil;
     private final UnSecurityProperties unSecurityProperties;
 
     @NotNull
@@ -42,8 +41,8 @@ public class JwtContextWebFilter implements WebFilter {
         String jwt = context.getJwt();
 
         if (context.getJwt() == null || !jwtUtil.verifyAccessToken(jwt)) {
-            setJwtExceptionHeaders(exchange);
-            DefaultDataBuffer buffer = getJwtExceptionBody();
+            exceptionUtil.setExceptionHeaders(exchange, HttpStatus.UNAUTHORIZED);
+            DefaultDataBuffer buffer = exceptionUtil.createExceptionBody(ErrorTypeEnum.JWT_EXCEPTION);
             return exchange.getResponse().writeWith(Mono.just(buffer));
         }
 
@@ -51,21 +50,6 @@ public class JwtContextWebFilter implements WebFilter {
 
         return chain.filter(exchange)
                 .contextWrite(JwtContextHolder.withJwtContext(Mono.just(context)));
-    }
-
-    private void setJwtExceptionHeaders(ServerWebExchange exchange) {
-        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-        exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
-    }
-
-    private DefaultDataBuffer getJwtExceptionBody() {
-        BaseResponse response = new BaseResponse();
-        response.setResult(ErrorTypeEnum.JWT_EXCEPTION.getResult());
-        response.setCode(ErrorTypeEnum.JWT_EXCEPTION.getCode());
-
-        return new DefaultDataBufferFactory().wrap(
-                this.jsonUtil.objectToByteArray(response)
-        );
     }
 
 }
