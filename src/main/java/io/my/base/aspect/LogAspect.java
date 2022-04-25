@@ -32,40 +32,36 @@ public class LogAspect {
 
         long startTime = System.currentTimeMillis();
 
-        logRequest(joinPoint, logId);
+        Map<String, Object> logMap = logRequest(joinPoint, logId);
 
         Object proceed = joinPoint.proceed(joinPoint.getArgs());
 
         if (proceed instanceof Mono<?>) {
-            return logResponse(proceed, startTime, logId);
+            return logResponse(proceed, logMap, startTime);
         } else {
             return proceed;
         }
     }
 
-    private void logRequest(ProceedingJoinPoint joinPoint, String logId) {
-        Map<String, Object> request = new HashMap<>();
+    private Map<String, Object> logRequest(ProceedingJoinPoint joinPoint, String logId) {
+        Map<String, Object> map = new HashMap<>();
         Class<?> clz = aspectUtil.getClass(joinPoint);
         String requestUrl = aspectUtil.getRequestUrl(joinPoint, clz);
-        request.put("url", requestUrl);
-        request.put("logId", logId);
-        request.put("logType", "request");
-        request.put("logTime", new Date().getTime());
-        request.putAll(aspectUtil.getParams(joinPoint));
-        log(request);
+        map.put("url", requestUrl);
+        map.put("logId", logId);
+        map.put("requestLogTime", new Date().getTime());
+        map.putAll(aspectUtil.getParams(joinPoint));
+        return map;
     }
 
-    private Object logResponse(Object proceed, long startTime, String logId) {
+    private Object logResponse(Object proceed, Map<String, Object> map, long startTime) {
         Mono<?> mono = (Mono<?>) proceed;
         return mono.map(response -> {
             long endTime = System.currentTimeMillis();
 
-            Map<String, Object> map = new HashMap<>();
             map.put("response", response);
-            map.put("logId", logId);
-            map.put("logType", "response");
             map.put("excueteTime", endTime - startTime);
-            map.put("logTime", new Date().getTime());
+            map.put("responseLogTime", new Date().getTime());
 
             log(map);
             return response;
