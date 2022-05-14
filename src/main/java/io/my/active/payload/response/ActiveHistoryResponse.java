@@ -1,12 +1,16 @@
 package io.my.active.payload.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter @Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ActiveHistoryResponse {
     private Long id;
     private String content;
     private Long regDateTime;
     private Long modDateTime;
+    private Long friendsUserId;
+    private Boolean isFollow;
 }

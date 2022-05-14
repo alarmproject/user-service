@@ -12,13 +12,15 @@ public class ActiveHistoryQuery {
     public DatabaseClient.GenericExecuteSpec findActiveHistoryPaging(Long id, Long userId, Integer limit) {
         String query =
                 "SELECT " +
-                "* " +
+                "ah.* " +
+                ", f.id as friends_id " +
                 "FROM " +
-                "active_history " +
+                "active_history ah " +
+                "left join friend f on ah.user_id = f.user_id and ah.friends_user_id = f.follow_user_id " +
                 "WHERE " +
-                ((id != null && id != 0) ? ("id < :id AND ") : "") +
-                "user_id = :userId " +
-                "ORDER BY id DESC LIMIT :limit";
+                ((id != null && id != 0) ? ("ah.id < :id AND ") : "") +
+                "ah.user_id = :userId " +
+                "ORDER BY ah.id DESC LIMIT :limit";
 
         DatabaseClient.GenericExecuteSpec sql = client.sql(query);
         if (id != null && id != 0) sql = sql.bind("id", id);

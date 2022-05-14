@@ -28,11 +28,14 @@ class ActiveHistoryRestdocsTest extends RestdocsBase {
         BaseExtentionPagingResponse<List<ActiveHistoryResponse>> responseBody = new BaseExtentionPagingResponse<>();
         List<ActiveHistoryResponse> list = new ArrayList<>();
         for (long index = 12; index > 7; index--) {
-            ActiveHistoryResponse response = new ActiveHistoryResponse();
-            response.setId(index);
-            response.setContent("수업 ABC" + index + " 의 시간이 변경되었습니다.");
-            response.setRegDateTime(dateUtil.localDateTimeToUnixTime(LocalDateTime.now()));
-            response.setModDateTime(dateUtil.localDateTimeToUnixTime(LocalDateTime.now()));
+            ActiveHistoryResponse response = ActiveHistoryResponse.builder()
+                    .id(index)
+                    .content("수업 ABC" + index + " 의 시간이 변경되었습니다.")
+                    .regDateTime(dateUtil.localDateTimeToUnixTime(LocalDateTime.now()))
+                    .modDateTime(dateUtil.localDateTimeToUnixTime(LocalDateTime.now()))
+                    .friendsUserId(null)
+                    .isFollow(Boolean.FALSE)
+                    .build();
 
             list.add(response);
         }
@@ -72,6 +75,14 @@ class ActiveHistoryRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].friendsUserId").description("친구추가한 유저 번호").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue.[].isFollow").description("나의 상대방에 대한 Follow 여부")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean")),
                         fieldWithPath("returnValue.[].regDateTime").description("생성 시각")
                                 .attributes(
                                         RestDocAttributes.length(0),
