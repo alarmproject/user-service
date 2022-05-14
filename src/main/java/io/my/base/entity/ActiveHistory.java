@@ -11,4 +11,5 @@ public class ActiveHistory extends BaseEntity {
     private Long id;
     private Long userId;
     private String content;
+    private Long friendsUserId;
 }

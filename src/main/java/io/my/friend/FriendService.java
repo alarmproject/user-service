@@ -18,6 +18,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -68,8 +69,11 @@ public class FriendService {
     }
 
     public Mono<BaseResponse> addFriend(Long id) {
+        AtomicLong atomicUserId = new AtomicLong();
+
         return JwtContextHolder.getMonoUserId()
             .flatMap(userId -> {
+                atomicUserId.set(userId);
                 Friend entity = new Friend();
                 entity.setUserId(userId);
                 entity.setFollowUserId(id);
@@ -79,7 +83,7 @@ public class FriendService {
             .flatMap(user -> {
                 ActiveHistory entity = new ActiveHistory();
                 entity.setUserId(user.getId());
-
+                entity.setFriendsUserId(id);
                 String content = ActiveContent.ADDED_FRIEND.getContent();
                 entity.setContent(content.replaceFirst("\\{}", user.getName()));
 
@@ -89,7 +93,7 @@ public class FriendService {
             .flatMap(user -> {
                 ActiveHistory entity = new ActiveHistory();
                 entity.setUserId(user.getId());
-
+                entity.setFriendsUserId(atomicUserId.get());
                 String content = ActiveContent.BE_ADDED_FRIEND.getContent();
                 entity.setContent(content.replaceFirst("\\{}", user.getName()));
 
