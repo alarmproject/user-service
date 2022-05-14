@@ -701,6 +701,7 @@ class UserRestdocsTest extends RestdocsBase {
                         .classOf(13)
                         .imageUrl("http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
                         .imageId(1L)
+                        .collegeId(1L)
                         .collegeName("서울대학교")
                         .build()
         );
@@ -735,6 +736,10 @@ class UserRestdocsTest extends RestdocsBase {
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.collegeId").description("학교 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
                         fieldWithPath("returnValue.collegeName").description("학교명")
                                 .attributes(
                                         RestDocAttributes.length(0),

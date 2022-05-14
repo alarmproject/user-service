@@ -68,6 +68,7 @@ public class UserDAO {
                     .email(row.get("email", String.class))
                     .classOf(row.get("class_of", Integer.class))
                     .imageId(row.get("image_id", Long.class))
+                    .collegeId(row.get("college_id", Long.class))
                     .collegeName(row.get("college_name", String.class))
                     .imageUrl(imageUrl)
                     .build();

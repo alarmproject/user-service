@@ -62,6 +62,7 @@ public class UserQuery {
                 ", u.class_of " +
                 ", i.file_name " +
                 ", c.name as college_name " +
+                ", c.id as college_id " +
                 ", i.id as image_id " +
                 "from " +
                 "`user` u " +
