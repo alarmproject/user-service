@@ -22,11 +22,11 @@ security:
       - GET /user/social/login
       - POST /user/social/join
       - GET /user/find/email
-      - POST /user/change/password
       - GET /mail/code
       - GET /user/find/email
       - GET /college/list
       - PATCH /user/password
+      - PATCH /user/change/password
       - GET /user/check/email
       - GET /user/check/nickname
 

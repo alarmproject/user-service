@@ -5,6 +5,7 @@ import io.my.base.entity.User;
 import io.my.base.entity.UserBackupEmail;
 import io.my.base.exception.ErrorTypeEnum;
 import io.my.base.exception.object.DatabaseException;
+import io.my.base.exception.object.PasswordWrongException;
 import io.my.base.payload.BaseExtentionResponse;
 import io.my.base.payload.BaseResponse;
 import io.my.base.properties.ServerProperties;
@@ -14,6 +15,7 @@ import io.my.base.repository.dao.UserDAO;
 import io.my.base.util.JwtUtil;
 import io.my.user.payload.request.JoinRequest;
 import io.my.user.payload.request.LoginRequest;
+import io.my.user.payload.request.PatchUserPasswordRequest;
 import io.my.user.payload.response.LoginResponse;
 import io.my.user.payload.response.SearchUserResponse;
 import io.my.user.payload.response.UserInfoResponse;
@@ -193,5 +195,21 @@ public class UserService {
 
     public Mono<BaseExtentionResponse<UserInfoResponse>> getUserInfo(Long userId) {
         return userDAO.findUserInfo(userId).map(BaseExtentionResponse::new);
+    }
+
+    public Mono<BaseResponse> changePassword(PatchUserPasswordRequest requestBody) {
+        return JwtContextHolder.getMonoUserId()
+                .flatMap(userRepository::findById)
+                .flatMap(user -> {
+                    try {
+                        boolean rightUser = checkBcrypt(requestBody.getPassword(), user.getPassword());
+                        if (rightUser) {
+                            user.setPassword(bcryptHash(requestBody.getNewPassword()));
+                            return userRepository.save(user);
+                        }
+                    } catch(IllegalArgumentException e) { /* do nothing */ }
+                    return Mono.error(new PasswordWrongException());
+                }).map(e -> new BaseResponse())
+                ;
     }
 }

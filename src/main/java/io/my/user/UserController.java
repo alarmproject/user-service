@@ -6,6 +6,7 @@ import io.my.base.payload.BaseResponse;
 import io.my.user.payload.request.FindEmailRequest;
 import io.my.user.payload.request.JoinRequest;
 import io.my.user.payload.request.LoginRequest;
+import io.my.user.payload.request.PatchUserPasswordRequest;
 import io.my.user.payload.response.LoginResponse;
 import io.my.user.payload.response.SearchUserResponse;
 import io.my.user.payload.response.UserInfoResponse;
@@ -112,6 +113,13 @@ public class UserController {
     @GetMapping("/{id}")
     public Mono<BaseExtentionResponse<UserInfoResponse>> getUserInfo(@PathVariable("id") Long userId) {
         return userService.getUserInfo(userId);
+    }
+
+    @Logger
+    @PatchMapping("/change/password")
+    public Mono<BaseResponse> changeUserPassword(
+            @RequestBody PatchUserPasswordRequest requestBody) {
+        return userService.changePassword(requestBody);
     }
 
 

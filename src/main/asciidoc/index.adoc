@@ -88,6 +88,16 @@ include::{snippets}/userrestdocstest/userfindemail/http-response.adoc[]
 include::{snippets}/userrestdocstest/userfindemail/curl-request.adoc[]
 
 
+[[resources-changepassword]]
+==== 이메일로 비밀번호 변경
+
+include::{snippets}/userrestdocstest/changepassword/request-fields.adoc[]
+include::{snippets}/userrestdocstest/changepassword/response-fields.adoc[]
+include::{snippets}/userrestdocstest/changepassword/http-request.adoc[]
+include::{snippets}/userrestdocstest/changepassword/http-response.adoc[]
+include::{snippets}/userrestdocstest/changepassword/curl-request.adoc[]
+
+
 [[resources-userchangepassword]]
 ==== 비밀번호 변경
 

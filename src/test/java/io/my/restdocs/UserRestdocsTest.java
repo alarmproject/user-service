@@ -7,6 +7,7 @@ import io.my.base.payload.BaseResponse;
 import io.my.user.payload.request.FindEmailRequest;
 import io.my.user.payload.request.JoinRequest;
 import io.my.user.payload.request.LoginRequest;
+import io.my.user.payload.request.PatchUserPasswordRequest;
 import io.my.user.payload.response.LoginResponse;
 import io.my.user.payload.response.SearchUserResponse;
 import io.my.user.payload.response.UserInfoResponse;
@@ -428,7 +429,7 @@ class UserRestdocsTest extends RestdocsBase {
         patchWebTestClientUnAuth(requestBody, "/user/password").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/userchangepassword", requestFieldsSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/changepassword", requestFieldsSnippet, responseFieldsSnippet));
     }
 
     @Test
@@ -766,6 +767,44 @@ class UserRestdocsTest extends RestdocsBase {
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/getuserinfo", pathParametersSnippet, responseFieldsSnippet));
+    }
+
+    @Test
+    @DisplayName("비밀번호 변경 API")
+    void changeUserPassword() {
+        PatchUserPasswordRequest requestBody = PatchUserPasswordRequest.builder().password("password").newPassword("newPasswod").build();
+        BaseResponse responseBody = new BaseResponse();
+
+        Mockito.when(userService.changePassword(Mockito.any())).thenReturn(Mono.just(responseBody));
+
+        RequestFieldsSnippet requestFieldsSnippet =
+                requestFields(
+                        fieldWithPath("password").description("기존 비밀번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("newPassword").description("변경할 비밀번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String"))
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+
+        patchWebTestClientUnAuth(requestBody, "/user/change/password").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/userchangepassword", requestFieldsSnippet, responseFieldsSnippet));
     }
 
 
