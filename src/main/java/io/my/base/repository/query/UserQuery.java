@@ -64,6 +64,7 @@ public class UserQuery {
                 ", c.name as college_name " +
                 ", c.id as college_id " +
                 ", i.id as image_id " +
+                ", (select count(id) from friend where user_id = u.id) as friends_count " +
                 "from " +
                 "`user` u " +
                 "left join image i on u.image_id = i.id " +

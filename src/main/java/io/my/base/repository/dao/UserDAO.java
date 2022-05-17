@@ -70,6 +70,7 @@ public class UserDAO {
                     .imageId(row.get("image_id", Long.class))
                     .collegeId(row.get("college_id", Long.class))
                     .collegeName(row.get("college_name", String.class))
+                    .friendsCount(row.get("friends_count", Integer.class))
                     .imageUrl(imageUrl)
                     .build();
         }).one();

@@ -755,7 +755,11 @@ class UserRestdocsTest extends RestdocsBase {
                         fieldWithPath("returnValue.imageUrl").description("이미지 주소")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String"))
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.friendsCount").description("친구 수")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
                 );
 
         getWebTestClientPathVariable(1, "/user/{id}").expectStatus()
