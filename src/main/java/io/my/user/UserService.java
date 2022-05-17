@@ -116,7 +116,7 @@ public class UserService {
 
 
     public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUserByName(Boolean isSameCollege, String name) {
-        Mono<Long> mono = Mono.empty();
+        Mono<Long> mono = Mono.just(0L);
 
         if (isSameCollege)
             mono = JwtContextHolder.getMonoUserId().flatMap(userRepository::findById).map(User::getCollegeId);
@@ -125,7 +125,7 @@ public class UserService {
     }
 
     public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUserByNickname(Boolean isSameCollege, String nickname) {
-        Mono<Long> mono = Mono.empty();
+        Mono<Long> mono = Mono.just(0L);
         if (isSameCollege)
             mono = JwtContextHolder.getMonoUserId().flatMap(userRepository::findById).map(User::getCollegeId);
 

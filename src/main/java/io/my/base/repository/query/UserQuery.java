@@ -20,12 +20,12 @@ public class UserQuery {
                 "LEFT JOIN image as i " +
                 "ON u.image_id = i.id " +
                 "WHERE " +
-                (collegeId != null ? "u.college_id = :collegeId and " : "") +
+                (collegeId != 0 ? "u.college_id = :collegeId and " : "") +
                 "u.name LIKE CONCAT('%', :name, '%')"
                 ;
         DatabaseClient.GenericExecuteSpec sql = client.sql(query).bind("name", name);
 
-        if (collegeId != null) sql = sql.bind("collegeId", collegeId);
+        if (collegeId != 0) sql = sql.bind("collegeId", collegeId);
         return sql;
     }
 
@@ -38,12 +38,12 @@ public class UserQuery {
                 "LEFT JOIN image as i " +
                 "ON u.image_id = i.id " +
                 "WHERE " +
-                (collegeId != null ? "u.college_id = :collegeId and " : "") +
+                (collegeId != 0 ? "u.college_id = :collegeId and " : "") +
                 "u.nickname LIKE CONCAT('%', :nickname, '%')"
                 ;
         DatabaseClient.GenericExecuteSpec sql = client.sql(query).bind("nickname", nickname);
 
-        if (collegeId != null) sql = sql.bind("collegeId", collegeId);
+        if (collegeId != 0) sql = sql.bind("collegeId", collegeId);
         return sql;
     }
 
