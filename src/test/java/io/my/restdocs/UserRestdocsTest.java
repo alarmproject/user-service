@@ -610,7 +610,7 @@ class UserRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Boolean"))
                 );
 
-        String params = "?email=" + this.EMAIL;
+        String params = "?email=" + EMAIL;
 
         getWebTestClientUnAuth("/user/check/email" + params).expectStatus()
                 .isOk()
