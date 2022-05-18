@@ -122,6 +122,19 @@ public class UserController {
         return userService.changePassword(requestBody);
     }
 
+    @Logger
+    @PatchMapping("/change/email")
+    public Mono<BaseResponse> changeUserEmail(
+            @RequestParam("email") String email) {
+        return userService.changeUserEmail(email);
+    }
 
+    @Logger
+    @PatchMapping("/change/school")
+    public Mono<BaseResponse> changeUserSchool(
+            @RequestParam("collegeId") Long schoolId,
+            @RequestParam("collegeEmail") String collegeEmail) {
+        return userService.changeUserCollege(schoolId, collegeEmail);
+    }
 
 }

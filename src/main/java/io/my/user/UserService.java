@@ -212,4 +212,27 @@ public class UserService {
                 }).map(e -> new BaseResponse())
                 ;
     }
+
+    public Mono<BaseResponse> changeUserEmail(String email) {
+        return JwtContextHolder.getMonoUserId()
+                .flatMap(userRepository::findById)
+                .flatMap(user -> {
+                    user.setEmail(email);
+                    return userRepository.save(user);
+                })
+                .map(e -> new BaseResponse())
+                ;
+    }
+
+    public Mono<BaseResponse> changeUserCollege(Long collegeId, String collegeEmail) {
+        return JwtContextHolder.getMonoUserId()
+                .flatMap(userRepository::findById)
+                .flatMap(user -> {
+                    user.setCollegeId(collegeId);
+                    user.setCollegeEmail(collegeEmail);
+                    return userRepository.save(user);
+                })
+                .map(e -> new BaseResponse())
+                ;
+    }
 }

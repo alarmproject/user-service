@@ -128,6 +128,26 @@ include::{snippets}/userrestdocstest/changenickname/http-response.adoc[]
 include::{snippets}/userrestdocstest/changenickname/curl-request.adoc[]
 
 
+[[resources-userchangeemail]]
+==== 이메일 변경
+
+include::{snippets}/userrestdocstest/userchangeemail/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/userchangeemail/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userchangeemail/http-request.adoc[]
+include::{snippets}/userrestdocstest/userchangeemail/http-response.adoc[]
+include::{snippets}/userrestdocstest/userchangeemail/curl-request.adoc[]
+
+
+[[resources-userchangeschool]]
+==== 학교 변경
+
+include::{snippets}/userrestdocstest/userchangeschool/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/userchangeschool/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userchangeschool/http-request.adoc[]
+include::{snippets}/userrestdocstest/userchangeschool/http-response.adoc[]
+include::{snippets}/userrestdocstest/userchangeschool/curl-request.adoc[]
+
+
 [[resources-usersearch]]
 ==== 사용자 검색
 

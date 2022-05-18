@@ -807,5 +807,76 @@ class UserRestdocsTest extends RestdocsBase {
                 .consumeWith(createConsumer("/userchangepassword", requestFieldsSnippet, responseFieldsSnippet));
     }
 
+    @Test
+    @DisplayName("이메일 변경 API")
+    void changeUserEmail() {
+        Mockito.when(userService.changeUserEmail(Mockito.anyString())).thenReturn(Mono.just(new BaseResponse()));
+
+        RequestParametersSnippet requestParametersSnippet =
+                requestParameters(
+                        parameterWithName("email").description("변경할 이메일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")
+                                )
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+        String params = "?email=" + EMAIL;
+
+        patchWebTestClient("/user/change/email" + params).expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/userchangeemail", requestParametersSnippet, responseFieldsSnippet));
+    }
+
+    @Test
+    @DisplayName("유저 학교 변경 API")
+    void changeUserCollege() {
+        Mockito.when(userService.changeUserCollege(Mockito.anyLong(), Mockito.anyString())).thenReturn(Mono.just(new BaseResponse()));
+
+        RequestParametersSnippet requestParametersSnippet =
+                requestParameters(
+                        parameterWithName("collegeId").description("변경할 학교 번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")
+                                ),
+                        parameterWithName("collegeEmail").description("변경할 학교 이메일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")
+                                )
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+        String params = "?collegeId=1&&collegeEmail=" + EMAIL;
+
+        patchWebTestClient("/user/change/school" + params).expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/userchangeschool", requestParametersSnippet, responseFieldsSnippet));
+    }
+
 
 }
