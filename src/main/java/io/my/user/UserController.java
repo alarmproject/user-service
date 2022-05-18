@@ -130,7 +130,7 @@ public class UserController {
     }
 
     @Logger
-    @PatchMapping("/change/school")
+    @PatchMapping("/change/college")
     public Mono<BaseResponse> changeUserSchool(
             @RequestParam("collegeId") Long schoolId,
             @RequestParam("collegeEmail") String collegeEmail) {

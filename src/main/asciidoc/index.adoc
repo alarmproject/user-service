@@ -138,14 +138,14 @@ include::{snippets}/userrestdocstest/userchangeemail/http-response.adoc[]
 include::{snippets}/userrestdocstest/userchangeemail/curl-request.adoc[]
 
 
-[[resources-userchangeschool]]
+[[resources-userchangecollege]]
 ==== 학교 변경
 
-include::{snippets}/userrestdocstest/userchangeschool/request-parameters.adoc[]
-include::{snippets}/userrestdocstest/userchangeschool/response-fields.adoc[]
-include::{snippets}/userrestdocstest/userchangeschool/http-request.adoc[]
-include::{snippets}/userrestdocstest/userchangeschool/http-response.adoc[]
-include::{snippets}/userrestdocstest/userchangeschool/curl-request.adoc[]
+include::{snippets}/userrestdocstest/userchangecollege/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/userchangecollege/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userchangecollege/http-request.adoc[]
+include::{snippets}/userrestdocstest/userchangecollege/http-response.adoc[]
+include::{snippets}/userrestdocstest/userchangecollege/curl-request.adoc[]
 
 
 [[resources-usersearch]]

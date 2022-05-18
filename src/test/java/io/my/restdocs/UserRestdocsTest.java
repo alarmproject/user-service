@@ -872,10 +872,10 @@ class UserRestdocsTest extends RestdocsBase {
                 );
         String params = "?collegeId=1&&collegeEmail=" + EMAIL;
 
-        patchWebTestClient("/user/change/school" + params).expectStatus()
+        patchWebTestClient("/user/change/college" + params).expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/userchangeschool", requestParametersSnippet, responseFieldsSnippet));
+                .consumeWith(createConsumer("/userchangecollege", requestParametersSnippet, responseFieldsSnippet));
     }
 
 
