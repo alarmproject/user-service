@@ -100,6 +100,11 @@
             <artifactId>spring-security-crypto</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.slack.api</groupId>
+            <artifactId>slack-api-client</artifactId>
+            <version>1.22.1</version>
+        </dependency>
     </dependencies>
 
     <build>

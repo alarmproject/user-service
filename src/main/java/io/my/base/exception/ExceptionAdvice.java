@@ -4,6 +4,8 @@ import io.my.base.exception.object.DatabaseException;
 import io.my.base.exception.object.MailSenderException;
 import io.my.base.exception.object.PasswordWrongException;
 import io.my.base.payload.BaseResponse;
+import io.my.slack.SlackService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -13,10 +15,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class ExceptionAdvice {
+    private final SlackService slackService;
 
     @ExceptionHandler(MailSenderException.class)
     protected ResponseEntity<BaseResponse> exceptionAdvice(MailSenderException e) {
+        slackService.sendSlackException(e);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new BaseResponse(
                         ErrorTypeEnum.MAIL_EXCEPTION.getCode(),
@@ -25,6 +30,7 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(PasswordWrongException.class)
     protected ResponseEntity<BaseResponse> exceptionAdvice(PasswordWrongException e) {
+        slackService.sendSlackException(e);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new BaseResponse(
                         ErrorTypeEnum.WRONG_PASSWORD.getCode(),
@@ -34,6 +40,7 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<BaseResponse> exceptionAdvice(Exception e) {
+        slackService.sendSlackException(e);
 
         return ResponseEntity.internalServerError()
                 .body(new BaseResponse(
@@ -43,6 +50,7 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(DatabaseException.class)
     protected ResponseEntity<BaseResponse> exceptionAdvice(DatabaseException e) {
+        slackService.sendSlackException(e);
         return ResponseEntity.internalServerError()
                 .body(new BaseResponse(
                         ErrorTypeEnum.DATABASE_EXCEPTION.getCode(),
