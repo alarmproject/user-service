@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 import org.springframework.restdocs.request.RequestParametersSnippet;
+import reactor.core.publisher.Mono;
 
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -18,6 +19,7 @@ class HealthCheckRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("HealthCheck Controller")
     void healthCheck() {
+        Mockito.when(dualDAO.callDbTest()).thenReturn(Mono.just(true));
         RequestParametersSnippet requestParametersSnippet = requestParameters();
         ResponseFieldsSnippet responseFieldsSnippet =
                 responseFields(

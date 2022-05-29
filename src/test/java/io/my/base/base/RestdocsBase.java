@@ -2,6 +2,7 @@ package io.my.base.base;
 
 import io.my.active.ActiveService;
 import io.my.base.context.JwtContextWebFilter;
+import io.my.base.repository.dao.DualDAO;
 import io.my.base.util.DateUtil;
 import io.my.base.util.JwtUtil;
 import io.my.college.CollegeService;
@@ -61,6 +62,9 @@ public class RestdocsBase {
 
     @Autowired
     protected JwtContextWebFilter jwtContextWebFilter;
+
+    @MockBean
+    protected DualDAO dualDAO;
 
     @MockBean
     protected MailService mailService;
