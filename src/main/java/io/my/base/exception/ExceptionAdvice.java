@@ -1,5 +1,6 @@
 package io.my.base.exception;
 
+import io.my.base.exception.object.DatabaseException;
 import io.my.base.exception.object.MailSenderException;
 import io.my.base.exception.object.PasswordWrongException;
 import io.my.base.payload.BaseResponse;
@@ -39,5 +40,15 @@ public class ExceptionAdvice {
                         ErrorTypeEnum.SERVER_ERROR.getCode(),
                         ErrorTypeEnum.SERVER_ERROR.getResult()));
     }
+
+    @ExceptionHandler(DatabaseException.class)
+    protected ResponseEntity<BaseResponse> exceptionAdvice(DatabaseException e) {
+        return ResponseEntity.internalServerError()
+                .body(new BaseResponse(
+                        ErrorTypeEnum.DATABASE_EXCEPTION.getCode(),
+                        ErrorTypeEnum.DATABASE_EXCEPTION.getResult()
+                ));
+    }
+
 
 }
