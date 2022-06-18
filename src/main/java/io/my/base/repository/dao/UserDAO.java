@@ -66,6 +66,7 @@ public class UserDAO {
                     .nickname(row.get("nickname", String.class))
                     .name(row.get("name", String.class))
                     .email(row.get("email", String.class))
+                    .collegeEmail(row.get("college_email", String.class))
                     .classOf(row.get("class_of", Integer.class))
                     .imageId(row.get("image_id", Long.class))
                     .collegeId(row.get("college_id", Long.class))

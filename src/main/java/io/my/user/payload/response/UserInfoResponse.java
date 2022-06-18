@@ -15,5 +15,6 @@ public class UserInfoResponse {
     private String imageUrl;
     private Long collegeId;
     private String collegeName;
+    private String collegeEmail;
     private Integer friendsCount;
 }

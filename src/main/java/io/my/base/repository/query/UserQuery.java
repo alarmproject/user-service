@@ -59,6 +59,7 @@ public class UserQuery {
                 "u.name " +
                 ", u.nickname " +
                 ", u.email " +
+                ", u.college_email " +
                 ", u.class_of " +
                 ", i.file_name " +
                 ", c.name as college_name " +

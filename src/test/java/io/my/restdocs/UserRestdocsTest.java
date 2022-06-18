@@ -699,6 +699,7 @@ class UserRestdocsTest extends RestdocsBase {
                         .nickname("nickname")
                         .name("name")
                         .email("email")
+                        .collegeEmail("email@seoul.ac.kr")
                         .classOf(13)
                         .imageUrl("http://mysend.co.kr:8080/image?fileName=65632a55-0280-4afb-b19d-c62fdf15b87e_charactor.jpeg")
                         .imageId(1L)
@@ -734,6 +735,10 @@ class UserRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
                         fieldWithPath("returnValue.email").description("이메일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.collegeEmail").description("학교 이메일")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),
