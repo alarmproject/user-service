@@ -250,6 +250,14 @@ include::{snippets}/collegerestdocstest/collegesearch/http-request.adoc[]
 include::{snippets}/collegerestdocstest/collegesearch/http-response.adoc[]
 include::{snippets}/collegerestdocstest/collegesearch/curl-request.adoc[]
 
+[[resources-collegeemail]]
+==== 대학교 이메일 등록 요청
+
+include::{snippets}/collegerestdocstest/collegeemail/request-fields.adoc[]
+include::{snippets}/collegerestdocstest/collegeemail/response-fields.adoc[]
+include::{snippets}/collegerestdocstest/collegeemail/http-request.adoc[]
+include::{snippets}/collegerestdocstest/collegeemail/http-response.adoc[]
+include::{snippets}/collegerestdocstest/collegeemail/curl-request.adoc[]
 
 === active history
 

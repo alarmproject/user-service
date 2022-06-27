@@ -1,6 +1,9 @@
 package io.my.college;
 
+import io.my.base.entity.CollegeEmailRequest;
 import io.my.base.payload.BaseExtentionResponse;
+import io.my.base.payload.BaseResponse;
+import io.my.base.repository.CollegeEmailRequestRepository;
 import io.my.base.repository.CollegeRepository;
 import io.my.college.payload.response.CollegeSearchResponse;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CollegeService {
     private final CollegeRepository collegeRepository;
+    private final CollegeEmailRequestRepository collegeEmailRequestRepository;
 
     public Mono<BaseExtentionResponse<List<CollegeSearchResponse>>> collegeSearch(String search) {
         return collegeRepository.findByNameContaining(search).map(entity -> {
@@ -30,5 +34,9 @@ public class CollegeService {
                     .emailPrefixList(emailPrefixList)
                     .build();
         }).collectList().map(BaseExtentionResponse::new);
+    }
+
+    public Mono<BaseResponse> postCollegeEmailRequest(CollegeEmailRequest requestBody) {
+        return collegeEmailRequestRepository.save(requestBody).map(entity -> new BaseResponse());
     }
 }
