@@ -1,17 +1,15 @@
 package io.my.college.payload.response;
 
-import io.my.base.payload.BaseResponse;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CollegeSearchResponse {
     private Long id;
     private String name;
+    private List<String> emailPrefixList;
 }

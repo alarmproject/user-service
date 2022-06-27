@@ -26,19 +26,23 @@ class CollegeRestdocsTest extends RestdocsBase {
     void collegeSearch() {
         BaseExtentionResponse<List<CollegeSearchResponse>> responseBody = new BaseExtentionResponse<>();
         List<CollegeSearchResponse> list = new ArrayList<>();
-        CollegeSearchResponse firstEntity = new CollegeSearchResponse();
-        firstEntity.setId(1L);
-        firstEntity.setName("서울대학교");
-        CollegeSearchResponse secondEntity = new CollegeSearchResponse();
-        secondEntity.setId(2L);
-        secondEntity.setName("고려대학교");
+        CollegeSearchResponse firstEntity = CollegeSearchResponse.builder()
+                .id(1L)
+                .name("서울대학교")
+                .emailPrefixList(List.of("sun.ac.kr"))
+                .build();
+        CollegeSearchResponse secondEntity = CollegeSearchResponse.builder()
+                .id(2L)
+                .name("고려대학교")
+                .emailPrefixList(List.of("korea.ac.kr"))
+                .build();
 
         list.add(firstEntity);
         list.add(secondEntity);
 
         responseBody.setReturnValue(list);
 
-        Mockito.when(collegeService.colleageSearch(Mockito.anyString())).thenReturn(Mono.just(responseBody));
+        Mockito.when(collegeService.collegeSearch(Mockito.anyString())).thenReturn(Mono.just(responseBody));
 
         RequestParametersSnippet requestParametersSnippet =
                 requestParameters(
@@ -65,7 +69,11 @@ class CollegeRestdocsTest extends RestdocsBase {
                         fieldWithPath("returnValue.[].name").description("대학교 이름")
                                 .attributes(
                                         RestDocAttributes.length(0),
-                                        RestDocAttributes.format("String"))
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].emailPrefixList.[]").description("대학교 이메일 목록")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Array"))
                 );
         String params = "?search=대학";
 

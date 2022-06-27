@@ -1,5 +1,6 @@
 package io.my.college;
 
+import io.my.base.annotation.Logger;
 import io.my.base.payload.BaseExtentionResponse;
 import io.my.college.payload.response.CollegeSearchResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +18,10 @@ import java.util.List;
 public class CollegeController {
     private final CollegeService collegeService;
 
+    @Logger
     @GetMapping("/list")
     public Mono<BaseExtentionResponse<List<CollegeSearchResponse>>> collegeSearch(
             @RequestParam(value = "search", required = false, defaultValue = "") String search) {
-        return collegeService.colleageSearch(search);
+        return collegeService.collegeSearch(search);
     }
 }
