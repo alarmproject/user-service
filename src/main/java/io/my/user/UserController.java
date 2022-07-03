@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -101,6 +102,15 @@ public class UserController {
     @GetMapping("/check/nickname")
     public Mono<BaseExtentionResponse<Boolean>> checkNickname(@RequestParam("nickname") String nickname) {
         return userService.checkNickname(nickname);
+    }
+
+    @PostMapping("/check/password")
+    public Mono<BaseExtentionResponse<Boolean>> checkPassword(@RequestBody Map<String, String> requestBody) {
+        if (requestBody.get("password") == null ) {
+            return Mono.just(new BaseExtentionResponse<>(false));
+        }
+
+        return userService.checkPassword(requestBody.get("password"));
     }
 
     @Logger

@@ -26,7 +26,6 @@ security:
       - GET /user/find/email
       - GET /college/list
       - PATCH /user/password
-      - PATCH /user/change/password
       - GET /user/check/email
       - GET /user/check/nickname
 

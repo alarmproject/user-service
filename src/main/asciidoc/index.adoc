@@ -178,6 +178,16 @@ include::{snippets}/userrestdocstest/checknickname/http-response.adoc[]
 include::{snippets}/userrestdocstest/checknickname/curl-request.adoc[]
 
 
+[[resources-checkpassword]]
+==== 비밀번호 확인
+
+include::{snippets}/userrestdocstest/checkpassword/request-fields.adoc[]
+include::{snippets}/userrestdocstest/checkpassword/response-fields.adoc[]
+include::{snippets}/userrestdocstest/checkpassword/http-request.adoc[]
+include::{snippets}/userrestdocstest/checkpassword/http-response.adoc[]
+include::{snippets}/userrestdocstest/checkpassword/curl-request.adoc[]
+
+
 [[resources-getimagelink]]
 ==== 사용자 이미지 링크 조회
 

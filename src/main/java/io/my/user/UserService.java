@@ -235,4 +235,17 @@ public class UserService {
                 .map(e -> new BaseResponse())
                 ;
     }
+
+    public Mono<BaseExtentionResponse<Boolean>> checkPassword(String password) {
+        return JwtContextHolder.getMonoUserId()
+                .flatMap(userRepository::findById)
+                .map(user -> {
+                    try {
+                        return new BaseExtentionResponse<>(checkBcrypt(password, user.getPassword()));
+                    } catch (Exception e) { /* do nothing */ }
+                    return new BaseExtentionResponse<>(false);
+                })
+                ;
+
+    }
 }

@@ -21,7 +21,9 @@ import org.springframework.restdocs.request.RequestParametersSnippet;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -655,6 +657,44 @@ class UserRestdocsTest extends RestdocsBase {
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/checknickname", requestParametersSnippet, responseFieldsSnippet));
+    }
+
+    @Test
+    @DisplayName("비밀번호 확인 API")
+    void checkPassword() {
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("password", "password");
+
+        Mockito.when(userService.checkPassword(Mockito.any())).thenReturn(Mono.just(new BaseExtentionResponse<>(true)));
+
+        RequestFieldsSnippet requestFieldsSnippet =
+                requestFields(
+                        fieldWithPath("password").description("기존 비밀번호")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String"))
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue").description("true: 비밀번호 일치, false: 비밀번호 불일치")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean"))
+                );
+
+        postWebTestClient(requestBody, "/user/check/password").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/checkpassword", requestFieldsSnippet, responseFieldsSnippet));
     }
 
     @Test
