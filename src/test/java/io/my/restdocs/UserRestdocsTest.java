@@ -846,7 +846,7 @@ class UserRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.format("Integer"))
                 );
 
-        patchWebTestClientUnAuth(requestBody, "/user/change/password").expectStatus()
+        patchWebTestClient(requestBody, "/user/change/password").expectStatus()
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/userchangepassword", requestFieldsSnippet, responseFieldsSnippet));
