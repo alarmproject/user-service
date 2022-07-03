@@ -18,7 +18,7 @@ public class MailBuilder {
     public static MailBuilder builder() {
         MailBuilder mailBuilder = new MailBuilder();
         mailBuilder.properties = new Properties();
-        return new MailBuilder();
+        return mailBuilder;
     }
 
     public MailBuilder properties(MailProperties mailProperties) {
