@@ -11,6 +11,7 @@ import io.my.base.payload.BaseResponse;
 import io.my.base.properties.ServerProperties;
 import io.my.base.repository.UserBackupEmailRepository;
 import io.my.base.repository.UserRepository;
+import io.my.base.repository.dao.FriendDAO;
 import io.my.base.repository.dao.UserDAO;
 import io.my.base.util.JwtUtil;
 import io.my.user.payload.request.JoinRequest;
@@ -27,6 +28,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +39,7 @@ public class UserService {
     private final ServerProperties serverProperties;
     private final UserDAO userDAO;
     private final UserBackupEmailRepository userBackupEmailRepository;
+    private final FriendDAO friendDAO;
 
     public Mono<BaseExtentionResponse<LoginResponse>> login(LoginRequest requestBody) {
         return userRepository.findByEmail(requestBody.getEmail()).flatMap(user -> {
@@ -117,8 +120,15 @@ public class UserService {
     }
 
 
-    public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUserByName(Boolean isSameCollege, String name) {
+    public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUserByName(
+            Boolean isSameCollege, String name, Boolean isFriends) {
         Mono<Long> mono = Mono.just(0L);
+
+        if (isFriends) {
+            return searchUser(
+                    JwtContextHolder.getMonoUserId()
+                            .flatMapMany(userId -> friendDAO.findFriendsByName(userId, name)));
+        }
 
         if (isSameCollege)
             mono = JwtContextHolder.getMonoUserId().flatMap(userRepository::findById).map(User::getCollegeId);
@@ -126,8 +136,16 @@ public class UserService {
         return searchUser(mono.flatMapMany(collegeId -> userDAO.findUserByName(name, collegeId)));
     }
 
-    public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUserByNickname(Boolean isSameCollege, String nickname) {
+    public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUserByNickname(
+            Boolean isSameCollege, String nickname, Boolean isFriends) {
         Mono<Long> mono = Mono.just(0L);
+
+        if (isFriends) {
+            return searchUser(
+                    JwtContextHolder.getMonoUserId()
+                            .flatMapMany(userId -> friendDAO.findFriendsByNickname(userId, nickname)));
+        }
+
         if (isSameCollege)
             mono = JwtContextHolder.getMonoUserId().flatMap(userRepository::findById).map(User::getCollegeId);
 
@@ -135,21 +153,26 @@ public class UserService {
     }
 
     public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUser(Flux<User> flux) {
-        return flux.map(user ->
-                new SearchUserResponse(
-                        user.getId(),
-                        user.getNickname(),
-                        user.getName(),
-                        user.getEmail(),
-                        user.getImage() != null ?
+        AtomicLong atomicUserId = new AtomicLong();
+
+        return JwtContextHolder.getMonoUserId().flatMapMany(userId -> {
+            atomicUserId.set(userId);
+            return flux;
+        }).flatMap(user -> {
+            if (user.getId() == atomicUserId.get()) {
+                return Mono.empty();
+            }
+            return Mono.just(new SearchUserResponse(
+                    user.getId(),
+                    user.getNickname(),
+                    user.getName(),
+                    user.getEmail(),
+                    user.getImage() != null ?
                             serverProperties.getImageUrl() +
                                     serverProperties.getImagePath() +
-                                    user.getImage().getFileName() : null)
-        ).collectList().map(list -> {
-            BaseExtentionResponse<List<SearchUserResponse>> responseBody = new BaseExtentionResponse<>();
-            responseBody.setReturnValue(list);
-            return responseBody;
-        }).switchIfEmpty(Mono.just(new BaseExtentionResponse<>()));
+                                    user.getImage().getFileName() : null));
+        }).collectList().map(BaseExtentionResponse::new)
+        .switchIfEmpty(Mono.just(new BaseExtentionResponse<>()));
     }
 
     public Mono<BaseResponse> changeImage(Long id) {

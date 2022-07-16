@@ -29,4 +29,30 @@ public class FriendQuery {
 
         return client.sql(query).bind("userId", userId);
     }
+
+    public DatabaseClient.GenericExecuteSpec findFriendsByName(Long userId, String name) {
+        String query = "" +
+                "select " +
+                "u.id, u.name, u.nickname, u.email, i.file_name " +
+                "from " +
+                "friend f " +
+                "JOIN `user` u ON f.follow_user_id = u.id " +
+                "LEFT JOIN image i ON u.image_id = i.id " +
+                "where f.user_id = :userId and u.name LIKE CONCAT('%', :name, '%')"
+                ;
+        return client.sql(query).bind("userId", userId).bind("name", name);
+    }
+
+    public DatabaseClient.GenericExecuteSpec findFriendsByNickname(Long userId, String nickname) {
+        String query = "" +
+                "select " +
+                "u.id, u.name, u.nickname, u.email, i.file_name " +
+                "from " +
+                "friend f " +
+                "JOIN `user` u ON f.follow_user_id = u.id " +
+                "LEFT JOIN image i ON u.image_id = i.id " +
+                "where f.user_id = :userId and u.nickname LIKE CONCAT('%', :nickname, '%')"
+                ;
+        return client.sql(query).bind("userId", userId).bind("nickname", nickname);
+    }
 }

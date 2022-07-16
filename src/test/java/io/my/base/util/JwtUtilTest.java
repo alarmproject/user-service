@@ -22,7 +22,7 @@ class JwtUtilTest extends Mockito {
 
     @Test
     void createAccessTokenTest() {
-        String jwt = jwtUtil.createAccessToken(1L);
+        String jwt = jwtUtil.createAccessToken(44L);
         System.out.println(jwt);
         assertTrue(jwtUtil.verifyAccessToken(jwt));
     }

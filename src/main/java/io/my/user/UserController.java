@@ -64,12 +64,13 @@ public class UserController {
     public Mono<BaseExtentionResponse<List<SearchUserResponse>>> searchUser(
             @RequestParam(name = "search", required = false) String search,
             @RequestParam(name = "searchType", defaultValue = "0", required = false) int type,
-            @RequestParam(name = "isSameCollege", defaultValue = "false", required = false) Boolean isSameCollege) {
+            @RequestParam(name = "isSameCollege", defaultValue = "false", required = false) Boolean isSameCollege,
+            @RequestParam(name = "isFriends", defaultValue = "false", required = false) Boolean isFriends) {
 
         Mono<BaseExtentionResponse<List<SearchUserResponse>>> responseMono;
 
-        if (type == 0) responseMono = userService.searchUserByName(isSameCollege, search);
-        else responseMono = userService.searchUserByNickname(isSameCollege, search);
+        if (type == 0) responseMono = userService.searchUserByName(isSameCollege, search, isFriends);
+        else responseMono = userService.searchUserByNickname(isSameCollege, search, isFriends);
 
         return responseMono;
     }

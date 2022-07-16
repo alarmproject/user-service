@@ -4,7 +4,9 @@ import io.my.base.entity.Friend;
 import io.my.base.entity.Image;
 import io.my.base.entity.User;
 import io.my.base.repository.query.FriendQuery;
+import io.my.user.payload.response.SearchUserResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
@@ -35,6 +37,32 @@ public class FriendDAO {
                     friend.setFollowUser(user);
 
                     return friend;
+        }).all();
+    }
+
+    public Flux<User> findFriendsByName(Long userId, String name) {
+        return findUserSearch(this.friendQuery.findFriendsByName(userId, name));
+    }
+
+    public Flux<User> findFriendsByNickname(Long userId, String nickname) {
+        return findUserSearch(this.friendQuery.findFriendsByNickname(userId, nickname));
+    }
+
+    private Flux<User> findUserSearch(DatabaseClient.GenericExecuteSpec spec) {
+        return spec.map((row, rowMetadata) -> {
+            User user = new User();
+            user.setName(row.get("name", String.class));
+            user.setId(row.get("id", Long.class));
+            user.setNickname(row.get("nickname", String.class));
+            user.setEmail(row.get("email", String.class));
+
+            if (row.get("file_name", String.class) != null) {
+                Image image = Image.builder().fileName(row.get("file_name", String.class)).build();
+
+                user.setImage(image);
+            }
+
+            return user;
         }).all();
     }
 }

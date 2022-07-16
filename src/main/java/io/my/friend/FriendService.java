@@ -100,7 +100,7 @@ public class FriendService {
                 return activeHistoryRepository.save(entity);
             })
             .map(entity -> new BaseResponse())
-            .switchIfEmpty(Mono.just(new BaseResponse(1, "등록 실패")))
+            .onErrorReturn(new BaseResponse(1, "등록 실패"))
         ;
     }
 
