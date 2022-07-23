@@ -35,6 +35,7 @@ class ActiveHistoryRestdocsTest extends RestdocsBase {
                     .modDateTime(dateUtil.localDateTimeToUnixTime(LocalDateTime.now()))
                     .friendsUserId(null)
                     .isFollow(Boolean.FALSE)
+                    .imageUrl("http://mysend.co.kr:8080/image/image?fileName=ae679669-1c14-43d0-80d0-23e4160b76fa_default_profile_7.png")
                     .build();
 
             list.add(response);
@@ -72,6 +73,10 @@ class ActiveHistoryRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")),
                         fieldWithPath("returnValue.[].content").description("활동 내역")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("returnValue.[].imageUrl").description("이미지 경로")
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")),

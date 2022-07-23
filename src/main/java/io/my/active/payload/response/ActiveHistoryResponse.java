@@ -13,4 +13,5 @@ public class ActiveHistoryResponse {
     private Long modDateTime;
     private Long friendsUserId;
     private Boolean isFollow;
+    private String imageUrl;
 }

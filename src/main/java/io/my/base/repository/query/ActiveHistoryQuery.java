@@ -14,9 +14,12 @@ public class ActiveHistoryQuery {
                 "SELECT " +
                 "ah.* " +
                 ", f.id as friends_id " +
+                ", i.file_name as file_name " +
                 "FROM " +
                 "active_history ah " +
                 "left join friend f on ah.user_id = f.user_id and ah.friends_user_id = f.follow_user_id " +
+                "join user u on ah.friends_user_id = u.id " +
+                "left join image i on u.image_id = i.id " +
                 "WHERE " +
                 ((id != null && id != 0) ? ("ah.id < :id AND ") : "") +
                 "ah.user_id = :userId " +
