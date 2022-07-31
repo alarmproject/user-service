@@ -84,11 +84,15 @@ public class UserQuery {
                 "from " +
                 "`user` u " +
                 "left join image i on u.image_id = i.id " +
-                "where u.id < :id " +
-                "and u.name like CONCAT('%', :name, '%') " +
+                "where " +
+                (id != null ? "u.id < :id and " : "") +
+                "u.name like CONCAT('%', :name, '%') " +
                 "and u.id not in (select follow_user_id from friend f where user_id = :userId) " +
                 "order by u.id desc limit 10";
 
-        return client.sql(query).bind("userId", userId).bind("id", id).bind("name", name);
+        DatabaseClient.GenericExecuteSpec sql = client.sql(query).bind("userId", userId).bind("name", name);
+
+        if (id != null) sql = sql.bind("id", id);
+        return sql;
     }
 }
