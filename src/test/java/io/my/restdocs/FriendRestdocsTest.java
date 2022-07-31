@@ -186,7 +186,7 @@ class FriendRestdocsTest extends RestdocsBase {
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("Integer")
                                 ),
-                        parameterWithName("name").description("이름")
+                        parameterWithName("name").description("이름").optional()
                                 .attributes(
                                         RestDocAttributes.length(0),
                                         RestDocAttributes.format("String")
@@ -229,7 +229,7 @@ class FriendRestdocsTest extends RestdocsBase {
         getWebTestClient("/friend/search" + param).expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/searchfriends", responseFieldsSnippet));
+                .consumeWith(createConsumer("/searchfriends", requestParametersSnippet, responseFieldsSnippet));
     }
 
 }
