@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
 @RequiredArgsConstructor
 public class UserQuery {
@@ -73,5 +71,24 @@ public class UserQuery {
                 "where u.id = :id"
                 ;
         return client.sql(query).bind("id", id);
+    }
+
+    public DatabaseClient.GenericExecuteSpec findAllNotFriends(Long userId, Long id, String name) {
+        String query = "" +
+                "select " +
+                "u.id " +
+                ", u.name " +
+                ", u.nickname " +
+                ", u.email " +
+                ", i.file_name " +
+                "from " +
+                "`user` u " +
+                "left join image i on u.image_id = i.id " +
+                "where u.id < :id " +
+                "and u.name like CONCAT('%', :name, '%') " +
+                "and u.id not in (select follow_user_id from friend f where user_id = :userId) " +
+                "order by u.id desc limit 10";
+
+        return client.sql(query).bind("userId", userId).bind("id", id).bind("name", name);
     }
 }

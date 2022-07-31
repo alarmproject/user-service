@@ -248,6 +248,15 @@ include::{snippets}/friendrestdocstest/removefriend/http-request.adoc[]
 include::{snippets}/friendrestdocstest/removefriend/http-response.adoc[]
 include::{snippets}/friendrestdocstest/removefriend/curl-request.adoc[]
 
+[[resources-searchfriends]]
+==== 친구 추가용 검색
+
+include::{snippets}/friendrestdocstest/searchfriends/request-parameters.adoc[]
+include::{snippets}/friendrestdocstest/searchfriends/response-fields.adoc[]
+include::{snippets}/friendrestdocstest/searchfriends/http-request.adoc[]
+include::{snippets}/friendrestdocstest/searchfriends/http-response.adoc[]
+include::{snippets}/friendrestdocstest/searchfriends/curl-request.adoc[]
+
 
 === college
 

@@ -4,6 +4,7 @@ import io.my.base.annotation.Logger;
 import io.my.base.payload.BaseExtentionResponse;
 import io.my.base.payload.BaseResponse;
 import io.my.friend.payload.response.FriendListResponse;
+import io.my.friend.payload.response.SearchFriendsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -32,5 +33,13 @@ public class FriendController {
     @DeleteMapping
     public Mono<BaseResponse> removeFriend(Long id) {
         return friendService.removeFriend(id);
+    }
+
+    @Logger
+    @GetMapping("/search")
+    public Mono<BaseExtentionResponse<List<SearchFriendsResponse>>> searchFriends(
+            @RequestParam(name = "id", required = false) Long id,
+            @RequestParam(name = "name", required = false, defaultValue = "") String name) {
+        return friendService.searchFriends(id, name);
     }
 }

@@ -4,8 +4,10 @@ import io.my.base.entity.Image;
 import io.my.base.entity.User;
 import io.my.base.properties.ServerProperties;
 import io.my.base.repository.query.UserQuery;
+import io.my.friend.payload.response.SearchFriendsResponse;
 import io.my.user.payload.response.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
+import org.reactivestreams.Publisher;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
@@ -75,5 +77,19 @@ public class UserDAO {
                     .imageUrl(imageUrl)
                     .build();
         }).one();
+    }
+
+    public Flux<SearchFriendsResponse> findAllNotFriends(Long userId, Long id, String name) {
+        return this.userQuery.findAllNotFriends(userId, id, name).map((row, rowMetadata) -> {
+            String imageUrl = row.get("file_name", String.class);
+
+            return SearchFriendsResponse.builder()
+                    .id(row.get("id", Long.class))
+                    .nickname(row.get("nickname", String.class))
+                    .name(row.get("name", String.class))
+                    .email(row.get("email", String.class))
+                    .imageUrl(imageUrl)
+                    .build();
+        }).all();
     }
 }
