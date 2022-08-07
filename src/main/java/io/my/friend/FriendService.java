@@ -82,7 +82,7 @@ public class FriendService {
                 entity.setFollowUserId(id);
                 return friendRepository.save(entity);
             })
-            .flatMap(friend -> userRepository.findById(friend.getUserId()))
+            .flatMap(friend -> userRepository.findById(friend.getFollowUserId()))
             .flatMap(user -> {
                 ActiveHistory entity = new ActiveHistory();
                 entity.setUserId(user.getId());
@@ -92,7 +92,7 @@ public class FriendService {
 
                 return activeHistoryRepository.save(entity);
             })
-            .flatMap(activeHistory -> userRepository.findById(id))
+            .flatMap(activeHistory -> userRepository.findById(activeHistory.getUserId()))
             .flatMap(user -> {
                 ActiveHistory entity = new ActiveHistory();
                 entity.setUserId(user.getId());

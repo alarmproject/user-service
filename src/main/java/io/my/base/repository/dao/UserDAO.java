@@ -7,7 +7,6 @@ import io.my.base.repository.query.UserQuery;
 import io.my.friend.payload.response.SearchFriendsResponse;
 import io.my.user.payload.response.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
-import org.reactivestreams.Publisher;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;

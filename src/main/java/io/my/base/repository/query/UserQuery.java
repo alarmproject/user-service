@@ -87,6 +87,7 @@ public class UserQuery {
                 "where " +
                 (id != null ? "u.id < :id and " : "") +
                 "u.name like CONCAT('%', :name, '%') " +
+                "and u.id != :userId " +
                 "and u.id not in (select follow_user_id from friend f where user_id = :userId) " +
                 "order by u.id desc limit 10";
 
