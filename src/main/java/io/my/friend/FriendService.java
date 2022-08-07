@@ -82,20 +82,20 @@ public class FriendService {
                 entity.setFollowUserId(id);
                 return friendRepository.save(entity);
             })
-            .flatMap(friend -> userRepository.findById(friend.getFollowUserId()))
+            .flatMap(friend -> userRepository.findById(id))
             .flatMap(user -> {
                 ActiveHistory entity = new ActiveHistory();
-                entity.setUserId(user.getId());
+                entity.setUserId(atomicUserId.get());
                 entity.setFriendsUserId(id);
                 String content = ActiveContent.ADDED_FRIEND.getContent();
                 entity.setContent(content.replaceFirst("\\{}", user.getName()));
 
                 return activeHistoryRepository.save(entity);
             })
-            .flatMap(activeHistory -> userRepository.findById(activeHistory.getUserId()))
+            .flatMap(activeHistory -> userRepository.findById(atomicUserId.get()))
             .flatMap(user -> {
                 ActiveHistory entity = new ActiveHistory();
-                entity.setUserId(user.getId());
+                entity.setUserId(id);
                 entity.setFriendsUserId(atomicUserId.get());
                 String content = ActiveContent.BE_ADDED_FRIEND.getContent();
                 entity.setContent(content.replaceFirst("\\{}", user.getName()));
