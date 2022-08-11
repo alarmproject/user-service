@@ -148,4 +148,10 @@ public class UserController {
         return userService.changeUserCollege(schoolId, collegeEmail);
     }
 
+    @Logger
+    @DeleteMapping("/remove")
+    public Mono<BaseResponse> removeUser() {
+        return userService.removeUser();
+    }
+
 }

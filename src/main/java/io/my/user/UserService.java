@@ -271,4 +271,8 @@ public class UserService {
                 ;
 
     }
+
+    public Mono<BaseResponse> removeUser() {
+        return JwtContextHolder.getMonoUserId().flatMap(userRepository::deleteById).thenReturn(new BaseResponse());
+    }
 }
