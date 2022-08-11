@@ -928,5 +928,28 @@ class UserRestdocsTest extends RestdocsBase {
                 .consumeWith(createConsumer("/userchangecollege", requestParametersSnippet, responseFieldsSnippet));
     }
 
+    @Test
+    @DisplayName("회원 탈퇴 API")
+    void removeUser() {
+        Mockito.when(userService.removeUser()).thenReturn(Mono.just(new BaseResponse()));
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer"))
+                );
+
+        deleteWebTestClient("/user/remove").expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/removeuser", responseFieldsSnippet));
+    }
+
 
 }

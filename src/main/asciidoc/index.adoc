@@ -208,6 +208,15 @@ include::{snippets}/userrestdocstest/getuserinfo/http-response.adoc[]
 include::{snippets}/userrestdocstest/getuserinfo/curl-request.adoc[]
 
 
+[[resources-removeuser]]
+==== 사용자 정보 조회
+
+include::{snippets}/userrestdocstest/removeuser/response-fields.adoc[]
+include::{snippets}/userrestdocstest/removeuser/http-request.adoc[]
+include::{snippets}/userrestdocstest/removeuser/http-response.adoc[]
+include::{snippets}/userrestdocstest/removeuser/curl-request.adoc[]
+
+
 === mail
 
 [[resources-mailcode]]
