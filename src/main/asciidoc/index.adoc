@@ -209,7 +209,7 @@ include::{snippets}/userrestdocstest/getuserinfo/curl-request.adoc[]
 
 
 [[resources-removeuser]]
-==== 사용자 정보 조회
+==== 회원 탈퇴
 
 include::{snippets}/userrestdocstest/removeuser/response-fields.adoc[]
 include::{snippets}/userrestdocstest/removeuser/http-request.adoc[]
