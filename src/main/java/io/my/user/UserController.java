@@ -100,6 +100,12 @@ public class UserController {
     }
 
     @Logger
+    @GetMapping("/check/college/email")
+    public Mono<BaseExtentionResponse<Boolean>> checkCollegeEmail(@RequestParam("email") String email) {
+        return userService.checkCollegeEmail(email);
+    }
+
+    @Logger
     @GetMapping("/check/nickname")
     public Mono<BaseExtentionResponse<Boolean>> checkNickname(@RequestParam("nickname") String nickname) {
         return userService.checkNickname(nickname);

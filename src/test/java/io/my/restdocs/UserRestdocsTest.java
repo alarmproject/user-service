@@ -627,6 +627,44 @@ class UserRestdocsTest extends RestdocsBase {
     }
 
     @Test
+    @DisplayName("학교 이메일 중복체크 API")
+    void checkCollegeEmail() {
+        Mockito.when(userService.checkCollegeEmail(Mockito.anyString())).thenReturn(Mono.just(new BaseExtentionResponse<>(Boolean.FALSE)));
+
+        RequestParametersSnippet requestParametersSnippet =
+                requestParameters(
+                        parameterWithName("email").description("학교 이메일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")
+                                )
+                );
+
+        ResponseFieldsSnippet responseFieldsSnippet =
+                responseFields(
+                        fieldWithPath("result").description("결과 메시지")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")),
+                        fieldWithPath("code").description("결과 코드")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Integer")),
+                        fieldWithPath("returnValue").description("true: 이미 존재, false: 없는 이메일")
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean"))
+                );
+
+        String params = "?email=" + EMAIL;
+
+        getWebTestClientUnAuth("/user/check/college/email" + params).expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(createConsumer("/checkcollegeemail", requestParametersSnippet, responseFieldsSnippet));
+    }
+
+    @Test
     @DisplayName("닉네임 중복체크 API")
     void checkNickname() {
         Mockito.when(userService.checkNickname(Mockito.anyString())).thenReturn(Mono.just(new BaseExtentionResponse<>(Boolean.FALSE)));

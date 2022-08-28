@@ -202,6 +202,13 @@ public class UserService {
                 ;
     }
 
+    public Mono<BaseExtentionResponse<Boolean>> checkCollegeEmail(String email) {
+        return userRepository.findByCollegeEmail(email)
+                .map(user -> new BaseExtentionResponse<>(Boolean.TRUE))
+                .switchIfEmpty(Mono.just(new BaseExtentionResponse<>(Boolean.FALSE)))
+                ;
+    }
+
     public Mono<BaseExtentionResponse<Boolean>> checkNickname(String nickname) {
         return userRepository.findByNickname(nickname)
                 .map(user -> new BaseExtentionResponse<>(Boolean.TRUE))
