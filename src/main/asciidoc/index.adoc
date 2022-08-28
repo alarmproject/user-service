@@ -168,6 +168,16 @@ include::{snippets}/userrestdocstest/checkemail/http-response.adoc[]
 include::{snippets}/userrestdocstest/checkemail/curl-request.adoc[]
 
 
+[[resources-checkcollegeemail]]
+==== 학교이메일 중복체크
+
+include::{snippets}/userrestdocstest/checkcollegeemail/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/checkcollegeemail/response-fields.adoc[]
+include::{snippets}/userrestdocstest/checkcollegeemail/http-request.adoc[]
+include::{snippets}/userrestdocstest/checkcollegeemail/http-response.adoc[]
+include::{snippets}/userrestdocstest/checkcollegeemail/curl-request.adoc[]
+
+
 [[resources-checknickname]]
 ==== 닉네임 중복체크
 
