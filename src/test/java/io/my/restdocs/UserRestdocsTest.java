@@ -658,7 +658,7 @@ class UserRestdocsTest extends RestdocsBase {
 
         String params = "?email=" + EMAIL;
 
-        getWebTestClientUnAuth("/user/check/college/email" + params).expectStatus()
+        getWebTestClient("/user/check/college/email" + params).expectStatus()
                 .isOk()
                 .expectBody()
                 .consumeWith(createConsumer("/checkcollegeemail", requestParametersSnippet, responseFieldsSnippet));
