@@ -5,7 +5,7 @@ spring:
     password: iURm6UHHaHioszpeA9G6
 
 server:
-  image-url: univercafe.xyz:8080/image
+  image-url: http://univercafe.xyz:8080/image
   image-path: /image?fileName=
 
 slack:
