@@ -156,8 +156,10 @@ public class UserController {
 
     @Logger
     @DeleteMapping("/remove")
-    public Mono<BaseResponse> removeUser() {
-        return userService.removeUser();
+    public Mono<BaseResponse> removeUser(
+            @RequestParam(required = false, name = "isApple", defaultValue = "false") Boolean isApple,
+            @RequestParam(required = false, name = "code") String code) {
+        return userService.removeUser(isApple, code);
     }
 
 }

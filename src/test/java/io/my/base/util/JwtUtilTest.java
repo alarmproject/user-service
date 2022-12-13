@@ -33,4 +33,10 @@ class JwtUtilTest extends Mockito {
         assertTrue(jwtUtil.verifyRefreshToken(jwt));
     }
 
+    @Test
+    void createAppleSecretKeyTest() {
+        String clientSecret = jwtUtil.createAppleSecretKey();
+        assertNotNull(clientSecret);
+    }
+
 }

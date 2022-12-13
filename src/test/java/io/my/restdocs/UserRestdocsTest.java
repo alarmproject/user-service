@@ -969,8 +969,21 @@ class UserRestdocsTest extends RestdocsBase {
     @Test
     @DisplayName("회원 탈퇴 API")
     void removeUser() {
-        Mockito.when(userService.removeUser()).thenReturn(Mono.just(new BaseResponse()));
+        Mockito.when(userService.removeUser(Mockito.any(), Mockito.any())).thenReturn(Mono.just(new BaseResponse()));
 
+        RequestParametersSnippet requestParametersSnippet =
+                requestParameters(
+                        parameterWithName("isApple").description("애플 로그인 여부").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("Boolean")
+                                ),
+                        parameterWithName("code").description("애플 로그인 코드").optional()
+                                .attributes(
+                                        RestDocAttributes.length(0),
+                                        RestDocAttributes.format("String")
+                                )
+                );
         ResponseFieldsSnippet responseFieldsSnippet =
                 responseFields(
                         fieldWithPath("result").description("결과 메시지")
@@ -986,7 +999,7 @@ class UserRestdocsTest extends RestdocsBase {
         deleteWebTestClient("/user/remove").expectStatus()
                 .isOk()
                 .expectBody()
-                .consumeWith(createConsumer("/removeuser", responseFieldsSnippet));
+                .consumeWith(createConsumer("/removeuser", requestParametersSnippet, responseFieldsSnippet));
     }
 
 

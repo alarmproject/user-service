@@ -1,5 +1,6 @@
 package io.my.base.exception;
 
+import io.my.base.exception.object.AppleConnectException;
 import io.my.base.exception.object.DatabaseException;
 import io.my.base.exception.object.MailSenderException;
 import io.my.base.exception.object.PasswordWrongException;
@@ -55,6 +56,16 @@ public class ExceptionAdvice {
                 .body(new BaseResponse(
                         ErrorTypeEnum.DATABASE_EXCEPTION.getCode(),
                         ErrorTypeEnum.DATABASE_EXCEPTION.getResult()
+                ));
+    }
+
+    @ExceptionHandler(AppleConnectException.class)
+    protected ResponseEntity<BaseResponse> exceptionAdvice(AppleConnectException e) {
+        slackService.sendSlackException(e);
+        return ResponseEntity.internalServerError()
+                .body(new BaseResponse(
+                        ErrorTypeEnum.FAIL_TO_APPLE_CONNECT.getCode(),
+                        ErrorTypeEnum.FAIL_TO_APPLE_CONNECT.getResult()
                 ));
     }
 

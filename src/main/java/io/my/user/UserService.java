@@ -4,6 +4,7 @@ import io.my.base.context.JwtContextHolder;
 import io.my.base.entity.User;
 import io.my.base.entity.UserBackupEmail;
 import io.my.base.exception.ErrorTypeEnum;
+import io.my.base.exception.object.AppleConnectException;
 import io.my.base.exception.object.DatabaseException;
 import io.my.base.exception.object.PasswordWrongException;
 import io.my.base.payload.BaseExtentionResponse;
@@ -14,6 +15,9 @@ import io.my.base.repository.UserRepository;
 import io.my.base.repository.dao.FriendDAO;
 import io.my.base.repository.dao.UserDAO;
 import io.my.base.util.JwtUtil;
+import io.my.user.dto.AppleLoginRequest;
+import io.my.user.dto.AppleLoginResponse;
+import io.my.user.dto.AppleRevokeRequest;
 import io.my.user.payload.request.JoinRequest;
 import io.my.user.payload.request.LoginRequest;
 import io.my.user.payload.request.PatchUserPasswordRequest;
@@ -22,12 +26,17 @@ import io.my.user.payload.response.SearchUserResponse;
 import io.my.user.payload.response.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
@@ -40,6 +49,7 @@ public class UserService {
     private final UserDAO userDAO;
     private final UserBackupEmailRepository userBackupEmailRepository;
     private final FriendDAO friendDAO;
+    private final WebClient webClient;
 
     public Mono<BaseExtentionResponse<LoginResponse>> login(LoginRequest requestBody) {
         return userRepository.findByEmail(requestBody.getEmail()).flatMap(user -> {
@@ -279,7 +289,57 @@ public class UserService {
 
     }
 
-    public Mono<BaseResponse> removeUser() {
+    public Mono<BaseResponse> removeUser(Boolean isApple, String code) {
+        if (isApple) {
+            String clientSecret = jwtUtil.createAppleSecretKey();
+
+            String appBundleId = "com.haksiklife.haksiklifes";
+            AppleLoginRequest requestBody = AppleLoginRequest.builder()
+                    .clientId(appBundleId)
+                    .clientSecret(clientSecret)
+                    .grantType("authorization_code")
+                    .code(code)
+                    .build();
+
+            return webClient.post()
+                    .uri(URI.create("https://appleid.apple.com/auth/token"))
+                    .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .bodyValue(requestBody)
+                    .retrieve()
+                    .toEntity(AppleLoginResponse.class)
+                    .map(response -> {
+                        if (response.getStatusCode() == HttpStatus.OK) {
+                            return Objects.requireNonNull(response.getBody()).getAccessToken();
+                        }
+                        throw new AppleConnectException();
+                    })
+                    .flatMap(accessToken ->
+                            webClient.post()
+                                .uri(URI.create("https://appleid.apple.com/auth/revoke"))
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .bodyValue(
+                                        AppleRevokeRequest.builder()
+                                                .clientId(appBundleId)
+                                                .clientSecret(clientSecret)
+                                                .token(accessToken)
+                                        .build()
+                                )
+                                .retrieve()
+                                .toEntity(Object.class)
+                                .flatMap(response -> {
+                                    if (response.getStatusCode() != HttpStatus.OK) {
+                                        return Mono.error(new AppleConnectException());
+                                    }
+
+                                    return JwtContextHolder.getMonoUserId()
+                                            .flatMap(userRepository::deleteById)
+                                            .thenReturn(new BaseResponse());
+                                })
+                    );
+        }
+
         return JwtContextHolder.getMonoUserId().flatMap(userRepository::deleteById).thenReturn(new BaseResponse());
     }
 }
