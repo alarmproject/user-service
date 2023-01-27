@@ -6,7 +6,7 @@ logging:
 
 jjwt:
   access-token:
-    expired-time: 720
+    expired-time: 1
     secret-key: access_secret
   refresh-token:
     expired-time: 1440
@@ -39,11 +39,16 @@ mail:
   smtp-socketFactory-port: 465
   smtp-socketFactory-class: javax.net.ssl.SSLSocketFactory
 
+#spring:
+#  r2dbc:
+#    url: r2dbc:mariadb://125.240.27.115:17001/alarm-project
+#    username: root
+#    password: 1234
 spring:
   r2dbc:
-    url: r2dbc:mariadb://125.240.27.115:17001/alarm-project
-    username: root
-    password: 1234
+    url: r2dbc:mariadb://database-2.c1sy875aigpu.ap-northeast-2.rds.amazonaws.com:3306/innodb
+    username: admin
+    password: iURm6UHHaHioszpeA9G6
 
 server:
   image-url: http://mysend.co.kr:8080/image
