@@ -1,12 +1,13 @@
 package io.my.base.context;
 
+import io.my.base.entity.User;
 import org.springframework.web.server.ServerWebExchange;
 
 import java.io.Serializable;
 
 final public class JwtContext implements Serializable {
     private final String jwt;
-    private Object user;
+    private User user;
     private Long userId;
 
     public JwtContext(final ServerWebExchange exchange) {
@@ -16,7 +17,7 @@ final public class JwtContext implements Serializable {
         } else { jwt = null; }
     }
 
-    public void setUser(Object user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -28,7 +29,7 @@ final public class JwtContext implements Serializable {
         return this.jwt;
     }
 
-    public Object getUser () {
+    public User getUser () {
         return this.user;
     }
 

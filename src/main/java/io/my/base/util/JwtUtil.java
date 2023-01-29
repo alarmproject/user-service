@@ -1,18 +1,26 @@
 package io.my.base.util;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.SignatureException;
+import io.my.base.exception.object.AppleConnectException;
 import io.my.base.properties.jwt.AccessTokenProperties;
 import io.my.base.properties.jwt.RefreshTokenProperties;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
+import java.io.Reader;
+import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -97,7 +105,7 @@ public class JwtUtil {
                     .setSigningKey(key)
                     .parseClaimsJws(jwt)
                     .getBody();
-        } catch(SignatureException e) {
+        } catch(SignatureException | ExpiredJwtException e) {
             return null;
         }
     }
@@ -127,5 +135,43 @@ public class JwtUtil {
                 .setSigningKey(accessToken)
                 .parseClaimsJws(jwt)
                 .getBody();
+    }
+
+    public String createAppleSecretKey() {
+        String alg = "ES256";
+        String kid = "R7YK7354MM";
+        String iss = "CR6FBD7V4K";
+
+        Date iat = new Date();
+        Date exp = Date.from(LocalDateTime.now().plusHours(1).atZone(ZoneId.systemDefault()).toInstant());
+
+        String aud = "https://appleid.apple.com";
+        String sub = "com.haksiklife.haksiklifes";
+
+        return Jwts.builder()
+                .setHeaderParam("alg", alg)
+                .setHeaderParam("kid", kid)
+                .setIssuer(iss)
+                .setIssuedAt(iat)
+                .setExpiration(exp)
+                .setAudience(aud)
+                .setSubject(sub)
+                .signWith(SignatureAlgorithm.ES256, this.getPrivateKey())
+                .compact();
+    }
+
+    private Key getPrivateKey() {
+        String key = "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQg5C/OwkqoSwDxi5iRxjQ33TMrwV4TCLbqRoknTBQQFwGgCgYIKoZIzj0DAQehRANCAAQSPSLllWeCpoL+/2wNruFG+qgYqZr9kvO4pipDEAARqzdUAt9Nv6szDVUfHDz9eKZorCNFlWPkSF0rd+BZMbVg";
+
+        try {
+            return KeyFactory.getInstance("EC")
+                    .generatePrivate(
+                            new PKCS8EncodedKeySpec(
+                                    Base64.getDecoder().decode(key)
+                            )
+                    );
+        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+            throw new AppleConnectException();
+        }
     }
 }

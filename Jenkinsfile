@@ -6,9 +6,9 @@ pipeline {
         maven 'mvn'
     }
 
-    triggers {
-        pollSCM('*/3 * * * *')
-    }
+//     triggers {
+//         pollSCM('*/3 * * * *')
+//     }
 
     stages {
         // 레포지토리를 다운로드 받음
@@ -46,7 +46,7 @@ pipeline {
           agent any
           steps {
             echo 'Build Maven'
-            sh 'mvn clean package'
+            sh 'mvn clean package -P local'
           }
 
           post {
@@ -101,38 +101,38 @@ pipeline {
             }
         }
 
-        stage('Connect Home-Server and build') {
-          agent any
-          steps {
-            sshPublisher(
-                continueOnError: false, failOnError: true,
-                publishers: [
-                    sshPublisherDesc(
-                        configName: "alarm-service",
-                        verbose: true,
-                        transfers: [
-                            sshTransfer(
-                                sourceFiles: "docker-compose-alarm-user.yml",
-                            ),
-                            sshTransfer(execCommand: "docker login -u rlabotjd -p 251fcc1f-8ec9-4b0a-b440-c97a95a68e9e"),
-                            sshTransfer(execCommand: "docker pull rlabotjd/mysend:latest-alarm-user"),
-                            sshTransfer(execCommand: "docker service rm alarm_alarm-user"),
-                            sshTransfer(execCommand: "docker stack deploy --compose-file /home/ec2-user/alarm-service/docker-compose-alarm-user.yml alarm"),
-                            sshTransfer(execCommand: "docker image prune -f")
-                        ]
-                    )
-                ]
-            )
-          }
-
-          post {
-            success {
-                echo 'connect Home Server deploy success..'
-            }
-            failure {
-              error 'connect Home Server deploy fail...'
-            }
-          }
-        }
+//         stage('Connect Home-Server and build') {
+//           agent any
+//           steps {
+//             sshPublisher(
+//                 continueOnError: false, failOnError: true,
+//                 publishers: [
+//                     sshPublisherDesc(
+//                         configName: "alarm-service",
+//                         verbose: true,
+//                         transfers: [
+//                             sshTransfer(
+//                                 sourceFiles: "docker-compose-user.yml",
+//                             ),
+//                             sshTransfer(execCommand: "docker login -u rlabotjd -p 251fcc1f-8ec9-4b0a-b440-c97a95a68e9e"),
+//                             sshTransfer(execCommand: "docker pull rlabotjd/mysend:latest-alarm-user"),
+//                             sshTransfer(execCommand: "docker service rm alarm_alarm-user"),
+//                             sshTransfer(execCommand: "docker stack deploy --compose-file /home/ec2-user/alarm-service/docker-compose-user.yml alarm"),
+//                             sshTransfer(execCommand: "docker image prune -f")
+//                         ]
+//                     )
+//                 ]
+//             )
+//           }
+//
+//           post {
+//             success {
+//                 echo 'connect Home Server deploy success..'
+//             }
+//             failure {
+//               error 'connect Home Server deploy fail...'
+//             }
+//           }
+//         }
     }
 }

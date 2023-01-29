@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
@@ -17,12 +18,17 @@ public class User extends BaseEntity {
     private Byte type;
     private String name;
     private String nickname;
+    private String password;
     private String email;
     private String deviceToken;
     private String collegeEmail;
+    private Integer classOf;
 
     private Long imageId;
     private Long collegeId;
+
+    @Transient
+    private Image image;
 
 
 

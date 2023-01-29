@@ -1,0 +1,16 @@
+spring:
+  r2dbc:
+    url: r2dbc:mariadb://database-2.c1sy875aigpu.ap-northeast-2.rds.amazonaws.com:3306/innodb
+    username: admin
+    password: iURm6UHHaHioszpeA9G6
+
+server:
+  image-url: http://univercafe.xyz:8080/image
+  image-path: /image?fileName=
+
+slack:
+  user-oauth-token: xoxp-2934250874400-2910515972802-3577594085399-a37aadaa6c08c5f857cdf365f961acda
+  bot-user-oauth-token: xoxb-2934250874400-3594550749092-Ry3KdAKf2c3f5BPlPttsKdVs
+  client-secret: 69012a9b612602434bf3b4ff1ba3f31a
+  signing-secret: 8db10f041156ea1e4fd63469077aaa03
+  verification-token: QSd6sPrGxe53VPRixtEm5R30

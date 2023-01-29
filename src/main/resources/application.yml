@@ -3,11 +3,10 @@ logging:
     org:
       springframework:
         r2dbc: DEBUG
-  config: classpath:logback-spring-test.xml
 
 jjwt:
   access-token:
-    expired-time: 720
+    expired-time: 1
     secret-key: access_secret
   refresh-token:
     expired-time: 1440
@@ -16,23 +15,48 @@ jjwt:
 security:
   un-security:
     list:
+      - GET /specification/index.html
       - GET /healthcheck
-      - POST /join
-      - POST /login
+      - POST /user/join
+      - POST /user/login
+      - GET /user/social/login
+      - POST /user/social/join
+      - GET /user/find/email
       - GET /mail/code
+      - GET /user/find/email
+      - GET /college/list
+      - PATCH /user/password
+      - GET /user/check/email
+      - GET /user/check/nickname
 
 mail:
   username: universitycafeterialife@gmail.com
-  password: unicafelife12
+#  password: unicafelife12
+  password: yznnvsgzouymtase
   smtp-host: smtp.gmail.com
   smtp-port: 465
   smtp-auth: true
   smtp-socketFactory-port: 465
   smtp-socketFactory-class: javax.net.ssl.SSLSocketFactory
 
+#spring:
+#  r2dbc:
+#    url: r2dbc:mariadb://125.240.27.115:17001/alarm-project
+#    username: root
+#    password: 1234
 spring:
   r2dbc:
-    url: r2dbc:mariadb://alarm-project.cl4rharqalth.ap-northeast-2.rds.amazonaws.com:3306/innodb
-    username: root
-    password: 12345678
+    url: r2dbc:mariadb://database-2.c1sy875aigpu.ap-northeast-2.rds.amazonaws.com:3306/innodb
+    username: admin
+    password: iURm6UHHaHioszpeA9G6
 
+server:
+  image-url: http://mysend.co.kr:8080/image
+  image-path: /image?fileName=
+
+slack:
+  user-oauth-token: xoxp-2934250874400-2910515972802-3577594085399-a37aadaa6c08c5f857cdf365f961acda
+  bot-user-oauth-token: xoxb-2934250874400-3594550749092-Ry3KdAKf2c3f5BPlPttsKdVs
+  client-secret: 69012a9b612602434bf3b4ff1ba3f31a
+  signing-secret: 8db10f041156ea1e4fd63469077aaa03
+  verification-token: QSd6sPrGxe53VPRixtEm5R30

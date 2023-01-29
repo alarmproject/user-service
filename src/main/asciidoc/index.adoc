@@ -15,6 +15,7 @@
 [[resources-api]]
 == API
 
+=== Healthcheck
 
 [[resources-healthcheck]]
 ==== healthcheck
@@ -23,4 +24,329 @@ include::{snippets}/healthcheckrestdocstest/healthcheck/response-fields.adoc[]
 include::{snippets}/healthcheckrestdocstest/healthcheck/http-request.adoc[]
 include::{snippets}/healthcheckrestdocstest/healthcheck/http-response.adoc[]
 include::{snippets}/healthcheckrestdocstest/healthcheck/curl-request.adoc[]
+
+
+=== user
+
+[[resources-userlogin]]
+==== 일반 로그인
+
+include::{snippets}/userrestdocstest/userlogin/request-fields.adoc[]
+include::{snippets}/userrestdocstest/userlogin/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userlogin/http-request.adoc[]
+include::{snippets}/userrestdocstest/userlogin/http-response.adoc[]
+include::{snippets}/userrestdocstest/userlogin/curl-request.adoc[]
+
+
+[[resources-userjoin]]
+==== 일반 회원가입
+
+include::{snippets}/userrestdocstest/userjoin/request-fields.adoc[]
+include::{snippets}/userrestdocstest/userjoin/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userjoin/http-request.adoc[]
+include::{snippets}/userrestdocstest/userjoin/http-response.adoc[]
+include::{snippets}/userrestdocstest/userjoin/curl-request.adoc[]
+
+
+[[resources-usersociallogin]]
+==== 소셜 로그인
+
+include::{snippets}/userrestdocstest/usersociallogin/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/usersociallogin/response-fields.adoc[]
+include::{snippets}/userrestdocstest/usersociallogin/http-request.adoc[]
+include::{snippets}/userrestdocstest/usersociallogin/http-response.adoc[]
+include::{snippets}/userrestdocstest/usersociallogin/curl-request.adoc[]
+
+
+[[resources-usersocialjoin]]
+==== 소셜 회원가입
+
+include::{snippets}/userrestdocstest/usersocialjoin/request-fields.adoc[]
+include::{snippets}/userrestdocstest/usersocialjoin/response-fields.adoc[]
+include::{snippets}/userrestdocstest/usersocialjoin/http-request.adoc[]
+include::{snippets}/userrestdocstest/usersocialjoin/http-response.adoc[]
+include::{snippets}/userrestdocstest/usersocialjoin/curl-request.adoc[]
+
+
+[[resources-userregistfindemail]]
+==== 이메일 찾기용 이메일 추 가
+
+include::{snippets}/userrestdocstest/userregistfindemail/request-fields.adoc[]
+include::{snippets}/userrestdocstest/userregistfindemail/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userregistfindemail/http-request.adoc[]
+include::{snippets}/userrestdocstest/userregistfindemail/http-response.adoc[]
+include::{snippets}/userrestdocstest/userregistfindemail/curl-request.adoc[]
+
+
+[[resources-userfindemail]]
+==== 이메일 찾기
+
+include::{snippets}/userrestdocstest/userfindemail/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/userfindemail/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userfindemail/http-request.adoc[]
+include::{snippets}/userrestdocstest/userfindemail/http-response.adoc[]
+include::{snippets}/userrestdocstest/userfindemail/curl-request.adoc[]
+
+
+[[resources-changepassword]]
+==== 이메일로 비밀번호 변경
+
+include::{snippets}/userrestdocstest/changepassword/request-fields.adoc[]
+include::{snippets}/userrestdocstest/changepassword/response-fields.adoc[]
+include::{snippets}/userrestdocstest/changepassword/http-request.adoc[]
+include::{snippets}/userrestdocstest/changepassword/http-response.adoc[]
+include::{snippets}/userrestdocstest/changepassword/curl-request.adoc[]
+
+
+[[resources-userchangepassword]]
+==== 비밀번호 변경
+
+include::{snippets}/userrestdocstest/userchangepassword/request-fields.adoc[]
+include::{snippets}/userrestdocstest/userchangepassword/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userchangepassword/http-request.adoc[]
+include::{snippets}/userrestdocstest/userchangepassword/http-response.adoc[]
+include::{snippets}/userrestdocstest/userchangepassword/curl-request.adoc[]
+
+
+[[resources-userchangeimage]]
+==== 프로필 사진 변경
+
+include::{snippets}/userrestdocstest/changeimage/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/changeimage/response-fields.adoc[]
+include::{snippets}/userrestdocstest/changeimage/http-request.adoc[]
+include::{snippets}/userrestdocstest/changeimage/http-response.adoc[]
+include::{snippets}/userrestdocstest/changeimage/curl-request.adoc[]
+
+
+[[resources-userchangenickname]]
+==== 닉네임 변경
+
+include::{snippets}/userrestdocstest/changenickname/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/changenickname/response-fields.adoc[]
+include::{snippets}/userrestdocstest/changenickname/http-request.adoc[]
+include::{snippets}/userrestdocstest/changenickname/http-response.adoc[]
+include::{snippets}/userrestdocstest/changenickname/curl-request.adoc[]
+
+
+[[resources-userchangeemail]]
+==== 이메일 변경
+
+include::{snippets}/userrestdocstest/userchangeemail/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/userchangeemail/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userchangeemail/http-request.adoc[]
+include::{snippets}/userrestdocstest/userchangeemail/http-response.adoc[]
+include::{snippets}/userrestdocstest/userchangeemail/curl-request.adoc[]
+
+
+[[resources-userchangecollege]]
+==== 학교 변경
+
+include::{snippets}/userrestdocstest/userchangecollege/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/userchangecollege/response-fields.adoc[]
+include::{snippets}/userrestdocstest/userchangecollege/http-request.adoc[]
+include::{snippets}/userrestdocstest/userchangecollege/http-response.adoc[]
+include::{snippets}/userrestdocstest/userchangecollege/curl-request.adoc[]
+
+
+[[resources-usersearch]]
+==== 사용자 검색
+
+include::{snippets}/userrestdocstest/usersearch/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/usersearch/response-fields.adoc[]
+include::{snippets}/userrestdocstest/usersearch/http-request.adoc[]
+include::{snippets}/userrestdocstest/usersearch/http-response.adoc[]
+include::{snippets}/userrestdocstest/usersearch/curl-request.adoc[]
+
+
+[[resources-checkemail]]
+==== 이메일 중복체크
+
+include::{snippets}/userrestdocstest/checkemail/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/checkemail/response-fields.adoc[]
+include::{snippets}/userrestdocstest/checkemail/http-request.adoc[]
+include::{snippets}/userrestdocstest/checkemail/http-response.adoc[]
+include::{snippets}/userrestdocstest/checkemail/curl-request.adoc[]
+
+
+[[resources-checkcollegeemail]]
+==== 학교이메일 중복체크
+
+include::{snippets}/userrestdocstest/checkcollegeemail/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/checkcollegeemail/response-fields.adoc[]
+include::{snippets}/userrestdocstest/checkcollegeemail/http-request.adoc[]
+include::{snippets}/userrestdocstest/checkcollegeemail/http-response.adoc[]
+include::{snippets}/userrestdocstest/checkcollegeemail/curl-request.adoc[]
+
+
+[[resources-checknickname]]
+==== 닉네임 중복체크
+
+include::{snippets}/userrestdocstest/checknickname/request-parameters.adoc[]
+include::{snippets}/userrestdocstest/checknickname/response-fields.adoc[]
+include::{snippets}/userrestdocstest/checknickname/http-request.adoc[]
+include::{snippets}/userrestdocstest/checknickname/http-response.adoc[]
+include::{snippets}/userrestdocstest/checknickname/curl-request.adoc[]
+
+
+[[resources-checkpassword]]
+==== 비밀번호 확인
+
+include::{snippets}/userrestdocstest/checkpassword/request-fields.adoc[]
+include::{snippets}/userrestdocstest/checkpassword/response-fields.adoc[]
+include::{snippets}/userrestdocstest/checkpassword/http-request.adoc[]
+include::{snippets}/userrestdocstest/checkpassword/http-response.adoc[]
+include::{snippets}/userrestdocstest/checkpassword/curl-request.adoc[]
+
+
+[[resources-getimagelink]]
+==== 사용자 이미지 링크 조회
+
+include::{snippets}/userrestdocstest/getimagelink/path-parameters.adoc[]
+include::{snippets}/userrestdocstest/getimagelink/response-fields.adoc[]
+include::{snippets}/userrestdocstest/getimagelink/http-request.adoc[]
+include::{snippets}/userrestdocstest/getimagelink/http-response.adoc[]
+include::{snippets}/userrestdocstest/getimagelink/curl-request.adoc[]
+
+
+[[resources-getuserinfo]]
+==== 사용자 정보 조회
+
+include::{snippets}/userrestdocstest/getuserinfo/path-parameters.adoc[]
+include::{snippets}/userrestdocstest/getuserinfo/response-fields.adoc[]
+include::{snippets}/userrestdocstest/getuserinfo/http-request.adoc[]
+include::{snippets}/userrestdocstest/getuserinfo/http-response.adoc[]
+include::{snippets}/userrestdocstest/getuserinfo/curl-request.adoc[]
+
+
+[[resources-removeuser]]
+==== 회원 탈퇴
+
+include::{snippets}/userrestdocstest/removeuser/response-fields.adoc[]
+include::{snippets}/userrestdocstest/removeuser/http-request.adoc[]
+include::{snippets}/userrestdocstest/removeuser/http-response.adoc[]
+include::{snippets}/userrestdocstest/removeuser/curl-request.adoc[]
+
+
+=== mail
+
+[[resources-mailcode]]
+==== 메일 코드 전송
+
+include::{snippets}/mailrestdocstest/mailcode/request-parameters.adoc[]
+include::{snippets}/mailrestdocstest/mailcode/response-fields.adoc[]
+include::{snippets}/mailrestdocstest/mailcode/http-request.adoc[]
+include::{snippets}/mailrestdocstest/mailcode/http-response.adoc[]
+include::{snippets}/mailrestdocstest/mailcode/curl-request.adoc[]
+
+
+=== friend
+
+[[resources-getfriendlist]]
+==== 친구 목록 조회
+
+include::{snippets}/friendrestdocstest/getfriendlist/response-fields.adoc[]
+include::{snippets}/friendrestdocstest/getfriendlist/http-request.adoc[]
+include::{snippets}/friendrestdocstest/getfriendlist/http-response.adoc[]
+include::{snippets}/friendrestdocstest/getfriendlist/curl-request.adoc[]
+
+[[resources-addfriend]]
+==== 친구 추가(팔로우)
+
+include::{snippets}/friendrestdocstest/addfriend/request-parameters.adoc[]
+include::{snippets}/friendrestdocstest/addfriend/response-fields.adoc[]
+include::{snippets}/friendrestdocstest/addfriend/http-request.adoc[]
+include::{snippets}/friendrestdocstest/addfriend/http-response.adoc[]
+include::{snippets}/friendrestdocstest/addfriend/curl-request.adoc[]
+
+[[resources-removefriend]]
+==== 친구 삭제(팔로우 취소)
+
+include::{snippets}/friendrestdocstest/removefriend/request-parameters.adoc[]
+include::{snippets}/friendrestdocstest/removefriend/response-fields.adoc[]
+include::{snippets}/friendrestdocstest/removefriend/http-request.adoc[]
+include::{snippets}/friendrestdocstest/removefriend/http-response.adoc[]
+include::{snippets}/friendrestdocstest/removefriend/curl-request.adoc[]
+
+[[resources-searchfriends]]
+==== 친구 추가용 검색
+
+include::{snippets}/friendrestdocstest/searchfriends/request-parameters.adoc[]
+include::{snippets}/friendrestdocstest/searchfriends/response-fields.adoc[]
+include::{snippets}/friendrestdocstest/searchfriends/http-request.adoc[]
+include::{snippets}/friendrestdocstest/searchfriends/http-response.adoc[]
+include::{snippets}/friendrestdocstest/searchfriends/curl-request.adoc[]
+
+
+=== college
+
+[[resources-collegesearch]]
+==== 대학교 검색
+
+include::{snippets}/collegerestdocstest/collegesearch/request-parameters.adoc[]
+include::{snippets}/collegerestdocstest/collegesearch/response-fields.adoc[]
+include::{snippets}/collegerestdocstest/collegesearch/http-request.adoc[]
+include::{snippets}/collegerestdocstest/collegesearch/http-response.adoc[]
+include::{snippets}/collegerestdocstest/collegesearch/curl-request.adoc[]
+
+[[resources-collegeemail]]
+==== 대학교 이메일 등록 요청
+
+include::{snippets}/collegerestdocstest/collegeemail/request-fields.adoc[]
+include::{snippets}/collegerestdocstest/collegeemail/response-fields.adoc[]
+include::{snippets}/collegerestdocstest/collegeemail/http-request.adoc[]
+include::{snippets}/collegerestdocstest/collegeemail/http-response.adoc[]
+include::{snippets}/collegerestdocstest/collegeemail/curl-request.adoc[]
+
+=== active history
+
+[[resources-activehistory]]
+==== 활동 내역 목록 조회
+
+include::{snippets}/activehistoryrestdocstest/activehistory/request-parameters.adoc[]
+include::{snippets}/activehistoryrestdocstest/activehistory/response-fields.adoc[]
+include::{snippets}/activehistoryrestdocstest/activehistory/http-request.adoc[]
+include::{snippets}/activehistoryrestdocstest/activehistory/http-response.adoc[]
+include::{snippets}/activehistoryrestdocstest/activehistory/curl-request.adoc[]
+
+
+=== 학과
+
+[[resources-save-department]]
+==== 학과 등록
+
+include::{snippets}/departmentrestdocstest/savedepartment/request-fields.adoc[]
+include::{snippets}/departmentrestdocstest/savedepartment/response-fields.adoc[]
+include::{snippets}/departmentrestdocstest/savedepartment/http-request.adoc[]
+include::{snippets}/departmentrestdocstest/savedepartment/http-response.adoc[]
+include::{snippets}/departmentrestdocstest/savedepartment/curl-request.adoc[]
+
+[[resources-find-department-list]]
+==== 학과 검색
+
+include::{snippets}/departmentrestdocstest/finddepartmentlist/request-parameters.adoc[]
+include::{snippets}/departmentrestdocstest/finddepartmentlist/response-fields.adoc[]
+include::{snippets}/departmentrestdocstest/finddepartmentlist/http-request.adoc[]
+include::{snippets}/departmentrestdocstest/finddepartmentlist/http-response.adoc[]
+include::{snippets}/departmentrestdocstest/finddepartmentlist/curl-request.adoc[]
+
+
+=== 교수
+
+[[resources-save-professor]]
+==== 교수 등록
+
+include::{snippets}/professorrestdocstest/saveprofessor/request-fields.adoc[]
+include::{snippets}/professorrestdocstest/saveprofessor/response-fields.adoc[]
+include::{snippets}/professorrestdocstest/saveprofessor/http-request.adoc[]
+include::{snippets}/professorrestdocstest/saveprofessor/http-response.adoc[]
+include::{snippets}/professorrestdocstest/saveprofessor/curl-request.adoc[]
+
+[[resources-find-professor-list]]
+==== 교수 검색
+
+include::{snippets}/professorrestdocstest/findprofessorlist/request-parameters.adoc[]
+include::{snippets}/professorrestdocstest/findprofessorlist/response-fields.adoc[]
+include::{snippets}/professorrestdocstest/findprofessorlist/http-request.adoc[]
+include::{snippets}/professorrestdocstest/findprofessorlist/http-response.adoc[]
+include::{snippets}/professorrestdocstest/findprofessorlist/curl-request.adoc[]
 

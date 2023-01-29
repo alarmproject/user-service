@@ -22,7 +22,8 @@ class JwtUtilTest extends Mockito {
 
     @Test
     void createAccessTokenTest() {
-        String jwt = jwtUtil.createAccessToken(2L);
+        String jwt = jwtUtil.createAccessToken(41L);
+        System.out.println(jwt);
         assertTrue(jwtUtil.verifyAccessToken(jwt));
     }
 
@@ -30,6 +31,12 @@ class JwtUtilTest extends Mockito {
     void createRefreshTokenTest() {
         String jwt = jwtUtil.createRefreshToken(2L);
         assertTrue(jwtUtil.verifyRefreshToken(jwt));
+    }
+
+    @Test
+    void createAppleSecretKeyTest() {
+        String clientSecret = jwtUtil.createAppleSecretKey();
+        assertNotNull(clientSecret);
     }
 
 }
